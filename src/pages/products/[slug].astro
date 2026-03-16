@@ -1,0 +1,745 @@
+---
+import { products } from '../../config/products.ts';
+
+export function getStaticPaths() {
+  return products.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const product = products.find((p) => p.slug === slug)!;
+const year = new Date().getFullYear();
+const productIndex = products.findIndex((p) => p.slug === slug);
+const prevProduct = productIndex > 0 ? products[productIndex - 1] : null;
+const nextProduct = productIndex < products.length - 1 ? products[productIndex + 1] : null;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{product.name} — AroDeploy</title>
+    <meta name="description" content={product.description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* ── COLOR TOKENS: DARK (default) ── */
+      :root {
+        --bg:              #0a0a0a;
+        --surface:         #111111;
+        --surface-2:       #171717;
+        --border:          #1f1f1f;
+        --border-strong:   #2e2e2e;
+        --text:            #f0f0f0;
+        --text-secondary:  #888888;
+        --text-muted:      #484848;
+        --nav-bg:          rgba(10, 10, 10, 0.92);
+        --btn-hover:       #d0d0d0;
+        --savings-bg:      #0d1f0d;
+        --savings-border:  #1a3a1a;
+        --savings-text:    #6dc46d;
+        --row-shadow:      0 6px 14px rgba(0,0,0,0.45), 0 -6px 14px rgba(0,0,0,0.45);
+      }
+
+      /* ── COLOR TOKENS: LIGHT ── */
+      @media (prefers-color-scheme: light) {
+        :root {
+          --bg:              #f5f5f5;
+          --surface:         #ffffff;
+          --surface-2:       #ebebeb;
+          --border:          #e0e0e0;
+          --border-strong:   #c8c8c8;
+          --text:            #0a0a0a;
+          --text-secondary:  #555555;
+          --text-muted:      #999999;
+          --nav-bg:          rgba(245, 245, 245, 0.92);
+          --btn-hover:       #1f1f1f;
+          --savings-bg:      #f0fff4;
+          --savings-border:  #a8d8b0;
+          --savings-text:    #1a6a28;
+          --row-shadow:      0 6px 14px rgba(0,0,0,0.1), 0 -6px 14px rgba(0,0,0,0.1);
+        }
+      }
+
+      html {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-size: 16px;
+        line-height: 1.6;
+      }
+
+      body { min-height: 100vh; }
+      a { color: inherit; text-decoration: none; }
+
+      /* ── NAV ── */
+
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 clamp(1.5rem, 5vw, 4rem);
+        height: 60px;
+        background: var(--nav-bg);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-left {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      .nav-logo {
+        font-size: 0.8125rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text);
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 0.125rem;
+      }
+
+      .nav-link {
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        padding: 0.25rem 0.625rem;
+        transition: color 0.15s;
+        letter-spacing: 0.02em;
+      }
+      .nav-link:hover { color: var(--text-secondary); }
+      .nav-link.active { color: var(--text-secondary); }
+
+      .nav-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.45rem 1rem;
+        font-size: 0.8125rem;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        border: 1px solid var(--border-strong);
+        color: var(--text-secondary);
+        background: transparent;
+        transition: border-color 0.15s, color 0.15s;
+        cursor: pointer;
+      }
+      .nav-cta:hover { border-color: var(--text-secondary); color: var(--text); }
+
+      /* ── SHARED ── */
+
+      .eyebrow {
+        font-size: 0.6875rem;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.7rem 1.5rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        background: var(--text);
+        color: var(--bg);
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      .btn-primary:hover { background: var(--btn-hover); }
+
+      /* ── BREADCRUMB ── */
+
+      .breadcrumb {
+        padding: 0.875rem clamp(1.5rem, 5vw, 4rem);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+
+      .breadcrumb a {
+        color: var(--text-muted);
+        transition: color 0.15s;
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+      .breadcrumb a:hover { color: var(--text-secondary); }
+
+      .breadcrumb-sep { color: var(--border-strong); }
+
+      .breadcrumb-current { color: var(--text-secondary); }
+
+      /* ── HERO ── */
+
+      .product-hero {
+        padding: clamp(3.5rem, 9vw, 7rem) clamp(1.5rem, 5vw, 4rem) clamp(3rem, 8vw, 6rem);
+        border-bottom: 1px solid var(--border);
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 2rem 4rem;
+        align-items: start;
+      }
+
+      .product-hero-content { max-width: 640px; }
+
+      .product-hero .eyebrow { margin-bottom: 1.25rem; }
+
+      .product-hero-icon {
+        width: 64px;
+        height: 64px;
+        color: var(--text-secondary);
+        flex-shrink: 0;
+        opacity: 0.5;
+      }
+
+      .product-hero h1 {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+        color: var(--text);
+        margin-bottom: 1.25rem;
+      }
+
+      .product-hero-desc {
+        font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
+        color: var(--text-secondary);
+        line-height: 1.75;
+        max-width: 560px;
+      }
+
+      /* ── HIGHLIGHTS ── */
+
+      .highlights {
+        padding: clamp(3.5rem, 8vw, 6rem) clamp(1.5rem, 5vw, 4rem);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .highlights-label {
+        font-size: 0.6875rem;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 2rem;
+      }
+
+      .highlights-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+      }
+
+      .highlight-card {
+        background: var(--bg);
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        transition: background 0.15s;
+      }
+      .highlight-card:hover { background: var(--surface); }
+
+      .highlight-card h3 {
+        font-size: 0.9375rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        color: var(--text);
+      }
+
+      .highlight-card p {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        line-height: 1.65;
+      }
+
+      .placeholder-notice {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        font-style: italic;
+        margin-top: 0.25rem;
+        border-top: 1px solid var(--border);
+        padding-top: 0.5rem;
+      }
+
+      /* ── DETAIL SECTIONS ── */
+
+      .detail-section {
+        padding: clamp(3.5rem, 8vw, 6rem) clamp(1.5rem, 5vw, 4rem);
+        border-bottom: 1px solid var(--border);
+        max-width: 860px;
+      }
+
+      .detail-section-label {
+        font-size: 0.6875rem;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 2rem;
+      }
+
+      .detail-section h2 {
+        font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin-bottom: 1.25rem;
+        line-height: 1.2;
+      }
+
+      .detail-section p {
+        font-size: 0.9375rem;
+        color: var(--text-secondary);
+        line-height: 1.75;
+        margin-bottom: 1rem;
+      }
+
+      .steps {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        margin-top: 2rem;
+      }
+
+      .step {
+        display: grid;
+        grid-template-columns: 3rem 1fr;
+        background: var(--bg);
+        transition: background 0.15s;
+      }
+      .step:hover { background: var(--surface); }
+
+      .step-num {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        padding: 1.25rem 0 1.25rem 1.25rem;
+        align-self: start;
+        padding-top: 1.35rem;
+      }
+
+      .step-body {
+        padding: 1.25rem 1.5rem;
+        border-left: 1px solid var(--border);
+      }
+
+      .step-body h4 {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 0.3rem;
+      }
+
+      .step-body p {
+        font-size: 0.825rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 0;
+      }
+
+      /* ── SPECS TABLE ── */
+
+      .specs-section {
+        padding: clamp(3.5rem, 8vw, 6rem) clamp(1.5rem, 5vw, 4rem);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .specs-label {
+        font-size: 0.6875rem;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 2rem;
+      }
+
+      .specs-table-wrap { overflow-x: auto; max-width: 680px; }
+
+      .specs-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid var(--border);
+      }
+
+      .specs-table th,
+      .specs-table td {
+        padding: 0.65rem 1.25rem;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+
+      .specs-table thead th {
+        font-size: 0.625rem;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        background: var(--surface);
+      }
+
+      .specs-table td:first-child {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        width: 45%;
+        background: var(--bg);
+      }
+
+      .specs-table td:not(:first-child) {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.8rem;
+        color: var(--text);
+        background: var(--bg);
+      }
+
+      .specs-table tbody tr:last-child td { border-bottom: none; }
+
+      .specs-table tbody tr {
+        transition: background 0.15s;
+      }
+      .specs-table tbody tr:hover td {
+        background: var(--surface-2);
+        box-shadow: var(--row-shadow);
+      }
+
+      /* ── PRODUCT NAV ── */
+
+      .product-nav-band {
+        padding: 1.5rem clamp(1.5rem, 5vw, 4rem);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .product-nav-link {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        max-width: 260px;
+        transition: opacity 0.15s;
+      }
+      .product-nav-link:hover { opacity: 0.7; }
+
+      .product-nav-dir {
+        font-size: 0.6875rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+
+      .product-nav-name {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+      }
+
+      .product-nav-link.next { text-align: right; align-items: flex-end; }
+
+      /* ── CTA BAND ── */
+
+      .cta-band {
+        padding: clamp(4rem, 10vw, 7rem) clamp(1.5rem, 5vw, 4rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 2rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .cta-band h2 {
+        font-size: clamp(1.625rem, 3.5vw, 2.5rem);
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        line-height: 1.15;
+        max-width: 520px;
+      }
+
+      .cta-band p {
+        font-size: 0.9375rem;
+        color: var(--text-secondary);
+        max-width: 400px;
+        line-height: 1.7;
+        margin-top: -0.75rem;
+      }
+
+      /* ── FOOTER ── */
+
+      footer {
+        padding: 1.75rem clamp(1.5rem, 5vw, 4rem);
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: start;
+        gap: 1rem 2rem;
+      }
+
+      .footer-left {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+      }
+
+      .footer-eu {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+      }
+      .footer-eu svg { flex-shrink: 0; }
+
+      .footer-copy {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
+
+      .footer-link {
+        font-size: 0.8125rem;
+        color: var(--text-muted);
+        transition: color 0.15s;
+        align-self: center;
+      }
+      .footer-link:hover { color: var(--text-secondary); }
+
+      /* ── RESPONSIVE ── */
+
+      @media (max-width: 768px) {
+        .product-hero {
+          grid-template-columns: 1fr;
+        }
+        .product-hero-icon { display: none; }
+        .nav-links { display: none; }
+      }
+
+      @media (max-width: 640px) {
+        footer { grid-template-columns: 1fr; }
+        .product-nav-band { flex-direction: column; align-items: flex-start; }
+        .product-nav-link.next { align-items: flex-start; text-align: left; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <nav>
+      <div class="nav-left">
+        <a href="/" class="nav-logo">AroDeploy</a>
+        <div class="nav-links">
+          <a href="/#products" class="nav-link active">Products</a>
+          <a href="/#plans" class="nav-link">Pricing</a>
+        </div>
+      </div>
+      <a href="https://console.aroeploy.com" class="nav-cta">
+        Open Console
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"/>
+        </svg>
+      </a>
+    </nav>
+
+    <div class="breadcrumb">
+      <a href="/">
+        <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+          <path d="M7 9L3 5.5 7 2" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"/>
+        </svg>
+        Home
+      </a>
+      <span class="breadcrumb-sep">/</span>
+      <a href="/#products">Products</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">{product.name}</span>
+    </div>
+
+    <main>
+
+      <!-- ── HERO ── -->
+      <section class="product-hero">
+        <div class="product-hero-content">
+          <p class="eyebrow">{product.name}</p>
+          <h1>{product.tagline}</h1>
+          <p class="product-hero-desc">{product.description}</p>
+        </div>
+        <svg class="product-hero-icon" viewBox="0 0 34 34" fill="none" set:html={product.iconPaths} />
+      </section>
+
+      <!-- ── HIGHLIGHTS ── -->
+      <section class="highlights">
+        <p class="highlights-label">Key capabilities</p>
+        <div class="highlights-grid">
+          {product.highlights.map((h) => (
+            <div class="highlight-card">
+              <h3>{h.title}</h3>
+              <p>{h.body}</p>
+              <p class="placeholder-notice">← Replace with your content</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- ── HOW IT WORKS ── -->
+      <!--
+        TODO: Replace the placeholder steps below with real content describing
+        how this product works. Add, remove, or rewrite steps as needed.
+      -->
+      <section class="detail-section">
+        <p class="detail-section-label">How it works</p>
+        <h2>From push to production in four steps.</h2>
+        <p>Replace this paragraph with a concise overview of the end-to-end flow for this product. Describe what triggers the process and what the outcome looks like.</p>
+        <div class="steps">
+          <div class="step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <h4>Step one title</h4>
+              <p>Replace with a description of what happens in this step.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <h4>Step two title</h4>
+              <p>Replace with a description of what happens in this step.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <h4>Step three title</h4>
+              <p>Replace with a description of what happens in this step.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <h4>Step four title</h4>
+              <p>Replace with a description of what happens in this step.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── SPECS ── -->
+      <!--
+        TODO: Replace the placeholder rows below with real limits and specs
+        for this product. Add or remove rows as needed.
+      -->
+      <section class="specs-section">
+        <p class="specs-label">Specs &amp; limits</p>
+        <div class="specs-table-wrap">
+          <table class="specs-table">
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Trial</th>
+                <th>Pro</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Spec row one</td>
+                <td>—</td>
+                <td>Replace me</td>
+              </tr>
+              <tr>
+                <td>Spec row two</td>
+                <td>Replace me</td>
+                <td>Replace me</td>
+              </tr>
+              <tr>
+                <td>Spec row three</td>
+                <td>Replace me</td>
+                <td>Replace me</td>
+              </tr>
+              <tr>
+                <td>Spec row four</td>
+                <td>Replace me</td>
+                <td>Replace me</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ── PREV / NEXT ── -->
+      <div class="product-nav-band">
+        {prevProduct ? (
+          <a href={`/products/${prevProduct.slug}`} class="product-nav-link prev">
+            <span class="product-nav-dir">← Previous</span>
+            <span class="product-nav-name">{prevProduct.name}</span>
+          </a>
+        ) : <span />}
+        {nextProduct ? (
+          <a href={`/products/${nextProduct.slug}`} class="product-nav-link next">
+            <span class="product-nav-dir">Next →</span>
+            <span class="product-nav-name">{nextProduct.name}</span>
+          </a>
+        ) : <span />}
+      </div>
+
+      <!-- ── CTA BAND ── -->
+      <section class="cta-band">
+        <h2>Ready to start deploying?</h2>
+        <p>30-day free trial. No credit card lock-in, no hidden tiers.</p>
+        <a href="https://console.aroeploy.com" class="btn-primary">
+          Open the Console
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+            <path d="M2.5 10.5L10.5 2.5M10.5 2.5H4.5M10.5 2.5V8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+          </svg>
+        </a>
+      </section>
+
+    </main>
+
+    <footer>
+      <div class="footer-left">
+        <div class="footer-eu">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.25"/>
+            <path d="M7 3v4l2.5 2" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"/>
+          </svg>
+          Built on European infrastructure &mdash; GDPR-compliant by default. Your data stays in Europe.
+        </div>
+        <span class="footer-copy">&copy; {year} AroDeploy. All rights reserved.</span>
+      </div>
+      <a href="https://console.aroeploy.com" class="footer-link">console.aroeploy.com</a>
+    </footer>
+
+  </body>
+</html>
