@@ -2,6 +2,15 @@
 
 The point of Arodeploy is to give the deployment eaze of Vercel, but the cost optimization of working on "bare-metal". Therefor the goal of this project is to create a full deployment engine in Golang and deploy it on Hetzner. The napkin math for this project is a cost optimization of around 60-70% compared to hosting on AWS.
 
+In general the biggest pain points i see is:
+
+- Lack of observability
+- Hard to Network applications
+- Expanding up and down dynamically
+- Tools becoming too complex
+- Products that take the "engineering" away from the user and does things in the background too much
+- High cost, sruge pricing esc
+
 ### Interesting features to reduce server anxiety
 
 **Duplicate Migrations**

@@ -79,7 +79,9 @@ const nextProduct = productIndex < products.length - 1 ? products[productIndex +
         -moz-osx-font-smoothing: grayscale;
         font-size: 16px;
         line-height: 1.6;
+        scrollbar-width: none;
       }
+      html::-webkit-scrollbar { display: none; }
 
       body { min-height: 100vh; }
       a { color: inherit; text-decoration: none; }
@@ -214,11 +216,12 @@ const nextProduct = productIndex < products.length - 1 ? products[productIndex +
       .product-hero .eyebrow { margin-bottom: 1.25rem; }
 
       .product-hero-icon {
-        width: 64px;
-        height: 64px;
+        width: 28px;
+        height: 28px;
         color: var(--text-secondary);
         flex-shrink: 0;
-        opacity: 0.5;
+        opacity: 0.35;
+        margin-top: 0.5rem;
       }
 
       .product-hero h1 {
@@ -608,58 +611,30 @@ const nextProduct = productIndex < products.length - 1 ? products[productIndex +
             <div class="highlight-card">
               <h3>{h.title}</h3>
               <p>{h.body}</p>
-              <p class="placeholder-notice">← Replace with your content</p>
             </div>
           ))}
         </div>
       </section>
 
       <!-- ── HOW IT WORKS ── -->
-      <!--
-        TODO: Replace the placeholder steps below with real content describing
-        how this product works. Add, remove, or rewrite steps as needed.
-      -->
       <section class="detail-section">
         <p class="detail-section-label">How it works</p>
-        <h2>From push to production in four steps.</h2>
-        <p>Replace this paragraph with a concise overview of the end-to-end flow for this product. Describe what triggers the process and what the outcome looks like.</p>
+        <h2>From push to production in {product.howItWorks.steps.length} steps.</h2>
+        <p>{product.howItWorks.intro}</p>
         <div class="steps">
-          <div class="step">
-            <span class="step-num">01</span>
-            <div class="step-body">
-              <h4>Step one title</h4>
-              <p>Replace with a description of what happens in this step.</p>
+          {product.howItWorks.steps.map((step, i) => (
+            <div class="step">
+              <span class="step-num">{String(i + 1).padStart(2, '0')}</span>
+              <div class="step-body">
+                <h4>{step.title}</h4>
+                <p>{step.body}</p>
+              </div>
             </div>
-          </div>
-          <div class="step">
-            <span class="step-num">02</span>
-            <div class="step-body">
-              <h4>Step two title</h4>
-              <p>Replace with a description of what happens in this step.</p>
-            </div>
-          </div>
-          <div class="step">
-            <span class="step-num">03</span>
-            <div class="step-body">
-              <h4>Step three title</h4>
-              <p>Replace with a description of what happens in this step.</p>
-            </div>
-          </div>
-          <div class="step">
-            <span class="step-num">04</span>
-            <div class="step-body">
-              <h4>Step four title</h4>
-              <p>Replace with a description of what happens in this step.</p>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
       <!-- ── SPECS ── -->
-      <!--
-        TODO: Replace the placeholder rows below with real limits and specs
-        for this product. Add or remove rows as needed.
-      -->
       <section class="specs-section">
         <p class="specs-label">Specs &amp; limits</p>
         <div class="specs-table-wrap">
@@ -672,26 +647,13 @@ const nextProduct = productIndex < products.length - 1 ? products[productIndex +
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Spec row one</td>
-                <td>—</td>
-                <td>Replace me</td>
-              </tr>
-              <tr>
-                <td>Spec row two</td>
-                <td>Replace me</td>
-                <td>Replace me</td>
-              </tr>
-              <tr>
-                <td>Spec row three</td>
-                <td>Replace me</td>
-                <td>Replace me</td>
-              </tr>
-              <tr>
-                <td>Spec row four</td>
-                <td>Replace me</td>
-                <td>Replace me</td>
-              </tr>
+              {product.specs.map((row) => (
+                <tr>
+                  <td>{row.property}</td>
+                  <td>{row.trial}</td>
+                  <td>{row.pro}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
