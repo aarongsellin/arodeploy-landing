@@ -1,5 +1,6 @@
 ---
 import { products } from '../../config/products.ts';
+import { links } from '../../config/links.ts';
 
 export function getStaticPaths() {
   return products.map((p) => ({ params: { slug: p.slug } }));
@@ -26,6 +27,12 @@ const nextProduct = productIndex < products.length - 1 ? products[productIndex +
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <script is:inline>
+      (function() {
+        var t = localStorage.getItem('arodeploy-theme');
+        if (t) document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
     <style>
       *, *::before, *::after {
         box-sizing: border-box;
@@ -34,15 +41,16 @@ const nextProduct = productIndex < products.length - 1 ? products[productIndex +
       }
 
       /* ── COLOR TOKENS: DARK (default) ── */
-      :root {
+      :root,
+      html[data-theme="dark"] {
         --bg:              #0a0a0a;
         --surface:         #111111;
         --surface-2:       #171717;
         --border:          #1f1f1f;
         --border-strong:   #2e2e2e;
-        --text:            #f0f0f0;
-        --text-secondary:  #888888;
-        --text-muted:      #484848;
+        --text:            #f5f5f5;
+        --text-secondary:  #b0b0b0;
+        --text-muted:      #7a7a7a;
         --nav-bg:          rgba(10, 10, 10, 0.92);
         --btn-hover:       #d0d0d0;
         --savings-bg:      #0d1f0d;
@@ -53,7 +61,7 @@ const nextProduct = productIndex < products.length - 1 ? products[productIndex +
 
       /* ── COLOR TOKENS: LIGHT ── */
       @media (prefers-color-scheme: light) {
-        :root {
+        :root:not([data-theme="dark"]) {
           --bg:              #f5f5f5;
           --surface:         #ffffff;
           --surface-2:       #ebebeb;
@@ -69,6 +77,22 @@ const nextProduct = productIndex < products.length - 1 ? products[productIndex +
           --savings-text:    #1a6a28;
           --row-shadow:      0 6px 14px rgba(0,0,0,0.1), 0 -6px 14px rgba(0,0,0,0.1);
         }
+      }
+      html[data-theme="light"] {
+        --bg:              #f5f5f5;
+        --surface:         #ffffff;
+        --surface-2:       #ebebeb;
+        --border:          #e0e0e0;
+        --border-strong:   #c8c8c8;
+        --text:            #0a0a0a;
+        --text-secondary:  #555555;
+        --text-muted:      #999999;
+        --nav-bg:          rgba(245, 245, 245, 0.92);
+        --btn-hover:       #1f1f1f;
+        --savings-bg:      #f0fff4;
+        --savings-border:  #a8d8b0;
+        --savings-text:    #1a6a28;
+        --row-shadow:      0 6px 14px rgba(0,0,0,0.1), 0 -6px 14px rgba(0,0,0,0.1);
       }
 
       html {
@@ -148,6 +172,41 @@ const nextProduct = productIndex < products.length - 1 ? products[productIndex +
         cursor: pointer;
       }
       .nav-cta:hover { border-color: var(--text-secondary); color: var(--text); }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .theme-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        background: transparent;
+        border: 1px solid var(--border-strong);
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: border-color 0.15s, color 0.15s;
+        padding: 0;
+      }
+      .theme-toggle:hover {
+        border-color: var(--text-secondary);
+        color: var(--text-secondary);
+      }
+      .theme-toggle .icon-sun,
+      .theme-toggle .icon-moon { display: none; }
+      html[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+      html[data-theme="light"] .theme-toggle .icon-moon { display: block; }
+      html:not([data-theme]) .theme-toggle .icon-sun { display: none; }
+      html:not([data-theme]) .theme-toggle .icon-moon { display: none; }
+      @media (prefers-color-scheme: dark) {
+        html:not([data-theme]) .theme-toggle .icon-sun { display: block; }
+      }
+      @media (prefers-color-scheme: light) {
+        html:not([data-theme]) .theme-toggle .icon-moon { display: block; }
+      }
 
       /* ── SHARED ── */
 
@@ -570,12 +629,23 @@ const nextProduct = productIndex < products.length - 1 ? products[productIndex +
           <a href="/#plans" class="nav-link">Pricing</a>
         </div>
       </div>
-      <a href="https://console.arodeploy.com" class="nav-cta">
-        Open Console
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-          <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"/>
-        </svg>
-      </a>
+      <div class="nav-right">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">
+          <svg class="icon-sun" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/>
+            <path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.17 3.17l1.06 1.06M11.77 11.77l1.06 1.06M3.17 12.83l1.06-1.06M11.77 4.23l1.06-1.06" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+          <svg class="icon-moon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M13.36 10.06A5.5 5.5 0 015.94 2.64a6 6 0 107.42 7.42z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <a href={links.console} class="nav-cta">
+          Open Console
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"/>
+          </svg>
+        </a>
+      </div>
     </nav>
 
     <div class="breadcrumb">
@@ -679,7 +749,7 @@ const nextProduct = productIndex < products.length - 1 ? products[productIndex +
       <section class="cta-band">
         <h2>Ready to start deploying?</h2>
         <p>30-day free trial. No credit card lock-in, no hidden tiers.</p>
-        <a href="https://console.arodeploy.com" class="btn-primary">
+        <a href={links.console} class="btn-primary">
           Open the Console
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
             <path d="M2.5 10.5L10.5 2.5M10.5 2.5H4.5M10.5 2.5V8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
@@ -700,8 +770,27 @@ const nextProduct = productIndex < products.length - 1 ? products[productIndex +
         </div>
         <span class="footer-copy">&copy; {year} AroDeploy. All rights reserved.</span>
       </div>
-      <a href="https://console.arodeploy.com" class="footer-link">console.arodeploy.com</a>
+      <a href={links.console} class="footer-link">console.arodeploy.com</a>
     </footer>
+
+    <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const html = document.documentElement;
+          const current = html.getAttribute('data-theme');
+          let next;
+          if (!current) {
+            next = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'light' : 'dark';
+          } else {
+            next = current === 'dark' ? 'light' : 'dark';
+          }
+          html.setAttribute('data-theme', next);
+          localStorage.setItem('arodeploy-theme', next);
+        });
+      })();
+    </script>
 
   </body>
 </html>

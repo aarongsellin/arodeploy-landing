@@ -1,5 +1,6 @@
 ---
 import { products } from '../config/products.ts';
+import { links } from '../config/links.ts';
 const year = new Date().getFullYear();
 ---
 
@@ -18,9 +19,9 @@ const year = new Date().getFullYear();
     <meta property="og:type" content="website" />
     <meta property="og:title" content="AroDeploy — Deploy from git. Simple pricing." />
     <meta property="og:description" content="Zero-downtime releases, preview environments, and smart builds — servers in the US, Europe, and Singapore. Plans from €0." />
-    <meta property="og:url" content="https://arodeploy.com" />
+    <meta property="og:url" content={links.site} />
     <meta property="og:site_name" content="AroDeploy" />
-    <meta property="og:image" content="https://arodeploy.com/og-image.png" />
+    <meta property="og:image" content={`${links.site}/og-image.png`} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
@@ -28,10 +29,17 @@ const year = new Date().getFullYear();
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="AroDeploy — Deploy from git. Simple pricing." />
     <meta name="twitter:description" content="Zero-downtime releases, preview environments, and smart builds — servers in the US, Europe, and Singapore. Plans from €0." />
-    <meta name="twitter:image" content="https://arodeploy.com/og-image.png" />
+    <meta name="twitter:image" content={`${links.site}/og-image.png`} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <script is:inline>
+      /* Apply saved theme before first paint to prevent flash */
+      (function() {
+        var t = localStorage.getItem('arodeploy-theme');
+        if (t) document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
     <style>
       *, *::before, *::after {
         box-sizing: border-box;
@@ -40,7 +48,8 @@ const year = new Date().getFullYear();
       }
 
       /* ── COLOR TOKENS: DARK (default) ── */
-      :root {
+      :root,
+      html[data-theme="dark"] {
         --bg:              #0a0a0a;
         --surface:         #111111;
         --surface-2:       #171717;
@@ -61,7 +70,7 @@ const year = new Date().getFullYear();
 
       /* ── COLOR TOKENS: LIGHT ── */
       @media (prefers-color-scheme: light) {
-        :root {
+        :root:not([data-theme="dark"]) {
           --bg:              #f5f5f5;
           --surface:         #ffffff;
           --surface-2:       #ebebeb;
@@ -79,6 +88,24 @@ const year = new Date().getFullYear();
           --tag-text:        #888888;
           --row-shadow:      0 6px 14px rgba(0,0,0,0.1), 0 -6px 14px rgba(0,0,0,0.1);
         }
+      }
+      html[data-theme="light"] {
+        --bg:              #f5f5f5;
+        --surface:         #ffffff;
+        --surface-2:       #ebebeb;
+        --border:          #e0e0e0;
+        --border-strong:   #c8c8c8;
+        --text:            #0a0a0a;
+        --text-secondary:  #555555;
+        --text-muted:      #999999;
+        --nav-bg:          rgba(245, 245, 245, 0.92);
+        --btn-hover:       #1f1f1f;
+        --savings-bg:      #f0fff4;
+        --savings-border:  #a8d8b0;
+        --savings-text:    #1a6a28;
+        --tag-bg:          #e8e8e8;
+        --tag-text:        #888888;
+        --row-shadow:      0 6px 14px rgba(0,0,0,0.1), 0 -6px 14px rgba(0,0,0,0.1);
       }
 
       html {
@@ -158,6 +185,43 @@ const year = new Date().getFullYear();
       }
       .nav-cta:hover { border-color: var(--text-secondary); color: var(--text); }
 
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .theme-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        background: transparent;
+        border: 1px solid var(--border-strong);
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: border-color 0.15s, color 0.15s;
+        padding: 0;
+      }
+      .theme-toggle:hover {
+        border-color: var(--text-secondary);
+        color: var(--text-secondary);
+      }
+      .theme-toggle .icon-sun,
+      .theme-toggle .icon-moon { display: none; }
+      html[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+      html[data-theme="light"] .theme-toggle .icon-moon { display: block; }
+      /* When no explicit data-theme (system default) */
+      html:not([data-theme]) .theme-toggle .icon-sun { display: none; }
+      html:not([data-theme]) .theme-toggle .icon-moon { display: none; }
+      @media (prefers-color-scheme: dark) {
+        html:not([data-theme]) .theme-toggle .icon-sun { display: block; }
+      }
+      @media (prefers-color-scheme: light) {
+        html:not([data-theme]) .theme-toggle .icon-moon { display: block; }
+      }
+
       /* ── SHARED ── */
 
       .eyebrow {
@@ -227,7 +291,7 @@ const year = new Date().getFullYear();
         font-size: clamp(2.25rem, 6vw, 4.5rem);
         font-weight: 700;
         letter-spacing: -0.03em;
-        line-height: 1.08;
+        line-height: 1.15;
         color: var(--text);
         max-width: 760px;
         margin-bottom: 1.5rem;
@@ -236,20 +300,10 @@ const year = new Date().getFullYear();
 
       .region-rotate {
         display: inline-block;
-        position: relative;
-        color: var(--text-secondary);
-        min-width: 6ch;
+        width: 5.5ch;
         text-align: left;
-      }
-      .region-rotate .region-word {
-        display: inline-block;
-        opacity: 0;
-        transform: translateY(8px);
-        transition: opacity 0.35s ease, transform 0.35s ease;
-      }
-      .region-rotate .region-word.active {
-        opacity: 1;
-        transform: translateY(0);
+        color: var(--text-secondary);
+        transition: opacity 0.5s ease;
       }
 
       .hero-sub {
@@ -1233,12 +1287,23 @@ const year = new Date().getFullYear();
           <a href="#pricing" class="nav-link">Pricing</a>
         </div>
       </div>
-      <a href="https://console.arodeploy.com" class="nav-cta">
-        Open Console
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-          <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"/>
-        </svg>
-      </a>
+      <div class="nav-right">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">
+          <svg class="icon-sun" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/>
+            <path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.17 3.17l1.06 1.06M11.77 11.77l1.06 1.06M3.17 12.83l1.06-1.06M11.77 4.23l1.06-1.06" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+          <svg class="icon-moon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M13.36 10.06A5.5 5.5 0 015.94 2.64a6 6 0 107.42 7.42z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <a href={links.console} class="nav-cta">
+          Open Console
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"/>
+          </svg>
+        </a>
+      </div>
     </nav>
 
     <main>
@@ -1246,12 +1311,12 @@ const year = new Date().getFullYear();
       <!-- ── HERO ── -->
       <section class="hero">
         <p class="eyebrow">Developer Infrastructure</p>
-        <h1>Git push. We handle<br />the rest in <span class="region-rotate" id="region-rotate"></span></h1>
+        <h1>Git push. We handle<br />the rest in the <span class="region-rotate" id="region-rotate">US</span></h1>
         <p class="hero-sub">
           Zero-downtime deploys, Cloudflare CDN, custom domains, and preview environments — all on dedicated servers across five global regions. Plans from&nbsp;€0.
         </p>
         <div class="hero-actions">
-          <a href="https://console.arodeploy.com" class="btn-primary">
+          <a href={links.console} class="btn-primary">
             Open Console
             <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
               <path d="M2.5 10.5L10.5 2.5M10.5 2.5H4.5M10.5 2.5V8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
@@ -1422,7 +1487,7 @@ const year = new Date().getFullYear();
                 <span class="pricing-spec-val">Free</span>
               </div>
             </div>
-            <a href="https://console.arodeploy.com" class="pricing-card-cta">Start free</a>
+            <a href={links.console} class="pricing-card-cta">Start free</a>
           </div>
 
           <!-- Starter -->
@@ -1452,7 +1517,7 @@ const year = new Date().getFullYear();
                 <span class="pricing-spec-val">Free</span>
               </div>
             </div>
-            <a href="https://console.arodeploy.com" class="pricing-card-cta">Get started</a>
+            <a href={links.console} class="pricing-card-cta">Get started</a>
           </div>
 
           <!-- Growth -->
@@ -1482,7 +1547,7 @@ const year = new Date().getFullYear();
                 <span class="pricing-spec-val">&euro;2 / TB</span>
               </div>
             </div>
-            <a href="https://console.arodeploy.com" class="pricing-card-cta">Get started</a>
+            <a href={links.console} class="pricing-card-cta">Get started</a>
           </div>
 
           <!-- Custom -->
@@ -1704,7 +1769,7 @@ const year = new Date().getFullYear();
       <section class="cta-band">
         <h2>Ready to ship?</h2>
         <p>30-day free trial. No credit card required.</p>
-        <a href="https://console.arodeploy.com" class="btn-primary">
+        <a href={links.console} class="btn-primary">
           Open the Console
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
             <path d="M2.5 10.5L10.5 2.5M10.5 2.5H4.5M10.5 2.5V8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
@@ -1727,31 +1792,46 @@ const year = new Date().getFullYear();
       </div>
       <div class="footer-links">
         <a href="/privacy" class="footer-link">Privacy</a>
-        <a href="https://docs.arodeploy.com" class="footer-link">Docs</a>
-        <a href="https://status.arodeploy.com" class="footer-link">Status</a>
-        <a href="https://console.arodeploy.com" class="footer-link">Console</a>
+        <a href={links.docs} class="footer-link">Docs</a>
+        <a href={links.status} class="footer-link">Status</a>
+        <a href={links.console} class="footer-link">Console</a>
       </div>
     </footer>
 
     <script>
+      /* ── Region rotation ── */
       (() => {
-        const regions = ['US East', 'US West', 'Germany', 'Finland', 'Singapore'];
+        const regions = ['US', 'EU', 'Singapore'];
         const el = document.getElementById('region-rotate');
         if (!el) return;
         let idx = 0;
-        const span = document.createElement('span');
-        span.className = 'region-word active';
-        span.textContent = regions[0];
-        el.appendChild(span);
-
         setInterval(() => {
-          span.classList.remove('active');
+          el.style.opacity = '0';
           setTimeout(() => {
             idx = (idx + 1) % regions.length;
-            span.textContent = regions[idx];
-            span.classList.add('active');
-          }, 350);
-        }, 2400);
+            el.textContent = regions[idx];
+            el.style.opacity = '1';
+          }, 500);
+        }, 3000);
+      })();
+
+      /* ── Theme toggle ── */
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const html = document.documentElement;
+          const current = html.getAttribute('data-theme');
+          let next;
+          if (!current) {
+            /* System default — toggle to the opposite */
+            next = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'light' : 'dark';
+          } else {
+            next = current === 'dark' ? 'light' : 'dark';
+          }
+          html.setAttribute('data-theme', next);
+          localStorage.setItem('arodeploy-theme', next);
+        });
       })();
     </script>
 

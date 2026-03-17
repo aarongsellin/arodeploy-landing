@@ -1,4 +1,5 @@
 ---
+import { links } from '../../config/links.ts';
 const year = new Date().getFullYear();
 ---
 
@@ -15,6 +16,12 @@ const year = new Date().getFullYear();
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <script is:inline>
+      (function() {
+        var t = localStorage.getItem('arodeploy-theme');
+        if (t) document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
     <style>
       *, *::before, *::after {
         box-sizing: border-box;
@@ -22,22 +29,23 @@ const year = new Date().getFullYear();
         padding: 0;
       }
 
-      :root {
+      :root,
+      html[data-theme="dark"] {
         --bg:              #0a0a0a;
         --surface:         #111111;
         --surface-2:       #171717;
         --border:          #1f1f1f;
         --border-strong:   #2e2e2e;
-        --text:            #f0f0f0;
-        --text-secondary:  #888888;
-        --text-muted:      #484848;
+        --text:            #f5f5f5;
+        --text-secondary:  #b0b0b0;
+        --text-muted:      #7a7a7a;
         --nav-bg:          rgba(10, 10, 10, 0.92);
         --btn-hover:       #d0d0d0;
         --row-shadow:      0 6px 14px rgba(0,0,0,0.45), 0 -6px 14px rgba(0,0,0,0.45);
       }
 
       @media (prefers-color-scheme: light) {
-        :root {
+        :root:not([data-theme="dark"]) {
           --bg:              #f5f5f5;
           --surface:         #ffffff;
           --surface-2:       #ebebeb;
@@ -50,6 +58,19 @@ const year = new Date().getFullYear();
           --btn-hover:       #1f1f1f;
           --row-shadow:      0 6px 14px rgba(0,0,0,0.1), 0 -6px 14px rgba(0,0,0,0.1);
         }
+      }
+      html[data-theme="light"] {
+        --bg:              #f5f5f5;
+        --surface:         #ffffff;
+        --surface-2:       #ebebeb;
+        --border:          #e0e0e0;
+        --border-strong:   #c8c8c8;
+        --text:            #0a0a0a;
+        --text-secondary:  #555555;
+        --text-muted:      #999999;
+        --nav-bg:          rgba(245, 245, 245, 0.92);
+        --btn-hover:       #1f1f1f;
+        --row-shadow:      0 6px 14px rgba(0,0,0,0.1), 0 -6px 14px rgba(0,0,0,0.1);
       }
 
       html {
@@ -127,6 +148,42 @@ const year = new Date().getFullYear();
         cursor: pointer;
       }
       .nav-cta:hover { border-color: var(--text-secondary); color: var(--text); }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .theme-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        background: transparent;
+        border: 1px solid var(--border-strong);
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: border-color 0.15s, color 0.15s;
+        padding: 0;
+      }
+      .theme-toggle:hover {
+        border-color: var(--text-secondary);
+        color: var(--text-secondary);
+      }
+      .theme-toggle .icon-sun,
+      .theme-toggle .icon-moon { display: none; }
+      html[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+      html[data-theme="light"] .theme-toggle .icon-moon { display: block; }
+      html:not([data-theme]) .theme-toggle .icon-sun { display: none; }
+      html:not([data-theme]) .theme-toggle .icon-moon { display: none; }
+      @media (prefers-color-scheme: dark) {
+        html:not([data-theme]) .theme-toggle .icon-sun { display: block; }
+      }
+      @media (prefers-color-scheme: light) {
+        html:not([data-theme]) .theme-toggle .icon-moon { display: block; }
+      }
 
       /* ── BREADCRUMB ── */
       .breadcrumb {
@@ -421,7 +478,176 @@ const year = new Date().getFullYear();
       }
       .footer-link:hover { color: var(--text-secondary); }
 
+      /* ── TWO-COLUMN LAYOUT ── */
+      .split-layout {
+        display: grid;
+        grid-template-columns: 1fr 460px;
+        gap: 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .split-content {
+        min-width: 0;
+      }
+      .split-content .section {
+        max-width: none;
+      }
+
+      .flowchart-panel {
+        position: relative;
+        border-left: 1px solid var(--border-strong);
+        background: var(--surface);
+      }
+
+      .flowchart-sticky {
+        position: sticky;
+        top: 61px;
+        padding: 2.5rem 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        max-height: calc(100vh - 61px);
+        overflow-y: auto;
+        scrollbar-width: none;
+      }
+      .flowchart-sticky::-webkit-scrollbar { display: none; }
+
+      .flowchart-label {
+        font-size: 0.6875rem;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+      }
+
+      /* ── FLOWCHART NODES ── */
+      .fc-stage {
+        opacity: 0;
+        transform: translateY(14px);
+        transition: opacity 0.55s ease, transform 0.55s ease;
+      }
+      .fc-stage.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .fc-node {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        padding: 1.1rem 1.25rem;
+        background: var(--bg);
+        border: 1px solid var(--border-strong);
+        transition: border-color 0.3s, background 0.3s;
+      }
+      .fc-stage.active .fc-node {
+        border-color: #555;
+        background: var(--surface-2);
+      }
+
+      .fc-node-header {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+
+      .fc-node-num {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        min-width: 1.5rem;
+      }
+      .fc-stage.active .fc-node-num { color: var(--text); }
+
+      .fc-node-icon {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+        color: var(--text-secondary);
+      }
+      .fc-stage.active .fc-node-icon { color: var(--text); }
+
+      .fc-node-title {
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: var(--text);
+        letter-spacing: -0.01em;
+      }
+
+      .fc-node-desc {
+        font-size: 0.8125rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+        padding-left: 0;
+      }
+
+      .fc-tech-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem;
+        margin-top: 0.1rem;
+      }
+
+      .fc-tech {
+        font-size: 0.6875rem;
+        font-family: 'JetBrains Mono', monospace;
+        padding: 0.2rem 0.55rem;
+        background: var(--surface);
+        border: 1px solid var(--border-strong);
+        border-radius: 2px;
+        color: var(--text-secondary);
+        transition: color 0.3s, border-color 0.3s;
+      }
+      .fc-stage.active .fc-tech {
+        color: var(--text);
+        border-color: #555;
+      }
+
+      .fc-connector {
+        width: 2px;
+        height: 20px;
+        background: var(--border-strong);
+        margin-left: 2.25rem;
+        transition: background 0.3s;
+      }
+      .fc-stage.visible .fc-connector { background: #555; }
+
+      .fc-output {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        padding: 1rem 1.25rem;
+        border: 2px dashed #555;
+        background: var(--bg);
+      }
+
+      .fc-output-icon {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+        color: var(--text-secondary);
+      }
+
+      .fc-output-text {
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: var(--text);
+      }
+
+      .fc-output-sub {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        margin-top: 0.1rem;
+      }
+
       /* ── RESPONSIVE ── */
+      @media (max-width: 1100px) {
+        .split-layout {
+          grid-template-columns: 1fr;
+        }
+        .flowchart-panel { display: none; }
+      }
       @media (max-width: 768px) {
         .nav-links { display: none; }
       }
@@ -440,12 +666,23 @@ const year = new Date().getFullYear();
           <a href="/#plans" class="nav-link">Pricing</a>
         </div>
       </div>
-      <a href="https://console.arodeploy.com" class="nav-cta">
-        Open Console
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-          <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"/>
-        </svg>
-      </a>
+      <div class="nav-right">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">
+          <svg class="icon-sun" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/>
+            <path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.17 3.17l1.06 1.06M11.77 11.77l1.06 1.06M3.17 12.83l1.06-1.06M11.77 4.23l1.06-1.06" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+          <svg class="icon-moon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M13.36 10.06A5.5 5.5 0 015.94 2.64a6 6 0 107.42 7.42z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <a href={links.console} class="nav-cta">
+          Open Console
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"/>
+          </svg>
+        </a>
+      </div>
     </nav>
 
     <div class="breadcrumb">
@@ -489,13 +726,17 @@ const year = new Date().getFullYear();
         </p>
       </section>
 
+      <!-- ── SPLIT LAYOUT: text left, flowchart right ── -->
+      <div class="split-layout">
+        <div class="split-content">
+
       <!-- ── PIPELINE ── -->
       <section class="section">
         <p class="section-label">Pipeline</p>
         <h2>Five stages from raw signal to actionable strategy.</h2>
         <div class="pipeline">
 
-          <div class="pipeline-phase">
+          <div class="pipeline-phase" data-phase="0">
             <div class="phase-header">
               <span class="phase-num">01</span>
               <div class="phase-content">
@@ -516,7 +757,7 @@ const year = new Date().getFullYear();
             </div>
           </div>
 
-          <div class="pipeline-phase">
+          <div class="pipeline-phase" data-phase="1">
             <div class="phase-header">
               <span class="phase-num">02</span>
               <div class="phase-content">
@@ -538,7 +779,7 @@ const year = new Date().getFullYear();
             </div>
           </div>
 
-          <div class="pipeline-phase">
+          <div class="pipeline-phase" data-phase="2">
             <div class="phase-header">
               <span class="phase-num">03</span>
               <div class="phase-content">
@@ -560,7 +801,7 @@ const year = new Date().getFullYear();
             </div>
           </div>
 
-          <div class="pipeline-phase">
+          <div class="pipeline-phase" data-phase="3">
             <div class="phase-header">
               <span class="phase-num">04</span>
               <div class="phase-content">
@@ -582,7 +823,7 @@ const year = new Date().getFullYear();
             </div>
           </div>
 
-          <div class="pipeline-phase">
+          <div class="pipeline-phase" data-phase="4">
             <div class="phase-header">
               <span class="phase-num">05</span>
               <div class="phase-content">
@@ -716,6 +957,122 @@ const year = new Date().getFullYear();
         </div>
       </section>
 
+        </div><!-- .split-content -->
+
+        <!-- ── FLOWCHART PANEL (right side, sticky) ── -->
+        <div class="flowchart-panel">
+          <div class="flowchart-sticky">
+            <span class="flowchart-label">System Flow</span>
+
+            <!-- Stage 1 — Data Layer -->
+            <div class="fc-stage" data-stage="1">
+              <div class="fc-node">
+                <div class="fc-node-header">
+                  <span class="fc-node-num">01</span>
+                  <svg class="fc-node-icon" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="12" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5 8h10M5 11h6" stroke="currentColor" stroke-width="1.1" stroke-linecap="square"/></svg>
+                  <span class="fc-node-title">Data Layer</span>
+                </div>
+                <p class="fc-node-desc">Raw reviews, queries, and product data scraped and stored. Embeddings queued and computed.</p>
+                <div class="fc-tech-row">
+                  <span class="fc-tech">Playwright</span>
+                  <span class="fc-tech">BullMQ</span>
+                  <span class="fc-tech">Postgres</span>
+                  <span class="fc-tech">Redis</span>
+                  <span class="fc-tech">Ollama Embed</span>
+                </div>
+              </div>
+              <div class="fc-connector"></div>
+            </div>
+
+            <!-- Stage 2 — Signal Extraction -->
+            <div class="fc-stage" data-stage="2">
+              <div class="fc-node">
+                <div class="fc-node-header">
+                  <span class="fc-node-num">02</span>
+                  <svg class="fc-node-icon" viewBox="0 0 20 20" fill="none"><path d="M10 3v14M6 7l4-4 4 4M6 13l4 4 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></svg>
+                  <span class="fc-node-title">Signal Extraction</span>
+                </div>
+                <p class="fc-node-desc">Sentiment, features, topic clusters, and dissatisfaction scores extracted via LLM.</p>
+                <div class="fc-tech-row">
+                  <span class="fc-tech">VADER</span>
+                  <span class="fc-tech">llama3.2</span>
+                  <span class="fc-tech">HDBSCAN</span>
+                </div>
+              </div>
+              <div class="fc-connector"></div>
+            </div>
+
+            <!-- Stage 3 — Field Construction -->
+            <div class="fc-stage" data-stage="3">
+              <div class="fc-node">
+                <div class="fc-node-header">
+                  <span class="fc-node-num">03</span>
+                  <svg class="fc-node-icon" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="16" height="16" stroke="currentColor" stroke-width="1.3"/><circle cx="7" cy="7" r="1.5" fill="currentColor" opacity="0.5"/><circle cx="13" cy="13" r="1.5" fill="currentColor" opacity="0.5"/><circle cx="11" cy="6" r="1" fill="currentColor" opacity="0.3"/></svg>
+                  <span class="fc-node-title">Field Construction</span>
+                </div>
+                <p class="fc-node-desc">UMAP projection, dual KDE fields, and the demand/competition ratio grid F(x).</p>
+                <div class="fc-tech-row">
+                  <span class="fc-tech">UMAP</span>
+                  <span class="fc-tech">scipy KDE</span>
+                  <span class="fc-tech">numpy</span>
+                  <span class="fc-tech">F(x)</span>
+                </div>
+              </div>
+              <div class="fc-connector"></div>
+            </div>
+
+            <!-- Stage 4 — Optimization -->
+            <div class="fc-stage" data-stage="4">
+              <div class="fc-node">
+                <div class="fc-node-header">
+                  <span class="fc-node-num">04</span>
+                  <svg class="fc-node-icon" viewBox="0 0 20 20" fill="none"><path d="M3 15l4-6 3 3 7-9" stroke="currentColor" stroke-width="1.3" stroke-linecap="square" stroke-linejoin="miter"/><circle cx="16" cy="4" r="1.5" stroke="currentColor" stroke-width="1"/></svg>
+                  <span class="fc-node-title">Optimization</span>
+                </div>
+                <p class="fc-node-desc">Peak detection on F(x), inverse projection, KNN retrieval of real documents.</p>
+                <div class="fc-tech-row">
+                  <span class="fc-tech">Peak Detect</span>
+                  <span class="fc-tech">pgvector KNN</span>
+                  <span class="fc-tech">Inversion</span>
+                </div>
+              </div>
+              <div class="fc-connector"></div>
+            </div>
+
+            <!-- Stage 5 — Interpretation -->
+            <div class="fc-stage" data-stage="5">
+              <div class="fc-node">
+                <div class="fc-node-header">
+                  <span class="fc-node-num">05</span>
+                  <svg class="fc-node-icon" viewBox="0 0 20 20" fill="none"><path d="M4 3h12v12l-3 2H4z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="miter"/><path d="M7 7h6M7 10h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="square"/></svg>
+                  <span class="fc-node-title">Interpretation</span>
+                </div>
+                <p class="fc-node-desc">Large LLM generates structured strategy: features, positioning, pricing, marketing.</p>
+                <div class="fc-tech-row">
+                  <span class="fc-tech">llama3.1:70b</span>
+                  <span class="fc-tech">gpt-4o</span>
+                  <span class="fc-tech">Pydantic</span>
+                </div>
+              </div>
+              <div class="fc-connector"></div>
+            </div>
+
+            <!-- Final output -->
+            <div class="fc-stage" data-stage="6">
+              <div class="fc-output">
+                <svg class="fc-output-icon" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M13 7l3 3-3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></svg>
+                <div>
+                  <p class="fc-output-text">Strategy Output</p>
+                  <p class="fc-output-sub">Opportunity reports in Postgres, viewable in dashboard.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div><!-- .split-layout -->
+
       <!-- ── TECH STACK ── -->
       <section class="section">
         <p class="section-label">Tech Stack</p>
@@ -764,6 +1121,71 @@ const year = new Date().getFullYear();
       </div>
       <a href="/" class="footer-link">← Back to home</a>
     </footer>
+
+    <script>
+      (() => {
+        /* Pipeline phases on the left drive flowchart stages on the right */
+        const phases = document.querySelectorAll('.pipeline-phase');
+        const stages = document.querySelectorAll('.fc-stage');
+        const output = document.querySelector('.fc-output');
+        if (!phases.length || !stages.length) return;
+
+        let highestRevealed = -1;
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            const idx = Number(entry.target.dataset.phase);
+            if (entry.isIntersecting && idx > highestRevealed) {
+              highestRevealed = idx;
+            }
+          });
+
+          /* Reveal all stages up to the highest visible phase */
+          stages.forEach(s => {
+            const si = Number(s.dataset.stage);
+            if (si <= highestRevealed + 1) {        /* +1 because phases are 0-indexed */
+              s.classList.add('visible');
+            }
+            s.classList.toggle('active', si === highestRevealed + 1);
+          });
+
+          /* Show output (stage 6) once last phase scrolls in */
+          if (highestRevealed >= phases.length - 1) {
+            const outStage = document.querySelector('.fc-stage[data-stage="6"]');
+            if (outStage) outStage.classList.add('visible');
+          }
+        }, {
+          threshold: 0.3,
+          rootMargin: '0px 0px -15% 0px'
+        });
+
+        phases.forEach(p => observer.observe(p));
+
+        /* Reveal stage 1 immediately so the panel isn't empty on load */
+        requestAnimationFrame(() => {
+          if (stages[0]) stages[0].classList.add('visible', 'active');
+          highestRevealed = 0;
+        });
+      })();
+
+      /* ── Theme toggle ── */
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const html = document.documentElement;
+          const current = html.getAttribute('data-theme');
+          let next;
+          if (!current) {
+            next = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'light' : 'dark';
+          } else {
+            next = current === 'dark' ? 'light' : 'dark';
+          }
+          html.setAttribute('data-theme', next);
+          localStorage.setItem('arodeploy-theme', next);
+        });
+      })();
+    </script>
 
   </body>
 </html>
