@@ -1,5 +1,4 @@
 ---
-import { pricing } from '../config/pricing.ts';
 import { products } from '../config/products.ts';
 const year = new Date().getFullYear();
 ---
@@ -12,8 +11,24 @@ const year = new Date().getFullYear();
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <title>AroDeploy — Deployment Infrastructure. Flat Rate. No Surprises.</title>
-    <meta name="description" content="AroDeploy is a full deployment engine with zero-downtime releases, preview environments, and smart builds — hosted on European infrastructure at a flat, predictable monthly rate." />
+    <title>AroDeploy — Deploy from git. Simple pricing.</title>
+    <meta name="description" content="AroDeploy is a deployment platform with zero-downtime releases, preview environments, and smart builds — servers in the US, Europe, and Singapore with transparent, fixed pricing." />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AroDeploy — Deploy from git. Simple pricing." />
+    <meta property="og:description" content="Zero-downtime releases, preview environments, and smart builds — servers in the US, Europe, and Singapore. Plans from €0." />
+    <meta property="og:url" content="https://arodeploy.com" />
+    <meta property="og:site_name" content="AroDeploy" />
+    <meta property="og:image" content="https://arodeploy.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="AroDeploy — Deploy from git. Simple pricing." />
+    <meta name="twitter:description" content="Zero-downtime releases, preview environments, and smart builds — servers in the US, Europe, and Singapore. Plans from €0." />
+    <meta name="twitter:image" content="https://arodeploy.com/og-image.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -31,9 +46,9 @@ const year = new Date().getFullYear();
         --surface-2:       #171717;
         --border:          #1f1f1f;
         --border-strong:   #2e2e2e;
-        --text:            #f0f0f0;
-        --text-secondary:  #888888;
-        --text-muted:      #484848;
+        --text:            #f5f5f5;
+        --text-secondary:  #b0b0b0;
+        --text-muted:      #7a7a7a;
         --nav-bg:          rgba(10, 10, 10, 0.92);
         --btn-hover:       #d0d0d0;
         --savings-bg:      #0d1f0d;
@@ -218,6 +233,24 @@ const year = new Date().getFullYear();
         margin-bottom: 1.5rem;
       }
       .hero h1 span { color: var(--text-secondary); }
+
+      .region-rotate {
+        display: inline-block;
+        position: relative;
+        color: var(--text-secondary);
+        min-width: 6ch;
+        text-align: left;
+      }
+      .region-rotate .region-word {
+        display: inline-block;
+        opacity: 0;
+        transform: translateY(8px);
+        transition: opacity 0.35s ease, transform 0.35s ease;
+      }
+      .region-rotate .region-word.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
 
       .hero-sub {
         font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
@@ -559,6 +592,249 @@ const year = new Date().getFullYear();
         align-self: center;
       }
       .footer-link:hover { color: var(--text-secondary); }
+
+      .footer-links {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        flex-wrap: wrap;
+        align-self: center;
+      }
+
+      /* ── PRICING TIERS ── */
+
+      .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        margin-bottom: 1px;
+      }
+
+      .pricing-card {
+        background: var(--bg);
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .pricing-card.featured { background: var(--surface); }
+
+      .pricing-card-name {
+        font-size: 0.625rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+        margin-bottom: 1.5rem;
+      }
+      .pricing-card.featured .pricing-card-name { color: var(--text); }
+
+      .pricing-card-price {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: clamp(1.75rem, 2.5vw, 2.25rem);
+        font-weight: 500;
+        letter-spacing: -0.04em;
+        line-height: 1;
+        color: var(--text);
+        margin-bottom: 0.25rem;
+      }
+
+      .pricing-card-unit {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        margin-bottom: 1.75rem;
+      }
+
+      .pricing-card-specs {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        border-top: 1px solid var(--border);
+        flex: 1;
+      }
+
+      .pricing-spec {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--border);
+        gap: 0.5rem;
+      }
+      .pricing-spec-label {
+        font-size: 0.775rem;
+        color: var(--text-secondary);
+        flex-shrink: 0;
+      }
+      .pricing-spec-val {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        color: var(--text);
+        text-align: right;
+      }
+
+      .pricing-card-cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        margin-top: 1.75rem;
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        border: 1px solid var(--border-strong);
+        color: var(--text-secondary);
+        background: transparent;
+        cursor: pointer;
+        transition: border-color 0.15s, color 0.15s;
+        text-decoration: none;
+      }
+      .pricing-card-cta:hover { border-color: var(--text-secondary); color: var(--text); }
+      .pricing-card.featured .pricing-card-cta {
+        background: var(--text);
+        border-color: var(--text);
+        color: var(--bg);
+      }
+      .pricing-card.featured .pricing-card-cta:hover { background: var(--btn-hover); }
+
+      .pricing-storage {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.25rem 2rem;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-top: none;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .pricing-storage-left {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+      }
+      .pricing-storage-label {
+        font-size: 0.625rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+      .pricing-storage-desc {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+      }
+      .pricing-storage-val {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.875rem;
+        color: var(--text);
+        white-space: nowrap;
+      }
+
+      .overage-note {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        margin-top: 0.3rem;
+      }
+
+      .how-it-works {
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+        max-width: 680px;
+      }
+      .how-it-works .eyebrow { margin-bottom: 1.25rem; }
+      .how-it-works h3 {
+        font-size: 1.125rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin-bottom: 1rem;
+      }
+      .how-it-works p {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        line-height: 1.75;
+        margin-bottom: 0.75rem;
+      }
+      .how-it-works p:last-child { margin-bottom: 0; }
+      .how-it-works strong { color: var(--text); font-weight: 600; }
+
+      .compare-table-wrap {
+        overflow-x: auto;
+        margin-top: 3rem;
+      }
+      .compare-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid var(--border);
+        min-width: 640px;
+      }
+      .compare-table th,
+      .compare-table td {
+        padding: 0.65rem 1.25rem;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+      }
+      .compare-table thead th {
+        font-size: 0.625rem;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        background: var(--surface);
+      }
+      .compare-table thead th.highlight {
+        background: var(--surface-2);
+        color: var(--text-secondary);
+      }
+      .compare-table td:first-child {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        background: var(--bg);
+      }
+      .compare-table td:not(:first-child) {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.775rem;
+        color: var(--text);
+        background: var(--bg);
+      }
+      .compare-table td.highlight {
+        background: var(--surface);
+      }
+      .compare-table tbody tr:last-child td { border-bottom: none; }
+      .compare-table tbody tr {
+        position: relative;
+        z-index: 0;
+      }
+      .compare-table tbody tr:hover {
+        z-index: 2;
+      }
+      .compare-table td {
+        transition: background 0.15s ease, box-shadow 0.15s ease;
+        position: relative;
+      }
+      .compare-table tbody tr:hover td {
+        background: var(--surface-2);
+        z-index: 2;
+        box-shadow: var(--row-shadow);
+      }
+      .compare-note {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        margin-top: 0.75rem;
+        line-height: 1.5;
+      }
+
+      @media (max-width: 900px) {
+        .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+      }
+      @media (max-width: 560px) {
+        .pricing-grid { grid-template-columns: 1fr; }
+      }
 
       /* ── PLANS & RATES ── */
 
@@ -954,8 +1230,7 @@ const year = new Date().getFullYear();
         <div class="nav-links">
           <a href="#products" class="nav-link">Products</a>
           <a href="#case-studies" class="nav-link">Case Studies</a>
-          <a href="#plans" class="nav-link">Pricing</a>
-          <a href="#compare" class="nav-link">Compare</a>
+          <a href="#pricing" class="nav-link">Pricing</a>
         </div>
       </div>
       <a href="https://console.arodeploy.com" class="nav-cta">
@@ -971,9 +1246,9 @@ const year = new Date().getFullYear();
       <!-- ── HERO ── -->
       <section class="hero">
         <p class="eyebrow">Developer Infrastructure</p>
-        <h1>Git push to production.<br /><span>One flat monthly rate.</span></h1>
+        <h1>Git push. We handle<br />the rest in <span class="region-rotate" id="region-rotate"></span></h1>
         <p class="hero-sub">
-          AroDeploy is a full deployment engine — zero downtime releases, preview environments, smart builds — hosted on European infrastructure at a predictable price.
+          Zero-downtime deploys, Cloudflare CDN, custom domains, and preview environments — all on dedicated servers across five global regions. Plans from&nbsp;€0.
         </p>
         <div class="hero-actions">
           <a href="https://console.arodeploy.com" class="btn-primary">
@@ -982,7 +1257,7 @@ const year = new Date().getFullYear();
               <path d="M2.5 10.5L10.5 2.5M10.5 2.5H4.5M10.5 2.5V8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
             </svg>
           </a>
-          <a href="#plans" class="btn-ghost">See pricing</a>
+          <a href="#pricing" class="btn-ghost">See pricing</a>
         </div>
       </section>
 
@@ -1055,30 +1330,35 @@ const year = new Date().getFullYear();
             <p>AroDeploy manages firewall rules, installs intrusion prevention, and locks down each deployment environment out of the box. You focus on your app — we handle the surface it runs on.</p>
           </div>
 
-        </div>
-      </section>
+          <div class="feature-card">
+            <svg class="feature-icon" viewBox="0 0 34 34" fill="none">
+              <circle cx="17" cy="17" r="11" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M6 17h22M17 6c-3.5 3-5.5 6.5-5.5 11s2 8 5.5 11c3.5-3 5.5-6.5 5.5-11s-2-8-5.5-11z" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+            </svg>
+            <h3>Cloudflare CDN Built In</h3>
+            <p>Every deployment is edge-cached across Cloudflare's global network — 300+ PoPs, automatic cache invalidation on deploy, and DDoS protection included at no extra cost.</p>
+          </div>
 
-      <!-- ── PRODUCTS ── -->
-      <section class="products" id="products">
-        <div class="section-header">
-          <p class="eyebrow">Products</p>
-          <h2>The full platform, in detail.</h2>
-        </div>
-        <div class="products-grid">
-          {products.map((product, i) => (
-            <a href={`/products/${product.slug}`} class="product-card">
-              <span class="product-card-num">{String(i + 1).padStart(2, '0')}</span>
-              <svg class="product-card-icon" viewBox="0 0 34 34" fill="none" set:html={product.iconPaths} />
-              <h3>{product.name}</h3>
-              <p>{product.tagline}</p>
-              <span class="product-card-link">
-                Explore
-                <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                  <path d="M2 9L9 2M9 2H4M9 2v5" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"/>
-                </svg>
-              </span>
-            </a>
-          ))}
+          <div class="feature-card">
+            <svg class="feature-icon" viewBox="0 0 34 34" fill="none">
+              <path d="M5 10h24M5 17h18M5 24h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+              <circle cx="27" cy="22" r="5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M25 22h4M27 20v4" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"/>
+            </svg>
+            <h3>Custom Domains, One Click</h3>
+            <p>Point your domain, and AroDeploy provisions TLS certificates automatically. Wildcard support for preview deployments means every branch gets its own HTTPS subdomain.</p>
+          </div>
+
+          <div class="feature-card">
+            <svg class="feature-icon" viewBox="0 0 34 34" fill="none">
+              <rect x="4" y="10" width="26" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M10 16h4v4h-4zM16 16h4v4h-4zM22 16h4v4h-4z" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"/>
+              <path d="M9 10V7h6v3M19 10V7h6v3" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"/>
+            </svg>
+            <h3>GPU Compute Add-On</h3>
+            <p>Run inference or fine-tuning on dedicated NVIDIA GPUs. Add a GPU instance to any project — AroDeploy handles drivers, containers, and health monitoring. No Kubernetes required.</p>
+          </div>
+
         </div>
       </section>
 
@@ -1105,205 +1385,325 @@ const year = new Date().getFullYear();
         </div>
       </section>
 
-      <!-- ── PLANS & RATES ── -->
-      <section class="plans" id="plans">
+      <!-- ── PRICING ── -->
+      <section class="plans" id="pricing">
         <div class="section-header">
-          <p class="eyebrow">Plans &amp; Rates</p>
-          <h2>Everything on the table.</h2>
+          <p class="eyebrow">Pricing</p>
+          <h2>Pick a plan. No surprises.</h2>
+          <p class="section-sub" style="color:var(--text-secondary);font-size:0.9375rem;margin-top:0.75rem;">All paid plans are billed upfront — monthly or annually. No metered surprises at the end of the month.</p>
         </div>
 
-        <!-- Plan header cards -->
-        <div class="plan-header-cards">
+        <div class="pricing-grid">
 
-          <div class="plan-header-card">
-            <p class="plan-card-name">Trial</p>
-            <p class="plan-card-price">$0</p>
-            <p class="plan-card-unit">for 30 days, then Pro or cancel</p>
-            <p class="plan-card-feature"><span class="plan-check">✓</span> {pricing.plans.free.projects} project</p>
-            <p class="plan-card-feature"><span class="plan-check">✓</span> Single user</p>
-            <p class="plan-card-feature"><span class="plan-check">✓</span> {pricing.plans.free.bandwidthIncludedGb} GB bandwidth / month</p>
-            <p class="plan-card-feature"><span class="plan-check">✓</span> Preview deployments</p>
+          <!-- Free trial -->
+          <div class="pricing-card">
+            <p class="pricing-card-name">Free Trial</p>
+            <p class="pricing-card-price">&euro;0</p>
+            <p class="pricing-card-unit">for 30 days, no credit card required</p>
+            <div class="pricing-card-specs">
+              <div class="pricing-spec">
+                <span class="pricing-spec-label">vCPU</span>
+                <span class="pricing-spec-val">2 cores</span>
+              </div>
+              <div class="pricing-spec">
+                <span class="pricing-spec-label">RAM</span>
+                <span class="pricing-spec-val">4 GB</span>
+              </div>
+              <div class="pricing-spec">
+                <span class="pricing-spec-label">Storage</span>
+                <span class="pricing-spec-val">&mdash;</span>
+              </div>
+              <div class="pricing-spec">
+                <span class="pricing-spec-label">Traffic</span>
+                <span class="pricing-spec-val">Unlimited</span>
+              </div>
+              <div class="pricing-spec">
+                <span class="pricing-spec-label">Ingress / Egress</span>
+                <span class="pricing-spec-val">Free</span>
+              </div>
+            </div>
+            <a href="https://console.arodeploy.com" class="pricing-card-cta">Start free</a>
           </div>
 
-          <div class="plan-header-card featured">
-            <p class="plan-card-name">Pro</p>
-            <p class="plan-card-price">&euro;10</p>
-            <p class="plan-card-unit">per seat / month</p>
-            <p class="plan-card-feature"><span class="plan-check">✓</span> Unlimited projects</p>
-            <p class="plan-card-feature"><span class="plan-check">✓</span> Teams &amp; collaboration</p>
-            <p class="plan-card-feature"><span class="plan-check">✓</span> 10 TB bandwidth / month</p>
-            <p class="plan-card-feature"><span class="plan-check">✓</span> Persistent volume storage</p>
+          <!-- Starter -->
+          <div class="pricing-card featured">
+            <p class="pricing-card-name">Starter</p>
+            <p class="pricing-card-price">&euro;30</p>
+            <p class="pricing-card-unit">per month, billed upfront</p>
+            <div class="pricing-card-specs">
+              <div class="pricing-spec">
+                <span class="pricing-spec-label">vCPU</span>
+                <span class="pricing-spec-val">4 cores</span>
+              </div>
+              <div class="pricing-spec">
+                <span class="pricing-spec-label">RAM</span>
+                <span class="pricing-spec-val">8 GB</span>
+              </div>
+              <div class="pricing-spec">
+                <span class="pricing-spec-label">SSD</span>
+                <span class="pricing-spec-val">160 GB</span>
+              </div>
+              <div class="pricing-spec">
+                <span class="pricing-spec-label">Traffic included</span>
+                <span class="pricing-spec-val">1 TB</span>
+              </div>
+              <div class="pricing-spec">
+                <span class="pricing-spec-label">Ingress / Egress</span>
+                <span class="pricing-spec-val">Free</span>
+              </div>
+            </div>
+            <a href="https://console.arodeploy.com" class="pricing-card-cta">Get started</a>
+          </div>
+
+          <!-- Growth -->
+          <div class="pricing-card">
+            <p class="pricing-card-name">Growth</p>
+            <p class="pricing-card-price">&euro;60</p>
+            <p class="pricing-card-unit">per month, billed upfront</p>
+            <div class="pricing-card-specs">
+              <div class="pricing-spec">
+                <span class="pricing-spec-label">vCPU</span>
+                <span class="pricing-spec-val">8 cores</span>
+              </div>
+              <div class="pricing-spec">
+                <span class="pricing-spec-label">RAM</span>
+                <span class="pricing-spec-val">16 GB</span>
+              </div>
+              <div class="pricing-spec">
+                <span class="pricing-spec-label">SSD</span>
+                <span class="pricing-spec-val">320 GB</span>
+              </div>
+              <div class="pricing-spec">
+                <span class="pricing-spec-label">Traffic included</span>
+                <span class="pricing-spec-val">5 TB</span>
+              </div>
+              <div class="pricing-spec">
+                <span class="pricing-spec-label">Overage</span>
+                <span class="pricing-spec-val">&euro;2 / TB</span>
+              </div>
+            </div>
+            <a href="https://console.arodeploy.com" class="pricing-card-cta">Get started</a>
+          </div>
+
+          <!-- Custom -->
+          <div class="pricing-card">
+            <p class="pricing-card-name">Custom</p>
+            <p class="pricing-card-price">Custom</p>
+            <p class="pricing-card-unit">dedicated Hetzner hardware</p>
+            <div class="pricing-card-specs">
+              <div class="pricing-spec">
+                <span class="pricing-spec-label">Server</span>
+                <span class="pricing-spec-val">Your choice</span>
+              </div>
+              <div class="pricing-spec">
+                <span class="pricing-spec-label">Config</span>
+                <span class="pricing-spec-val">Fully managed</span>
+              </div>
+              <div class="pricing-spec">
+                <span class="pricing-spec-label">Traffic</span>
+                <span class="pricing-spec-val">As allocated</span>
+              </div>
+              <div class="pricing-spec">
+                <span class="pricing-spec-label">Support</span>
+                <span class="pricing-spec-val">Priority</span>
+              </div>
+              <div class="pricing-spec">
+                <span class="pricing-spec-label">Setup</span>
+                <span class="pricing-spec-val">We handle it</span>
+              </div>
+            </div>
+            <a href="mailto:hello@arodeploy.com" class="pricing-card-cta">Contact us</a>
           </div>
 
         </div>
 
-        <!-- Compute pricing -->
-        <p class="rates-block-label">Compute pricing</p>
-        <div class="rates-grid">
-          <div class="rates-row">
-            <div class="rate-label">vCPU</div>
-            <div class="rate-val">$0.0045 / hr</div>
-          </div>
-          <div class="rates-row">
-            <div class="rate-label">RAM</div>
-            <div class="rate-val">$0.0012 / GB / hr</div>
-          </div>
-          <div class="rates-row">
-            <div class="rate-label">Persistent storage</div>
-            <div class="rate-val">$0.10 / GB / month</div>
-          </div>
-          <div class="rates-row">
-            <div class="rate-label">Outbound bandwidth</div>
-            <div class="rate-val">$0.01 / GB</div>
-          </div>
-          <div class="rates-row">
-            <div class="rate-label">GPU vCPU <span class="rate-tag">coming soon</span></div>
-            <div class="rate-val">$0.08 / hr</div>
-          </div>
-          <div class="rates-row">
-            <div class="rate-label">GPU VRAM <span class="rate-tag">coming soon</span></div>
-            <div class="rate-val">$0.02 / GB / hr</div>
-          </div>
-        </div>
-        <div class="compute-examples">
-          <div class="compute-example">
-            <span class="compute-example-label">Small container &mdash; 0.25 vCPU, 512 MB RAM</span>
-            <span class="compute-example-val">$0.0017/hr &asymp; $1.24/month</span>
-          </div>
-          <div class="compute-example">
-            <span class="compute-example-label">Beefier container &mdash; 1 vCPU, 2 GB RAM</span>
-            <span class="compute-example-val">$0.0069/hr &asymp; $5.00/month</span>
-          </div>
+        <!-- How it works -->
+        <div class="how-it-works">
+          <p class="eyebrow">How It Works</p>
+          <h3>One plan = one server instance in your project.</h3>
+          <p>
+            Every plan gives you a <strong>dedicated server instance</strong> inside a project.
+            Need to run your API, a background worker, and a database? Add more instances to the same project — each one gets its own container on your hardware.
+          </p>
+          <p>
+            <strong>Managed services — €4 / month each.</strong>
+            Spin up Postgres, Redis, Meilisearch, or any supported open-source database as a managed service running on your already-purchased hardware. No extra server cost — just €4/mo per managed service to cover orchestration, health checks, and auto-restarts.
+          </p>
+          <p>
+            <strong>GPU compute — from €199 / month.</strong>
+            Need inference or fine-tuning? Add a dedicated NVIDIA GPU instance (RTX 4000 SFF Ada, 20 GB VRAM) to any project. AroDeploy manages CUDA drivers, container runtime, and health monitoring. No Kubernetes, no DevOps — just push your model code.
+          </p>
+          <p>
+            There is no "Pro" gate. Every feature — zero-downtime deploys, preview environments, smart builds, private networking — is available on every plan. You are paying for compute, not for feature flags.
+          </p>
+          <p>
+            Under the hood, AroDeploy manages the entire Docker image pipeline for you: builds, registry, rollouts, health checks, rollbacks. You push code, we handle the rest.
+          </p>
+          <p>
+            <strong>Billing is simple: pay upfront, use all month.</strong>
+            Every paid plan is charged at the start of the billing cycle. No metered usage, no surprise invoices, no overages on compute. You know exactly what you're paying before you deploy.
+          </p>
         </div>
 
-        <!-- Resource rates -->
-        <p class="rates-block-label">Resource rates</p>
-        <div class="rates-grid">
-          <div class="rates-row">
-            <div class="rate-label">vCPU</div>
-            <div class="rate-val">${pricing.aro.cpuRate} / vCPU / month</div>
+        <!-- Object storage -->
+        <div class="pricing-storage">
+          <div class="pricing-storage-left">
+            <span class="pricing-storage-label">Object Storage</span>
+            <span class="pricing-storage-desc">S3-compatible blob storage for backups, assets, and model weights. Available on all plans.</span>
           </div>
-          <div class="rates-row">
-            <div class="rate-label">Memory</div>
-            <div class="rate-val">${pricing.aro.ramRate} / GB / month</div>
-          </div>
-          <div class="rates-row">
-            <div class="rate-label">Bandwidth overage &mdash; Trial</div>
-            <div class="rate-val">&euro;10 / TB &nbsp;&nbsp; after {pricing.plans.free.bandwidthIncludedGb} GB</div>
-          </div>
-          <div class="rates-row">
-            <div class="rate-label">Bandwidth overage &mdash; Pro</div>
-            <div class="rate-val">&euro;10 / TB &nbsp;&nbsp; after 10 TB</div>
-          </div>
-          <div class="rates-row">
-            <div class="rate-label">Pro license</div>
-            <div class="rate-val">&euro;10 / seat / month</div>
-          </div>
+          <span class="pricing-storage-val">&euro;0.015 / GB / month</span>
         </div>
 
-        <!-- Limits table -->
-        <p class="rates-block-label">Resources &amp; limits</p>
-        <div class="limits-table-wrap">
-          <table class="limits-table">
+        <!-- GPU compute -->
+        <div class="pricing-storage" style="border-top: none;">
+          <div class="pricing-storage-left">
+            <span class="pricing-storage-label">GPU Compute</span>
+            <span class="pricing-storage-desc">Dedicated NVIDIA GPU instance &mdash; RTX 4000 SFF Ada, 20 GB VRAM. Fully managed, add to any project.</span>
+          </div>
+          <span class="pricing-storage-val">from &euro;199 / month</span>
+        </div>
+
+        <!-- Comparison -->
+        <div class="compare-table-wrap">
+          <p class="eyebrow" style="margin-bottom:1.25rem; margin-top:3rem;">How we compare</p>
+          <table class="compare-table">
             <thead>
               <tr>
                 <th></th>
-                <th>Trial</th>
-                <th>Pro</th>
+                <th class="highlight">AroDeploy Starter</th>
+                <th>Railway</th>
+                <th>Render</th>
+                <th>Fly.io</th>
+                <th>DigitalOcean</th>
+                <th>Heroku</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Projects</td>
-                <td>{pricing.plans.free.projects}</td>
-                <td><span class="lim-check">&infin;</span></td>
+                <td>Comparable plan</td>
+                <td class="highlight">&euro;30 / mo</td>
+                <td>~$50&ndash;70 / mo</td>
+                <td>~$85 / mo</td>
+                <td>~$45&ndash;60 / mo</td>
+                <td>~$48 / mo</td>
+                <td>~$100+ / mo</td>
               </tr>
               <tr>
-                <td>Services per project</td>
-                <td>{pricing.plans.free.servicesPerProject}</td>
-                <td>{pricing.plans.pro.servicesPerProject}</td>
+                <td>vCPU</td>
+                <td class="highlight">4 cores</td>
+                <td>2</td>
+                <td>2</td>
+                <td>2</td>
+                <td>2</td>
+                <td>2</td>
               </tr>
               <tr>
-                <td>CPU per service</td>
-                <td>{pricing.plans.free.maxVcpuPerService} vCPU</td>
-                <td>{pricing.plans.pro.maxVcpuPerService} vCPU</td>
+                <td>RAM</td>
+                <td class="highlight">8 GB</td>
+                <td>8 GB</td>
+                <td>4 GB</td>
+                <td>4 GB</td>
+                <td>4 GB</td>
+                <td>4 GB</td>
               </tr>
               <tr>
-                <td>RAM per service</td>
-                <td>{pricing.plans.free.maxRamGbPerService} GB</td>
-                <td>{pricing.plans.pro.maxRamGbPerService} GB</td>
+                <td>SSD</td>
+                <td class="highlight">160 GB</td>
+                <td>10 GB *</td>
+                <td>25 GB *</td>
+                <td>3 GB *</td>
+                <td>80 GB</td>
+                <td>0 *</td>
               </tr>
               <tr>
-                <td>Ephemeral disk</td>
-                <td>{pricing.plans.free.ephemeralDiskGb} GB</td>
-                <td>{pricing.plans.pro.ephemeralDiskGb} GB</td>
+                <td>Bandwidth</td>
+                <td class="highlight">1 TB incl</td>
+                <td>Metered</td>
+                <td>100 GB</td>
+                <td>Metered</td>
+                <td>4 TB</td>
+                <td>Metered</td>
               </tr>
               <tr>
-                <td>Persistent volumes</td>
-                <td><span class="lim-dash">&mdash;</span></td>
-                <td><span class="lim-check">&#10003;</span></td>
+                <td>Managed DB add-on</td>
+                <td class="highlight">&euro;4 / svc</td>
+                <td>Compute cost</td>
+                <td>$7+ / svc</td>
+                <td>Compute cost</td>
+                <td>$15+ / db</td>
+                <td>$5+ / db</td>
               </tr>
               <tr>
-                <td>Team members</td>
-                <td>1</td>
-                <td><span class="lim-check">&infin;</span></td>
+                <td>Zero-downtime deploy</td>
+                <td class="highlight">Included</td>
+                <td>Included</td>
+                <td>Pro only</td>
+                <td>Included</td>
+                <td>Included</td>
+                <td>Included</td>
               </tr>
               <tr>
-                <td>Custom domains</td>
-                <td>{pricing.plans.free.customDomains}</td>
-                <td><span class="lim-check">&infin;</span></td>
+                <td>Preview environments</td>
+                <td class="highlight">Included</td>
+                <td>PR deploys</td>
+                <td>Pro only</td>
+                <td>Manual</td>
+                <td>App Spec</td>
+                <td>Pipelines</td>
               </tr>
               <tr>
-                <td>Cron jobs per project</td>
-                <td>{pricing.plans.free.cronJobsPerProject}</td>
-                <td>{pricing.plans.pro.cronJobsPerProject}</td>
+                <td>GPU add-on</td>
+                <td class="highlight">&euro;199 / mo</td>
+                <td>&mdash;</td>
+                <td>&mdash;</td>
+                <td>$2.50/hr+</td>
+                <td>$2,500+ / mo</td>
+                <td>&mdash;</td>
               </tr>
               <tr>
-                <td>Bandwidth included</td>
-                <td>{pricing.plans.free.bandwidthIncludedGb} GB / month</td>
-                <td>10 TB / month</td>
-              </tr>
-              <tr>
-                <td>Preview deployments</td>
-                <td><span class="lim-check">&#10003;</span></td>
-                <td><span class="lim-check">&#10003;</span></td>
-              </tr>
-              <tr>
-                <td>Zero-downtime deploys</td>
-                <td><span class="lim-check">&#10003;</span></td>
-                <td><span class="lim-check">&#10003;</span></td>
-              </tr>
-              <tr>
-                <td>Database add-ons</td>
-                <td><span class="lim-dash">&mdash;</span></td>
-                <td><span class="lim-check">&#10003;</span></td>
-              </tr>
-              <tr>
-                <td>Security hardening</td>
-                <td><span class="lim-check">&#10003;</span></td>
-                <td><span class="lim-check">&#10003;</span></td>
+                <td>Infrastructure</td>
+                <td class="highlight">US / EU / SG</td>
+                <td>US / EU</td>
+                <td>US / EU</td>
+                <td>Global</td>
+                <td>Global</td>
+                <td>US / EU</td>
               </tr>
             </tbody>
           </table>
+          <p class="compare-note">* Additional storage costs extra on those platforms. Prices are approximate and based on publicly available pricing pages as of March 2026. Actual costs depend on usage patterns.</p>
         </div>
+
       </section>
 
-      <!-- ── MISSION ── -->
-      <section class="mission">
-        <p class="eyebrow">Our Mission</p>
-        <p class="mission-statement">
-          We built AroDeploy because infrastructure had become a source of <strong>anxiety rather than leverage.</strong>
-          Surprise invoices. Usage-based models that compound in ways you can't predict. Config that feels like gambling.
-          <br /><br />
-          The goal is simple: make deployment feel like <strong>engineering again.</strong>
-          Flat pricing. Transparent internals. Tools that trust you to be an architect.
-        </p>
+      <!-- ── PRODUCTS ── -->
+      <section class="products" id="products">
+        <div class="section-header">
+          <p class="eyebrow">Products</p>
+          <h2>The full platform, in detail.</h2>
+        </div>
+        <div class="products-grid">
+          {products.map((product, i) => (
+            <a href={`/products/${product.slug}`} class="product-card">
+              <span class="product-card-num">{String(i + 1).padStart(2, '0')}</span>
+              <svg class="product-card-icon" viewBox="0 0 34 34" fill="none" set:html={product.iconPaths} />
+              <h3>{product.name}</h3>
+              <p>{product.tagline}</p>
+              <span class="product-card-link">
+                Explore
+                <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                  <path d="M2 9L9 2M9 2H4M9 2v5" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"/>
+                </svg>
+              </span>
+            </a>
+          ))}
+        </div>
       </section>
 
       <!-- ── FINAL CTA ── -->
       <section class="cta-band">
-        <h2>Ready to stop guessing your bill?</h2>
-        <p>30-day free trial. No credit card lock-in, no hidden tiers.</p>
+        <h2>Ready to ship?</h2>
+        <p>30-day free trial. No credit card required.</p>
         <a href="https://console.arodeploy.com" class="btn-primary">
           Open the Console
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
@@ -1321,121 +1721,37 @@ const year = new Date().getFullYear();
             <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.25"/>
             <path d="M7 3v4l2.5 2" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"/>
           </svg>
-          Built on European infrastructure &mdash; GDPR-compliant by default. Your data stays in Europe.
+          Servers in the US (East &amp; West), Germany, Finland, and Singapore. GDPR-compliant EU regions available.
         </div>
         <span class="footer-copy">&copy; {year} AroDeploy. All rights reserved.</span>
       </div>
-      <a href="https://console.arodeploy.com" class="footer-link">console.arodeploy.com</a>
+      <div class="footer-links">
+        <a href="/privacy" class="footer-link">Privacy</a>
+        <a href="https://docs.arodeploy.com" class="footer-link">Docs</a>
+        <a href="https://status.arodeploy.com" class="footer-link">Status</a>
+        <a href="https://console.arodeploy.com" class="footer-link">Console</a>
+      </div>
     </footer>
 
-    <script define:vars={{ pricing }}>
-      (function () {
-        const vcpuEl  = document.getElementById('vcpu');
-        const ramEl   = document.getElementById('ram');
-        const bwEl    = document.getElementById('bw');
-        const seatsEl = document.getElementById('seats');
+    <script>
+      (() => {
+        const regions = ['US East', 'US West', 'Germany', 'Finland', 'Singapore'];
+        const el = document.getElementById('region-rotate');
+        if (!el) return;
+        let idx = 0;
+        const span = document.createElement('span');
+        span.className = 'region-word active';
+        span.textContent = regions[0];
+        el.appendChild(span);
 
-        const aro = pricing.aro;
-        const rw  = pricing.railway;
-        const vc  = pricing.vercel;
-        let aroTier = 'pro';
-
-        function calcAroCompute(v, r) {
-          return aro.baseFee + v * aro.cpuRate + r * aro.ramRate;
-        }
-        function calcRailwayCompute(v, r) {
-          return rw.baseFee + v * rw.cpuMonthlyRate + r * rw.ramMonthlyRate;
-        }
-        function calcVercelCompute(v, r) {
-          const gbHr = v * r * vc.hoursPerMonth * vc.avgUtilization;
-          const extra = Math.max(0, gbHr - vc.includedGbHr) * vc.overageRate;
-          return vc.basePlan + extra;
-        }
-        function calcBw(bw, includedGb, overageRate) {
-          return Math.max(0, bw - includedGb) * overageRate;
-        }
-
-        function fmt(n)  { return Math.round(n).toLocaleString('en-US'); }
-        function fmtd(n) { return '$' + fmt(n); }
-
-        function update() {
-          const v     = parseInt(vcpuEl.value,  10);
-          const r     = parseInt(ramEl.value,   10);
-          const bw    = parseInt(bwEl.value,    10);
-          const seats = parseInt(seatsEl.value, 10);
-
-          document.getElementById('vcpu-val').textContent  = v + ' vCPU';
-          document.getElementById('ram-val').textContent   = r + ' GB';
-          document.getElementById('bw-val').textContent    = bw.toLocaleString('en-US') + ' GB';
-          document.getElementById('seats-val').textContent = seats + (seats === 1 ? ' seat — Pro' : ' seats — Pro');
-
-          // Vercel
-          const vcBw    = calcBw(bw, vc.bandwidthIncludedGb, vc.bandwidthOverageRate);
-          const vcTotal = calcVercelCompute(v, r) + vcBw;
-          const vcCompute = Math.max(0, (v * r * vc.hoursPerMonth * vc.avgUtilization - vc.includedGbHr) * vc.overageRate);
-          document.getElementById('vc-total').textContent      = fmt(vcTotal);
-          document.getElementById('vc-compute').textContent    = fmtd(vcCompute);
-          document.getElementById('vc-bw-label').textContent   = bw.toLocaleString('en-US');
-          document.getElementById('vc-bw').textContent         = vcBw > 0 ? fmtd(vcBw) : 'Incl.';
-
-          // Railway
-          const rwBw    = calcBw(bw, rw.bandwidthIncludedGb, rw.bandwidthOverageRate);
-          const rwTotal = calcRailwayCompute(v, r) + rwBw;
-          document.getElementById('rw-total').textContent      = fmt(rwTotal);
-          document.getElementById('rw-vcpu-label').textContent = v;
-          document.getElementById('rw-ram-label').textContent  = r;
-          document.getElementById('rw-cpu').textContent        = fmtd(v * rw.cpuMonthlyRate);
-          document.getElementById('rw-ram').textContent        = fmtd(r * rw.ramMonthlyRate);
-          document.getElementById('rw-bw-label').textContent   = bw.toLocaleString('en-US');
-          document.getElementById('rw-bw').textContent         = rwBw > 0 ? fmtd(rwBw) : 'Incl.';
-
-          // AroDeploy
-          const aroBwCfg = aro.bandwidth[aroTier];
-          const aroBw    = calcBw(bw, aroBwCfg.includedGb, aroBwCfg.overageRate);
-          const aroSeats = aroTier === 'pro' ? seats * aro.seatRate : 0;
-          const aroTotal = calcAroCompute(v, r) + aroBw + aroSeats;
-          document.getElementById('aro-total').textContent       = fmt(aroTotal);
-          document.getElementById('aro-vcpu-label').textContent  = v;
-          document.getElementById('aro-ram-label').textContent   = r;
-          document.getElementById('aro-cpu').textContent         = fmtd(v * aro.cpuRate);
-          document.getElementById('aro-ram-cost').textContent    = fmtd(r * aro.ramRate);
-          document.getElementById('aro-bw-label').textContent    = bw.toLocaleString('en-US');
-          document.getElementById('aro-bw').textContent          = aroBw > 0 ? fmtd(aroBw) : 'Incl.';
-          document.getElementById('aro-seats-label').textContent = seats;
-          document.getElementById('aro-seats-cost').textContent  = aroTier === 'pro' ? fmtd(aroSeats) : 'N/A';
-
-          // Savings vs Railway
-          const savingsPct = Math.round((1 - aroTotal / rwTotal) * 100);
-          const savingsYr  = Math.round((rwTotal - aroTotal) * 12);
-          document.getElementById('savings-pct').textContent = savingsPct + '%';
-          document.getElementById('savings-yr').textContent  = fmtd(savingsYr) + '/yr';
-        }
-
-        vcpuEl.addEventListener('input', update);
-        ramEl.addEventListener('input', update);
-        bwEl.addEventListener('input', update);
-        seatsEl.addEventListener('input', update);
-
-        document.getElementById('tier-free').addEventListener('click', function () {
-          aroTier = 'free';
-          document.getElementById('tier-free').classList.add('active');
-          document.getElementById('tier-pro').classList.remove('active');
-          document.getElementById('aro-tier-label').textContent  = 'Trial';
-          document.getElementById('seats-group').style.display   = 'none';
-          document.getElementById('aro-seats-row').style.display = 'none';
-          update();
-        });
-        document.getElementById('tier-pro').addEventListener('click', function () {
-          aroTier = 'pro';
-          document.getElementById('tier-pro').classList.add('active');
-          document.getElementById('tier-free').classList.remove('active');
-          document.getElementById('aro-tier-label').textContent  = 'Pro';
-          document.getElementById('seats-group').style.display   = '';
-          document.getElementById('aro-seats-row').style.display = '';
-          update();
-        });
-
-        update();
+        setInterval(() => {
+          span.classList.remove('active');
+          setTimeout(() => {
+            idx = (idx + 1) % regions.length;
+            span.textContent = regions[idx];
+            span.classList.add('active');
+          }, 350);
+        }, 2400);
       })();
     </script>
 
