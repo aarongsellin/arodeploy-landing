@@ -1,6 +1,7 @@
 ---
 import { products } from '../config/products.ts';
 import { links } from '../config/links.ts';
+import { pricing } from '../config/pricing.ts';
 const year = new Date().getFullYear();
 ---
 
@@ -659,7 +660,7 @@ const year = new Date().getFullYear();
 
       .pricing-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 1px;
         background: var(--border);
         border: 1px solid var(--border);
@@ -753,6 +754,231 @@ const year = new Date().getFullYear();
         color: var(--bg);
       }
       .pricing-card.featured .pricing-card-cta:hover { background: var(--btn-hover); }
+
+      /* ── CUSTOM TIER CALCULATOR ── */
+
+      .custom-tier {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        background: var(--bg);
+        padding: 2rem;
+      }
+
+      .custom-tier-header {
+        margin-bottom: 2rem;
+      }
+
+      .custom-tier h3 {
+        font-size: 0.625rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+        margin-bottom: 1.5rem;
+      }
+
+      .custom-tier-desc {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        margin-bottom: 1.75rem;
+        line-height: 1.6;
+      }
+
+      .calculator-section {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .calc-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .calc-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+
+      .calc-server-select {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 0.5rem;
+      }
+
+      .calc-server-btn {
+        padding: 0.75rem 1rem;
+        background: var(--bg);
+        border: 1px solid var(--border-strong);
+        color: var(--text-secondary);
+        cursor: pointer;
+        font-size: 0.75rem;
+        font-weight: 500;
+        transition: all 0.15s;
+      }
+      .calc-server-btn:hover {
+        border-color: var(--text-secondary);
+        color: var(--text);
+      }
+      .calc-server-btn.selected {
+        background: var(--text);
+        border-color: var(--text);
+        color: var(--bg);
+      }
+
+      .calc-server-specs {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        margin-top: 0.3rem;
+      }
+
+      .calc-slider-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .calc-slider-label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .calc-slider-label-text {
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+      }
+
+      .calc-slider-value {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      .calc-slider {
+        width: 100%;
+        height: 2px;
+        background: var(--border-strong);
+        border-radius: 1px;
+        outline: none;
+        -webkit-appearance: none;
+        appearance: none;
+      }
+      .calc-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: var(--text);
+        cursor: pointer;
+      }
+      .calc-slider::-moz-range-thumb {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: var(--text);
+        border: none;
+        cursor: pointer;
+      }
+
+      .calc-summary {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1.25rem 0;
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        margin: 1.5rem 0;
+      }
+
+      .calc-summary-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        font-size: 0.8rem;
+      }
+
+      .calc-summary-label {
+        color: var(--text-muted);
+      }
+
+      .calc-summary-value {
+        font-family: 'JetBrains Mono', monospace;
+        color: var(--text);
+        font-weight: 500;
+      }
+
+      .calc-data-tier-notice {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        padding: 0.75rem 1rem;
+        background: var(--bg);
+        border: 1px solid var(--border);
+      }
+
+      .calc-data-tier-notice-title {
+        font-weight: 600;
+        color: var(--text-secondary);
+      }
+
+      .calc-total-price {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.3rem;
+        margin-top: 1rem;
+      }
+
+      .calc-total-label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        letter-spacing: 0.08em;
+      }
+
+      .calc-total-amount {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--text);
+        letter-spacing: -0.04em;
+      }
+
+      .calc-monthly-unit {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+      }
+
+      .custom-tier-cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        margin-top: 1.75rem;
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        border: 1px solid var(--text);
+        color: var(--bg);
+        background: var(--text);
+        cursor: pointer;
+        transition: background 0.15s;
+        text-decoration: none;
+        align-self: flex-start;
+      }
+      .custom-tier-cta:hover { background: var(--btn-hover); color: var(--bg); }
 
       .pricing-storage {
         display: flex;
@@ -1263,6 +1489,12 @@ const year = new Date().getFullYear();
         .comparison-controls {
           grid-template-columns: 1fr;
         }
+        .pricing-grid {
+          grid-template-columns: 1fr;
+        }
+        .calc-server-select {
+          grid-template-columns: 1fr;
+        }
       }
 
       @media (max-width: 640px) {
@@ -1273,6 +1505,13 @@ const year = new Date().getFullYear();
         footer { grid-template-columns: 1fr; }
         .plan-header-cards { grid-template-columns: 1fr; }
         .rates-row { grid-template-columns: 1fr; }
+        .calc-summary-row {
+          flex-direction: column;
+          gap: 0.3rem;
+        }
+        .calc-total-price {
+          align-items: flex-end;
+        }
       }
     </style>
   </head>
@@ -1553,15 +1792,90 @@ const year = new Date().getFullYear();
             <a href={links.console} class="pricing-card-cta">Get started</a>
           </div>
 
-          <!-- Custom -->
-          <div class="pricing-card">
-            <p class="pricing-card-name">Custom</p>
-            <p class="pricing-card-price">Custom</p>
-            <div class="pricing-card-specs">
-            </div>
-            <a href="mailto:hello@arodeploy.com" class="pricing-card-cta">Calculate your Needs</a>
-          </div>
+        </div>
 
+        <!-- Custom Tier Calculator -->
+        <div style="background: var(--border); border: 1px solid var(--border); border-top: none;">
+          <div class="custom-tier">
+            <div class="custom-tier-header">
+              <h3>Custom Tier</h3>
+              <p class="custom-tier-desc">Build your own solution with real Hetzner servers and transparent pricing.</p>
+            </div>
+
+            <div class="calculator-section" id="calculator">
+              <!-- Server Selection -->
+              <div class="calc-group">
+                <label class="calc-label">Choose your server instance</label>
+                <div class="calc-server-select" id="serverSelect">
+                  {pricing.hetznerServers.map((server) => (
+                    <button 
+                      class={`calc-server-btn ${server.name === 'CPX31' ? 'selected' : ''}`}
+                      data-server-id={server.name}
+                      data-vcpu={server.vcpu}
+                      data-ram={server.ram}
+                      data-ssd={server.ssd}
+                      data-monthly-eur={server.monthlyEur}
+                    >
+                      <div>{server.name}</div>
+                      <div class="calc-server-specs">{server.vcpu} vCPU, {server.ram}GB RAM, {server.ssd}GB SSD</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <!-- Data Storage -->
+              <div class="calc-group">
+                <label class="calc-label">Additional data storage (beyond 20TB included)</label>
+                <div class="calc-slider-group">
+                  <div class="calc-slider-label">
+                    <span class="calc-slider-label-text">Data storage</span>
+                    <span class="calc-slider-value"><span id="dataAmount">0</span> TB</span>
+                  </div>
+                  <input 
+                    type="range" 
+                    min="0" 
+                    max="50" 
+                    step="1" 
+                    value="0" 
+                    class="calc-slider" 
+                    id="dataSlider"
+                  />
+                  <div class="calc-data-tier-notice">
+                    <div class="calc-data-tier-notice-title">Pricing tiers:</div>
+                    <div>0–15 TB: €0/month (included)</div>
+                    <div>15–30 TB: €2/month per TB overage</div>
+                    <div>30+ TB: €1.50/month per TB overage</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Price Summary -->
+              <div class="calc-summary">
+                <div class="calc-summary-row">
+                  <span class="calc-summary-label">Server base price (Hetzner)</span>
+                  <span class="calc-summary-value">€<span id="basePriceDisplay">23.99</span>/mo</span>
+                </div>
+                <div class="calc-summary-row">
+                  <span class="calc-summary-label">Data overage fee</span>
+                  <span class="calc-summary-value">€<span id="dataFeeDisplay">0.00</span>/mo</span>
+                </div>
+                <div class="calc-summary-row" style="border-top: 1px solid var(--border); padding-top: 0.75rem; margin-top: 0.75rem;">
+                  <span class="calc-summary-label" style="font-weight: 600;">Total monthly cost</span>
+                  <div class="calc-total-price" style="align-items: flex-start;">
+                    <span class="calc-total-label">per month</span>
+                    <span class="calc-total-amount">€<span id="totalPrice">23.99</span></span>
+                  </div>
+                </div>
+              </div>
+
+              <button class="custom-tier-cta" onclick="document.location.href='mailto:hello@arodeploy.com?subject=Custom%20Tier%20Inquiry'">
+                Request custom pricing
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"/>
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
 
         <!-- How it works -->
@@ -1814,6 +2128,94 @@ const year = new Date().getFullYear();
           html.setAttribute('data-theme', next);
           localStorage.setItem('arodeploy-theme', next);
         });
+      })();
+
+      /* ── Custom Tier Calculator ── */
+      (() => {
+        const serverSelect = document.getElementById('serverSelect');
+        const dataSlider = document.getElementById('dataSlider') as HTMLInputElement | null;
+        
+        if (!serverSelect || !dataSlider) return;
+
+        // Initialize with CPX31 selected
+        let selectedServer = {
+          vcpu: 4,
+          ram: 16,
+          ssd: 160,
+          monthlyEur: 23.99,
+        };
+
+        function calculateDataFee(dataGb: number): number {
+          if (dataGb === 0) return 0;
+          
+          // Tiers: 0-15TB included (€0), 15-30TB €2/TB, 30TB+ €1.50/TB
+          const tier1MaxGb = 15 * 1024; // 15TB in GB
+          const tier2MaxGb = 30 * 1024; // 30TB in GB
+
+          let fee = 0;
+
+          if (dataGb > tier1MaxGb) {
+            // Data exceeds the included 15TB
+            if (dataGb <= tier2MaxGb) {
+              // All overage is in tier 2 (15-30TB range)
+              const tbInTier2 = (dataGb - tier1MaxGb) / 1024;
+              fee += tbInTier2 * 2; // €2 per TB
+            } else {
+              // Part in tier 2, part in tier 3
+              const tbInTier2 = (tier2MaxGb - tier1MaxGb) / 1024; // 15TB
+              fee += tbInTier2 * 2; // €2 × 15 = €30
+
+              const tbInTier3 = (dataGb - tier2MaxGb) / 1024;
+              fee += tbInTier3 * 1.5; // €1.50 per TB for anything over 30TB
+            }
+          }
+          // If dataGb <= tier1MaxGb, data is included (fee = 0)
+
+          return fee;
+        }
+
+        function updateDisplay() {
+          const dataTb = parseInt(dataSlider!.value);
+          const dataGb = dataTb * 1024;
+
+          const dataAmountEl = document.getElementById('dataAmount');
+          if (dataAmountEl) dataAmountEl.textContent = String(dataTb);
+          
+          const dataFee = calculateDataFee(dataGb);
+          const totalPrice = selectedServer.monthlyEur + dataFee;
+
+          const basePriceEl = document.getElementById('basePriceDisplay');
+          const dataFeeEl = document.getElementById('dataFeeDisplay');
+          const totalPriceEl = document.getElementById('totalPrice');
+
+          if (basePriceEl) basePriceEl.textContent = selectedServer.monthlyEur.toFixed(2);
+          if (dataFeeEl) dataFeeEl.textContent = dataFee.toFixed(2);
+          if (totalPriceEl) totalPriceEl.textContent = totalPrice.toFixed(2);
+        }
+
+        // Server selection
+        const serverButtons = serverSelect.querySelectorAll('.calc-server-btn') as NodeListOf<HTMLButtonElement>;
+        serverButtons.forEach((btn) => {
+          btn.addEventListener('click', () => {
+            serverButtons.forEach((b) => b.classList.remove('selected'));
+            btn.classList.add('selected');
+
+            selectedServer = {
+              vcpu: parseInt(btn.dataset.vcpu || '0'),
+              ram: parseInt(btn.dataset.ram || '0'),
+              ssd: parseInt(btn.dataset.ssd || '0'),
+              monthlyEur: parseFloat(btn.dataset.monthlyEur || '0'),
+            };
+
+            updateDisplay();
+          });
+        });
+
+        // Data slider
+        dataSlider.addEventListener('input', updateDisplay);
+
+        // Initial display update
+        updateDisplay();
       })();
     </script>
 

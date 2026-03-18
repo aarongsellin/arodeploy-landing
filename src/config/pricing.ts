@@ -78,6 +78,71 @@ export const pricing = {
     bandwidth: { min: 0, max: 2000, step: 50 },
   },
 
+  /** Hetzner Cloud server instances for Custom tier */
+  hetznerServers: [
+    {
+      name: "CPX11",
+      vcpu: 2,
+      ram: 4,
+      ssd: 40,
+      bandwidth: 20, // TB included
+      monthlyUsd: 6.99,
+      monthlyEur: 6.49,
+      tier: "cost-optimized",
+    },
+    {
+      name: "CPX21",
+      vcpu: 3,
+      ram: 8,
+      ssd: 80,
+      bandwidth: 20,
+      monthlyUsd: 12.99,
+      monthlyEur: 11.99,
+      tier: "cost-optimized",
+    },
+    {
+      name: "CPX31",
+      vcpu: 4,
+      ram: 16,
+      ssd: 160,
+      bandwidth: 20,
+      monthlyUsd: 25.99,
+      monthlyEur: 23.99,
+      tier: "general-purpose",
+    },
+    {
+      name: "CPX41",
+      vcpu: 8,
+      ram: 32,
+      ssd: 320,
+      bandwidth: 20,
+      monthlyUsd: 51.99,
+      monthlyEur: 47.99,
+      tier: "general-purpose",
+    },
+    {
+      name: "CPX51",
+      vcpu: 16,
+      ram: 64,
+      ssd: 640,
+      bandwidth: 20,
+      monthlyUsd: 103.99,
+      monthlyEur: 95.99,
+      tier: "general-purpose",
+    },
+  ],
+
+  /** Custom tier data pricing */
+  customTier: {
+    /** 20TB of bandwidth included per Hetzner server */
+    includedDataTb: 20,
+    /** Data pricing breakdown:
+     * - 0-15TB: included in base price (€0)
+     * - 15-30TB: €2/month per TB overage
+     * - 30TB+: €1.50/month per TB overage
+     */
+  },
+
   aro: {
     /** Flat base fee per month ($) */
     baseFee: 2,
