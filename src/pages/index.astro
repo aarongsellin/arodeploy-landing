@@ -1799,7 +1799,7 @@ const year = new Date().getFullYear();
           <div class="custom-tier">
             <div class="custom-tier-header">
               <h3>Custom Tier</h3>
-              <p class="custom-tier-desc">Build your own solution with real Hetzner servers and transparent pricing.</p>
+              <p class="custom-tier-desc">Build your own solution with real Hetzner servers and transparent bandwidth pricing.</p>
             </div>
 
             <div class="calculator-section" id="calculator">
@@ -1807,7 +1807,7 @@ const year = new Date().getFullYear();
               <div class="calc-group">
                 <label class="calc-label">Choose your server instance</label>
                 <div class="calc-server-select" id="serverSelect">
-                  {pricing.hetznerServers.map((server) => (
+                  {pricing.hetznerServers.map((server, idx) => (
                     <button 
                       class={`calc-server-btn ${server.name === 'CPX31' ? 'selected' : ''}`}
                       data-server-id={server.name}
@@ -1816,19 +1816,19 @@ const year = new Date().getFullYear();
                       data-ssd={server.ssd}
                       data-monthly-eur={server.monthlyEur}
                     >
-                      <div>{server.name}</div>
+                      <div>S{idx + 1}</div>
                       <div class="calc-server-specs">{server.vcpu} vCPU, {server.ram}GB RAM, {server.ssd}GB SSD</div>
                     </button>
                   ))}
                 </div>
               </div>
 
-              <!-- Data Storage -->
+              <!-- Network Traffic -->
               <div class="calc-group">
-                <label class="calc-label">Additional data storage (beyond 20TB included)</label>
+                <label class="calc-label">Additional network traffic (beyond 20TB included)</label>
                 <div class="calc-slider-group">
                   <div class="calc-slider-label">
-                    <span class="calc-slider-label-text">Data storage</span>
+                    <span class="calc-slider-label-text">Network traffic</span>
                     <span class="calc-slider-value"><span id="dataAmount">0</span> TB</span>
                   </div>
                   <input 
@@ -1841,7 +1841,7 @@ const year = new Date().getFullYear();
                     id="dataSlider"
                   />
                   <div class="calc-data-tier-notice">
-                    <div class="calc-data-tier-notice-title">Pricing tiers:</div>
+                    <div class="calc-data-tier-notice-title">Traffic pricing tiers:</div>
                     <div>0–15 TB: €0/month (included)</div>
                     <div>15–30 TB: €2/month per TB overage</div>
                     <div>30+ TB: €1.50/month per TB overage</div>
@@ -1853,17 +1853,17 @@ const year = new Date().getFullYear();
               <div class="calc-summary">
                 <div class="calc-summary-row">
                   <span class="calc-summary-label">Server base price (Hetzner)</span>
-                  <span class="calc-summary-value">€<span id="basePriceDisplay">23.99</span>/mo</span>
+                  <span class="calc-summary-value">€<span id="basePriceDisplay">33.59</span>/mo</span>
                 </div>
                 <div class="calc-summary-row">
-                  <span class="calc-summary-label">Data overage fee</span>
+                  <span class="calc-summary-label">Traffic overage fee</span>
                   <span class="calc-summary-value">€<span id="dataFeeDisplay">0.00</span>/mo</span>
                 </div>
                 <div class="calc-summary-row" style="border-top: 1px solid var(--border); padding-top: 0.75rem; margin-top: 0.75rem;">
                   <span class="calc-summary-label" style="font-weight: 600;">Total monthly cost</span>
                   <div class="calc-total-price" style="align-items: flex-start;">
                     <span class="calc-total-label">per month</span>
-                    <span class="calc-total-amount">€<span id="totalPrice">23.99</span></span>
+                    <span class="calc-total-amount">€<span id="totalPrice">33.59</span></span>
                   </div>
                 </div>
               </div>
@@ -2142,7 +2142,7 @@ const year = new Date().getFullYear();
           vcpu: 4,
           ram: 16,
           ssd: 160,
-          monthlyEur: 23.99,
+          monthlyEur: 33.59,
         };
 
         function calculateDataFee(dataGb: number): number {

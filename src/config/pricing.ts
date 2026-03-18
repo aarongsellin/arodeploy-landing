@@ -87,7 +87,7 @@ export const pricing = {
       ssd: 40,
       bandwidth: 20, // TB included
       monthlyUsd: 6.99,
-      monthlyEur: 6.49,
+      monthlyEur: 9.09, // 6.49 × 1.4 margin
       tier: "cost-optimized",
     },
     {
@@ -97,7 +97,7 @@ export const pricing = {
       ssd: 80,
       bandwidth: 20,
       monthlyUsd: 12.99,
-      monthlyEur: 11.99,
+      monthlyEur: 16.79, // 11.99 × 1.4 margin
       tier: "cost-optimized",
     },
     {
@@ -107,7 +107,7 @@ export const pricing = {
       ssd: 160,
       bandwidth: 20,
       monthlyUsd: 25.99,
-      monthlyEur: 23.99,
+      monthlyEur: 33.59, // 23.99 × 1.4 margin
       tier: "general-purpose",
     },
     {
@@ -117,7 +117,7 @@ export const pricing = {
       ssd: 320,
       bandwidth: 20,
       monthlyUsd: 51.99,
-      monthlyEur: 47.99,
+      monthlyEur: 67.19, // 47.99 × 1.4 margin
       tier: "general-purpose",
     },
     {
@@ -127,7 +127,7 @@ export const pricing = {
       ssd: 640,
       bandwidth: 20,
       monthlyUsd: 103.99,
-      monthlyEur: 95.99,
+      monthlyEur: 134.39, // 95.99 × 1.4 margin
       tier: "general-purpose",
     },
   ],
