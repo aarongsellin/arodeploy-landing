@@ -1,7 +1,5 @@
 ---
-import { products } from '../config/products.ts';
 import { links } from '../config/links.ts';
-import { pricing } from '../config/pricing.ts';
 const year = new Date().getFullYear();
 ---
 
@@ -19,7 +17,7 @@ const year = new Date().getFullYear();
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="AroDeploy — Deploy from git. Simple pricing." />
-    <meta property="og:description" content="Zero-downtime releases, preview environments, and smart builds — servers in the US, Europe, and Singapore. Plans from €0." />
+    <meta property="og:description" content="Zero-downtime releases, preview environments, and smart builds — servers in US, Europe, and Singapore. Plans from €0." />
     <meta property="og:url" content={links.site} />
     <meta property="og:site_name" content="AroDeploy" />
     <meta property="og:image" content={`${links.site}/og-image.png`} />
@@ -301,7 +299,7 @@ const year = new Date().getFullYear();
 
       .region-rotate {
         display: inline-block;
-        width: 5.5ch;
+        width: 6.5ch;
         text-align: left;
         color: var(--text-secondary);
         transition: opacity 0.5s ease;
@@ -1521,18 +1519,18 @@ const year = new Date().getFullYear();
       <div class="nav-left">
         <a href="/" class="nav-logo">AroDeploy</a>
         <div class="nav-links">
-          <a href="#products" class="nav-link">Products</a>
+          <!-- <a href="#products" class="nav-link">Products</a>
           <a href="#case-studies" class="nav-link">Case Studies</a>
-          <a href="#pricing" class="nav-link">Pricing</a>
+          <a href="#pricing" class="nav-link">Pricing</a> -->
         </div>
       </div>
       <div class="nav-right">
         <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">
-          <svg class="icon-sun" width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <svg class="icon-sun" width="24" height="24" viewBox="0 0 16 16" fill="none">
             <circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/>
             <path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.17 3.17l1.06 1.06M11.77 11.77l1.06 1.06M3.17 12.83l1.06-1.06M11.77 4.23l1.06-1.06" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
           </svg>
-          <svg class="icon-moon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <svg class="icon-moon" width="24" height="24" viewBox="0 0 16 16" fill="none">
             <path d="M13.36 10.06A5.5 5.5 0 015.94 2.64a6 6 0 107.42 7.42z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
@@ -1546,13 +1544,11 @@ const year = new Date().getFullYear();
     </nav>
 
     <main>
-
-      <!-- ── HERO ── -->
       <section class="hero">
         <p class="eyebrow">Developer Infrastructure</p>
-        <h1>Git push. We handle<br />the rest in the <span class="region-rotate" id="region-rotate">US</span></h1>
+        <h1>Git push. We handle<br />the rest in <span class="region-rotate" id="region-rotate">Germany</span></h1>
         <p class="hero-sub">
-          Zero-downtime deploys, Cloudflare CDN, custom domains, and preview environments — all on dedicated servers across five global regions. Plans from&nbsp;€0.
+          Zero-downtime deploys, CDN, custom domains, and preview environments — all on dedicated servers across five global regions.
         </p>
         <div class="hero-actions">
           <a href={links.console} class="btn-primary">
@@ -1561,11 +1557,10 @@ const year = new Date().getFullYear();
               <path d="M2.5 10.5L10.5 2.5M10.5 2.5H4.5M10.5 2.5V8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
             </svg>
           </a>
-          <a href="#pricing" class="btn-ghost">See pricing</a>
+          <!-- <a href="#pricing" class="btn-ghost">See pricing</a> -->
         </div>
       </section>
 
-      <!-- ── FEATURES ── -->
       <section class="features">
         <div class="section-header">
           <p class="eyebrow">Platform Features</p>
@@ -1615,17 +1610,6 @@ const year = new Date().getFullYear();
 
           <div class="feature-card">
             <svg class="feature-icon" viewBox="0 0 34 34" fill="none">
-              <ellipse cx="17" cy="9" rx="11" ry="3.5" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M6 9v6c0 1.93 4.92 3.5 11 3.5S28 16.93 28 15V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
-              <path d="M6 15v6c0 1.93 4.92 3.5 11 3.5S28 22.93 28 21v-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
-              <path d="M22 26l3 3M22 29l3-3" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"/>
-            </svg>
-            <h3>Databases &amp; Storage</h3>
-            <p>Deploy any open-source database — Postgres, Redis, Meilisearch, and more — as a one-click add-on. Built-in backups for both databases and persistent volumes ship to object storage on your schedule. IOPS and disk usage metrics are surfaced per service so you always know what's running.</p>
-          </div>
-
-          <div class="feature-card">
-            <svg class="feature-icon" viewBox="0 0 34 34" fill="none">
               <path d="M5 27V16l6-9h12l6 9v11" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"/>
               <path d="M5 20h24" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
               <path d="M14 27v-7h6v7" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
@@ -1655,16 +1639,6 @@ const year = new Date().getFullYear();
 
           <div class="feature-card">
             <svg class="feature-icon" viewBox="0 0 34 34" fill="none">
-              <rect x="4" y="10" width="26" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M10 16h4v4h-4zM16 16h4v4h-4zM22 16h4v4h-4z" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"/>
-              <path d="M9 10V7h6v3M19 10V7h6v3" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"/>
-            </svg>
-            <h3>GPU Compute Add-On</h3>
-            <p>Run inference or fine-tuning on dedicated NVIDIA GPUs. Add a GPU instance to any project — AroDeploy handles drivers, containers, and health monitoring. No Kubernetes required.</p>
-          </div>
-
-          <div class="feature-card">
-            <svg class="feature-icon" viewBox="0 0 34 34" fill="none">
               <rect x="5" y="9" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/>
               <rect x="21" y="9" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/>
               <rect x="13" y="21" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/>
@@ -1676,403 +1650,6 @@ const year = new Date().getFullYear();
 
         </div>
       </section>
-
-      <!-- ── CASE STUDIES ── -->
-      <section class="case-studies" id="case-studies">
-        <div class="section-header">
-          <p class="eyebrow">Case Studies</p>
-          <h2>Real systems, in depth.</h2>
-        </div>
-        <div class="case-studies-grid">
-          <a href="/case-studies/market-signal-engine" class="case-study-card">
-            <span class="case-study-num">01</span>
-            <div class="case-study-body">
-              <h3>Market Signal Engine</h3>
-              <p>A semantic intelligence pipeline that turns raw reviews and search queries into an optimizable embedding field — surfacing unmet demand and product opportunities.</p>
-              <span class="case-study-link">
-                Read case study
-                <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                  <path d="M2 9L9 2M9 2H4M9 2v5" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"/>
-                </svg>
-              </span>
-            </div>
-          </a>
-        </div>
-      </section>
-
-      <!-- ── PRICING ── -->
-      <section class="plans" id="pricing">
-        <div class="section-header">
-          <p class="eyebrow">Pricing</p>
-          <h2>Pick a plan. No surprises.</h2>
-          <p class="section-sub" style="color:var(--text-secondary);font-size:0.9375rem;margin-top:0.75rem;">All paid plans are billed upfront — monthly or annually. No metered surprises at the end of the month.</p>
-        </div>
-
-        <div class="pricing-grid">
-
-          <!-- Free trial -->
-          <div class="pricing-card">
-            <p class="pricing-card-name">Free Trial</p>
-            <p class="pricing-card-price">&euro;0</p>
-            <p class="pricing-card-unit">for 30 days, no credit card required</p>
-            <div class="pricing-card-specs">
-              <div class="pricing-spec">
-                <span class="pricing-spec-label">vCPU</span>
-                <span class="pricing-spec-val">2 cores</span>
-              </div>
-              <div class="pricing-spec">
-                <span class="pricing-spec-label">RAM</span>
-                <span class="pricing-spec-val">4 GB</span>
-              </div>
-              <div class="pricing-spec">
-                <span class="pricing-spec-label">Storage</span>
-                <span class="pricing-spec-val">&mdash;</span>
-              </div>
-              <div class="pricing-spec">
-                <span class="pricing-spec-label">Traffic</span>
-                <span class="pricing-spec-val">2TB</span>
-              </div>
-            </div>
-            <a href={links.console} class="pricing-card-cta">Start free</a>
-          </div>
-
-          <!-- Starter -->
-          <div class="pricing-card featured">
-            <p class="pricing-card-name">Starter</p>
-            <p class="pricing-card-price">&euro;30</p>
-            <p class="pricing-card-unit">per month, billed upfront</p>
-            <div class="pricing-card-specs">
-              <div class="pricing-spec">
-                <span class="pricing-spec-label">vCPU</span>
-                <span class="pricing-spec-val">4 cores</span>
-              </div>
-              <div class="pricing-spec">
-                <span class="pricing-spec-label">RAM</span>
-                <span class="pricing-spec-val">8 GB</span>
-              </div>
-              <div class="pricing-spec">
-                <span class="pricing-spec-label">SSD</span>
-                <span class="pricing-spec-val">160 GB</span>
-              </div>
-              <div class="pricing-spec">
-                <span class="pricing-spec-label">Traffic included</span>
-                <span class="pricing-spec-val">5 TB</span>
-              </div>
-              <div class="pricing-spec">
-                <span class="pricing-spec-label">Ingress / Egress</span>
-                <span class="pricing-spec-val">Free</span>
-              </div>
-            </div>
-            <a href={links.console} class="pricing-card-cta">Get started</a>
-          </div>
-
-          <!-- Growth -->
-          <div class="pricing-card">
-            <p class="pricing-card-name">Growth</p>
-            <p class="pricing-card-price">&euro;60</p>
-            <p class="pricing-card-unit">per month, billed upfront</p>
-            <div class="pricing-card-specs">
-              <div class="pricing-spec">
-                <span class="pricing-spec-label">vCPU</span>
-                <span class="pricing-spec-val">8 cores</span>
-              </div>
-              <div class="pricing-spec">
-                <span class="pricing-spec-label">RAM</span>
-                <span class="pricing-spec-val">16 GB</span>
-              </div>
-              <div class="pricing-spec">
-                <span class="pricing-spec-label">SSD</span>
-                <span class="pricing-spec-val">320 GB</span>
-              </div>
-              <div class="pricing-spec">
-                <span class="pricing-spec-label">Traffic included</span>
-                <span class="pricing-spec-val">15 TB</span>
-              </div>
-            </div>
-            <a href={links.console} class="pricing-card-cta">Get started</a>
-          </div>
-
-        </div>
-
-        <!-- Custom Tier Calculator -->
-        <div style="background: var(--border); border: 1px solid var(--border); border-top: none;">
-          <div class="custom-tier">
-            <div class="custom-tier-header">
-              <h3>Custom Tier</h3>
-              <p class="custom-tier-desc">Build your own solution with real Hetzner servers and transparent bandwidth pricing.</p>
-            </div>
-
-            <div class="calculator-section" id="calculator">
-              <!-- Server Selection -->
-              <div class="calc-group">
-                <label class="calc-label">Choose your server instance</label>
-                <div class="calc-server-select" id="serverSelect">
-                  {pricing.hetznerServers.map((server, idx) => (
-                    <button 
-                      class={`calc-server-btn ${server.name === 'CPX31' ? 'selected' : ''}`}
-                      data-server-id={server.name}
-                      data-vcpu={server.vcpu}
-                      data-ram={server.ram}
-                      data-ssd={server.ssd}
-                      data-monthly-eur={server.monthlyEur}
-                    >
-                      <div>S{idx + 1}</div>
-                      <div class="calc-server-specs">{server.vcpu} vCPU, {server.ram}GB RAM, {server.ssd}GB SSD</div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <!-- Network Traffic -->
-              <div class="calc-group">
-                <label class="calc-label">Additional network traffic (beyond 20TB included)</label>
-                <div class="calc-slider-group">
-                  <div class="calc-slider-label">
-                    <span class="calc-slider-label-text">Network traffic</span>
-                    <span class="calc-slider-value"><span id="dataAmount">0</span> TB</span>
-                  </div>
-                  <input 
-                    type="range" 
-                    min="0" 
-                    max="50" 
-                    step="1" 
-                    value="0" 
-                    class="calc-slider" 
-                    id="dataSlider"
-                  />
-                  <div class="calc-data-tier-notice">
-                    <div class="calc-data-tier-notice-title">Traffic pricing tiers:</div>
-                    <div>0–15 TB: €0/month (included)</div>
-                    <div>15–30 TB: €2/month per TB overage</div>
-                    <div>30+ TB: €1.50/month per TB overage</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Price Summary -->
-              <div class="calc-summary">
-                <div class="calc-summary-row">
-                  <span class="calc-summary-label">Server base price</span>
-                  <span class="calc-summary-value">€<span id="basePriceDisplay">33.59</span>/mo</span>
-                </div>
-                <div class="calc-summary-row">
-                  <span class="calc-summary-label">Traffic overage fee</span>
-                  <span class="calc-summary-value">€<span id="dataFeeDisplay">0.00</span>/mo</span>
-                </div>
-                <div class="calc-summary-row" style="border-top: 1px solid var(--border); padding-top: 0.75rem; margin-top: 0.75rem;">
-                  <span class="calc-summary-label" style="font-weight: 600;">Total monthly cost</span>
-                  <div class="calc-total-price" style="align-items: flex-start;">
-                    <span class="calc-total-label">per month</span>
-                    <span class="calc-total-amount">€<span id="totalPrice">33.59</span></span>
-                  </div>
-                </div>
-              </div>
-
-              <button class="custom-tier-cta" onclick="document.location.href='mailto:hello@arodeploy.com?subject=Custom%20Tier%20Inquiry'">
-                Request custom pricing
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                  <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"/>
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- How it works -->
-        <div class="how-it-works">
-          <p class="eyebrow">How It Works</p>
-          <h3>One plan = one server instance in your project.</h3>
-          <p>
-            Every plan gives you a <strong>dedicated server instance</strong> inside a project.
-            Need to run your API, a background worker, and a database? Add more instances to the same project — each one gets its own container on your hardware.
-          </p>
-          <p>
-            <strong>Managed services — €4 / month each.</strong>
-            Spin up Postgres, Redis, Meilisearch, or any supported open-source database as a managed service running on your already-purchased hardware. No extra server cost — just €4/mo per managed service to cover orchestration, health checks, and auto-restarts.
-          </p>
-          <p>
-            <strong>GPU compute — from €199 / month.</strong>
-            Need inference or fine-tuning? Add a dedicated NVIDIA GPU instance (RTX 4000 SFF Ada, 20 GB VRAM) to any project. AroDeploy manages CUDA drivers, container runtime, and health monitoring. No Kubernetes, no DevOps — just push your model code.
-          </p>
-          <p>
-            There is no "Pro" gate. Every feature — zero-downtime deploys, preview environments, smart builds, private networking — is available on every plan. You are paying for compute, not for feature flags.
-          </p>
-          <p>
-            Under the hood, AroDeploy manages the entire Docker image pipeline for you: builds, registry, rollouts, health checks, rollbacks. You push code, we handle the rest.
-          </p>
-          <p>
-            <strong>Billing is simple: pay upfront, use all month.</strong>
-            Every paid plan is charged at the start of the billing cycle. No metered usage, no surprise invoices, no overages on compute. You know exactly what you're paying before you deploy.
-          </p>
-        </div>
-
-        <!-- Object storage -->
-        <div class="pricing-storage">
-          <div class="pricing-storage-left">
-            <span class="pricing-storage-label">Object Storage</span>
-            <span class="pricing-storage-desc">S3-compatible blob storage for backups, assets, and model weights. Available on all plans.</span>
-          </div>
-          <span class="pricing-storage-val">&euro;0.015 / GB / month</span>
-        </div>
-
-        <!-- GPU compute -->
-        <div class="pricing-storage" style="border-top: none;">
-          <div class="pricing-storage-left">
-            <span class="pricing-storage-label">GPU Compute</span>
-            <span class="pricing-storage-desc">Dedicated NVIDIA GPU instance &mdash; RTX 4000 SFF Ada, 20 GB VRAM. Fully managed, add to any project.</span>
-          </div>
-          <span class="pricing-storage-val">from &euro;199 / month</span>
-        </div>
-
-        <!-- Comparison -->
-        <div class="compare-table-wrap">
-          <p class="eyebrow" style="margin-bottom:1.25rem; margin-top:3rem;">How we compare</p>
-          <table class="compare-table">
-            <thead>
-              <tr>
-                <th></th>
-                <th class="highlight">AroDeploy Starter</th>
-                <th>Railway</th>
-                <th>Render</th>
-                <th>Fly.io</th>
-                <th>DigitalOcean</th>
-                <th>Heroku</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Comparable plan</td>
-                <td class="highlight">&euro;30 / mo</td>
-                <td>~$50&ndash;70 / mo</td>
-                <td>~$85 / mo</td>
-                <td>~$45&ndash;60 / mo</td>
-                <td>~$48 / mo</td>
-                <td>~$100+ / mo</td>
-              </tr>
-              <tr>
-                <td>vCPU</td>
-                <td class="highlight">4 cores</td>
-                <td>2</td>
-                <td>2</td>
-                <td>2</td>
-                <td>2</td>
-                <td>2</td>
-              </tr>
-              <tr>
-                <td>RAM</td>
-                <td class="highlight">8 GB</td>
-                <td>8 GB</td>
-                <td>4 GB</td>
-                <td>4 GB</td>
-                <td>4 GB</td>
-                <td>4 GB</td>
-              </tr>
-              <tr>
-                <td>SSD</td>
-                <td class="highlight">160 GB</td>
-                <td>10 GB *</td>
-                <td>25 GB *</td>
-                <td>3 GB *</td>
-                <td>80 GB</td>
-                <td>0 *</td>
-              </tr>
-              <tr>
-                <td>Bandwidth</td>
-                <td class="highlight">1 TB incl</td>
-                <td>Metered</td>
-                <td>100 GB</td>
-                <td>Metered</td>
-                <td>4 TB</td>
-                <td>Metered</td>
-              </tr>
-              <tr>
-                <td>Managed DB add-on</td>
-                <td class="highlight">&euro;4 / svc</td>
-                <td>Compute cost</td>
-                <td>$7+ / svc</td>
-                <td>Compute cost</td>
-                <td>$15+ / db</td>
-                <td>$5+ / db</td>
-              </tr>
-              <tr>
-                <td>Zero-downtime deploy</td>
-                <td class="highlight">Included</td>
-                <td>Included</td>
-                <td>Pro only</td>
-                <td>Included</td>
-                <td>Included</td>
-                <td>Included</td>
-              </tr>
-              <tr>
-                <td>Preview environments</td>
-                <td class="highlight">Included</td>
-                <td>PR deploys</td>
-                <td>Pro only</td>
-                <td>Manual</td>
-                <td>App Spec</td>
-                <td>Pipelines</td>
-              </tr>
-              <tr>
-                <td>GPU add-on</td>
-                <td class="highlight">&euro;199 / mo</td>
-                <td>&mdash;</td>
-                <td>&mdash;</td>
-                <td>$2.50/hr+</td>
-                <td>$2,500+ / mo</td>
-                <td>&mdash;</td>
-              </tr>
-              <tr>
-                <td>Infrastructure</td>
-                <td class="highlight">US / EU / SG</td>
-                <td>US / EU</td>
-                <td>US / EU</td>
-                <td>Global</td>
-                <td>Global</td>
-                <td>US / EU</td>
-              </tr>
-            </tbody>
-          </table>
-          <p class="compare-note">* Additional storage costs extra on those platforms. Prices are approximate and based on publicly available pricing pages as of March 2026. Actual costs depend on usage patterns.</p>
-        </div>
-
-      </section>
-
-      <!-- ── PRODUCTS ── -->
-      <section class="products" id="products">
-        <div class="section-header">
-          <p class="eyebrow">Products</p>
-          <h2>The full platform, in detail.</h2>
-        </div>
-        <div class="products-grid">
-          {products.map((product, i) => (
-            <a href={`/products/${product.slug}`} class="product-card">
-              <span class="product-card-num">{String(i + 1).padStart(2, '0')}</span>
-              <svg class="product-card-icon" viewBox="0 0 34 34" fill="none" set:html={product.iconPaths} />
-              <h3>{product.name}</h3>
-              <p>{product.tagline}</p>
-              <span class="product-card-link">
-                Explore
-                <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                  <path d="M2 9L9 2M9 2H4M9 2v5" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"/>
-                </svg>
-              </span>
-            </a>
-          ))}
-        </div>
-      </section>
-
-      <!-- ── FINAL CTA ── -->
-      <section class="cta-band">
-        <h2>Ready to ship?</h2>
-        <p>30-day free trial. No credit card required.</p>
-        <a href={links.console} class="btn-primary">
-          Open the Console
-          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-            <path d="M2.5 10.5L10.5 2.5M10.5 2.5H4.5M10.5 2.5V8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
-          </svg>
-        </a>
-      </section>
-
     </main>
 
     <footer>
@@ -2088,16 +1665,16 @@ const year = new Date().getFullYear();
       </div>
       <div class="footer-links">
         <a href="/privacy" class="footer-link">Privacy</a>
-        <a href={links.docs} class="footer-link">Docs</a>
-        <a href={links.status} class="footer-link">Status</a>
-        <a href={links.console} class="footer-link">Console</a>
+        <!-- <a href={links.docs} class="footer-link">Docs</a> -->
+        <!-- <a href={links.status} class="footer-link">Status</a> -->
+        <!-- <a href={links.console} class="footer-link">Console</a> -->
       </div>
     </footer>
 
     <script>
       /* ── Region rotation ── */
       (() => {
-        const regions = ['US', 'EU', 'Singapore'];
+        const regions = ['US East', 'US West', 'Germany', 'Finland', 'Singapore'];
         const el = document.getElementById('region-rotate');
         if (!el) return;
         let idx = 0;
@@ -2128,94 +1705,6 @@ const year = new Date().getFullYear();
           html.setAttribute('data-theme', next);
           localStorage.setItem('arodeploy-theme', next);
         });
-      })();
-
-      /* ── Custom Tier Calculator ── */
-      (() => {
-        const serverSelect = document.getElementById('serverSelect');
-        const dataSlider = document.getElementById('dataSlider') as HTMLInputElement | null;
-        
-        if (!serverSelect || !dataSlider) return;
-
-        // Initialize with CPX31 selected
-        let selectedServer = {
-          vcpu: 4,
-          ram: 16,
-          ssd: 160,
-          monthlyEur: 33.59,
-        };
-
-        function calculateDataFee(dataGb: number): number {
-          if (dataGb === 0) return 0;
-          
-          // Tiers: 0-15TB included (€0), 15-30TB €2/TB, 30TB+ €1.50/TB
-          const tier1MaxGb = 15 * 1024; // 15TB in GB
-          const tier2MaxGb = 30 * 1024; // 30TB in GB
-
-          let fee = 0;
-
-          if (dataGb > tier1MaxGb) {
-            // Data exceeds the included 15TB
-            if (dataGb <= tier2MaxGb) {
-              // All overage is in tier 2 (15-30TB range)
-              const tbInTier2 = (dataGb - tier1MaxGb) / 1024;
-              fee += tbInTier2 * 2; // €2 per TB
-            } else {
-              // Part in tier 2, part in tier 3
-              const tbInTier2 = (tier2MaxGb - tier1MaxGb) / 1024; // 15TB
-              fee += tbInTier2 * 2; // €2 × 15 = €30
-
-              const tbInTier3 = (dataGb - tier2MaxGb) / 1024;
-              fee += tbInTier3 * 1.5; // €1.50 per TB for anything over 30TB
-            }
-          }
-          // If dataGb <= tier1MaxGb, data is included (fee = 0)
-
-          return fee;
-        }
-
-        function updateDisplay() {
-          const dataTb = parseInt(dataSlider!.value);
-          const dataGb = dataTb * 1024;
-
-          const dataAmountEl = document.getElementById('dataAmount');
-          if (dataAmountEl) dataAmountEl.textContent = String(dataTb);
-          
-          const dataFee = calculateDataFee(dataGb);
-          const totalPrice = selectedServer.monthlyEur + dataFee;
-
-          const basePriceEl = document.getElementById('basePriceDisplay');
-          const dataFeeEl = document.getElementById('dataFeeDisplay');
-          const totalPriceEl = document.getElementById('totalPrice');
-
-          if (basePriceEl) basePriceEl.textContent = selectedServer.monthlyEur.toFixed(2);
-          if (dataFeeEl) dataFeeEl.textContent = dataFee.toFixed(2);
-          if (totalPriceEl) totalPriceEl.textContent = totalPrice.toFixed(2);
-        }
-
-        // Server selection
-        const serverButtons = serverSelect.querySelectorAll('.calc-server-btn') as NodeListOf<HTMLButtonElement>;
-        serverButtons.forEach((btn) => {
-          btn.addEventListener('click', () => {
-            serverButtons.forEach((b) => b.classList.remove('selected'));
-            btn.classList.add('selected');
-
-            selectedServer = {
-              vcpu: parseInt(btn.dataset.vcpu || '0'),
-              ram: parseInt(btn.dataset.ram || '0'),
-              ssd: parseInt(btn.dataset.ssd || '0'),
-              monthlyEur: parseFloat(btn.dataset.monthlyEur || '0'),
-            };
-
-            updateDisplay();
-          });
-        });
-
-        // Data slider
-        dataSlider.addEventListener('input', updateDisplay);
-
-        // Initial display update
-        updateDisplay();
       })();
     </script>
 
