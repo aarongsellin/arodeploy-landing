@@ -321,6 +321,39 @@ const year = new Date().getFullYear();
         justify-content: center;
       }
 
+      /* ── STATEMENT ── */
+
+      .statement {
+        padding: clamp(4rem, 10vw, 7rem) clamp(1.5rem, 5vw, 4rem);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .statement .eyebrow { margin-bottom: 1rem; }
+
+      .statement-content {
+        background: var(--surface-2);
+        border: 1px dashed var(--border-strong);
+        border-radius: 4px;
+        padding: 2rem;
+        max-width: 680px;
+        font-size: clamp(1rem, 2vw, 1.125rem);
+        line-height: 1.8;
+        color: var(--text-secondary);
+        min-height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .statement-content.has-content {
+        background: var(--bg);
+        border-color: var(--border);
+        border-style: solid;
+        color: var(--text);
+      }
+
       /* ── FEATURES ── */
 
       .features {
@@ -1548,7 +1581,7 @@ const year = new Date().getFullYear();
         <p class="eyebrow">Developer Infrastructure</p>
         <h1>Git push. We handle<br />the rest in <span class="region-rotate" id="region-rotate">Germany</span></h1>
         <p class="hero-sub">
-          Zero-downtime deploys, CDN, custom domains, and preview environments — all on dedicated servers across five global regions.
+          Zero-downtime deploys, CDN, custom domains, and preview environments.
         </p>
         <div class="hero-actions">
           <a href={links.console} class="btn-primary">
@@ -1558,6 +1591,13 @@ const year = new Date().getFullYear();
             </svg>
           </a>
           <!-- <a href="#pricing" class="btn-ghost">See pricing</a> -->
+        </div>
+      </section>
+
+      <section class="statement">
+        <p class="eyebrow">Our Vision</p>
+        <div class="statement-content" id="statement-content">
+          We solve the issue of observability, tool complextion
         </div>
       </section>
 
@@ -1575,8 +1615,8 @@ const year = new Date().getFullYear();
               <path d="M10.5 13V10M23.5 13V10M10.5 24v3M23.5 24v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
               <path d="M16 18.5h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
             </svg>
-            <h3>Zero Downtime Deployment</h3>
-            <p>Blue/green deployments. A new instance spins up, passes your custom health check, then traffic cuts over. The previous version stays live until the switch is confirmed.</p>
+            <h3>Deploy Without Breaking Things</h3>
+            <p>When you push a new version, we spin up a fresh copy, verify it's working with your custom health check, then swap traffic over. Your old version stays running until the switch completes. Something goes wrong? We revert automatically.</p>
           </div>
 
           <div class="feature-card">
@@ -1584,8 +1624,8 @@ const year = new Date().getFullYear();
               <path d="M5 24l8-9 5 5 5-7 6 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"/>
               <rect x="5" y="7" width="24" height="3" stroke="currentColor" stroke-width="1.5"/>
             </svg>
-            <h3>Preview Deployments</h3>
-            <p>Every push creates a unique subdomain — <code style="font-family:'JetBrains Mono',monospace;font-size:0.8em">feature-x.yourdomain.com</code>. Preview, test, and production environments, separate credentials and all.</p>
+            <h3>See Changes Before You Merge</h3>
+            <p>Each pull request gets a live environment with its own subdomain, <code style="font-family:'JetBrains Mono',monospace;font-size:0.8em">pr-42.yourdomain.com</code>. Test your code in the real world instead of just locally. Everything's isolated, and it cleans itself up when the PR closes.</p>
           </div>
 
           <div class="feature-card">
@@ -1594,8 +1634,8 @@ const year = new Date().getFullYear();
               <rect x="5" y="21" width="14" height="6" stroke="currentColor" stroke-width="1.5"/>
               <rect x="22" y="8" width="7" height="19" stroke="currentColor" stroke-width="1.5"/>
             </svg>
-            <h3>Multi-Service Projects</h3>
-            <p>Group your frontend, API, workers, and databases into a single project with a shared private network. Not a single-app silo - a full architecture, together.</p>
+            <h3>Deploy Your Whole Stack</h3>
+            <p>Throw your frontend, API, database, and workers all into one project. They talk to each other over a private network — no public internet needed. Unlike other platforms, this isn't one app in a box. It's your whole architecture in one place.</p>
           </div>
 
           <div class="feature-card">
@@ -1604,8 +1644,8 @@ const year = new Date().getFullYear();
               <rect x="12" y="20" width="10" height="9" stroke="currentColor" stroke-width="1.5"/>
               <path d="M17 20v-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
             </svg>
-            <h3>Smart Builds</h3>
-            <p>No config file needed. AroDeploy detects your project type and builds it automatically. Drop in your own build configuration when you want full control.</p>
+            <h3>Just Push Your Code</h3>
+            <p>No Dockerfile? No problem. We detect what kind of project you have — Node, Python, Ruby, Go, whatever — and build it correctly. Write your own build config when you want full control, but most people don't need to.</p>
           </div>
 
           <div class="feature-card">
@@ -1614,8 +1654,8 @@ const year = new Date().getFullYear();
               <path d="M5 20h24" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
               <path d="M14 27v-7h6v7" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
             </svg>
-            <h3>Security Handled for You</h3>
-            <p>AroDeploy manages firewall rules, installs intrusion prevention, and locks down each deployment environment out of the box. You focus on your app — we handle the surface it runs on.</p>
+            <h3>Security, No Headaches</h3>
+            <p>We set up firewalls, install intrusion detection, and lock things down automatically. You don't have to think about it. Every deployment gets its own isolated environment, and bad actors get blocked before they reach your code.</p>
           </div>
 
           <div class="feature-card">
@@ -1623,8 +1663,8 @@ const year = new Date().getFullYear();
               <circle cx="17" cy="17" r="11" stroke="currentColor" stroke-width="1.5"/>
               <path d="M6 17h22M17 6c-3.5 3-5.5 6.5-5.5 11s2 8 5.5 11c3.5-3 5.5-6.5 5.5-11s-2-8-5.5-11z" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
             </svg>
-            <h3>Cloudflare CDN Built In</h3>
-            <p>Every deployment is edge-cached across Cloudflare's global network — 300+ PoPs, automatic cache invalidation on deploy, and DDoS protection included at no extra cost.</p>
+            <h3>Watch Your App in Real-Time</h3>
+            <p>Stream raw logs directly from your containers into the console. See CPU and memory usage. Get alerts when things spike. Total transparency — no hidden stuff happening in the background.</p>
           </div>
 
           <div class="feature-card">
@@ -1633,8 +1673,8 @@ const year = new Date().getFullYear();
               <circle cx="27" cy="22" r="5" stroke="currentColor" stroke-width="1.5"/>
               <path d="M25 22h4M27 20v4" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"/>
             </svg>
-            <h3>Custom Domains, One Click</h3>
-            <p>Point your domain, and AroDeploy provisions TLS certificates automatically. Wildcard support for preview deployments means every branch gets its own HTTPS subdomain.</p>
+            <h3>Databases Included</h3>
+            <p>Need PostgreSQL, Redis, or Meilisearch? Spin them up as Docker containers in your project. Automatic backups to object storage. Password rotations. It's just another service in your architecture, no special handling needed.</p>
           </div>
 
           <div class="feature-card">
@@ -1644,8 +1684,8 @@ const year = new Date().getFullYear();
               <rect x="13" y="21" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/>
               <path d="M9 17v4h8M25 17v4h-8" stroke="currentColor" stroke-width="1.25" stroke-linecap="square"/>
             </svg>
-            <h3>Private Networking, Included</h3>
-            <p>All services within a project share a private network by default. Your app reaches its database over an isolated internal interface — never the public internet. Included on every plan, no add-on required.</p>
+            <h3>Deploy Everywhere</h3>
+            <p>Run the same app across regions for redundancy. Migrations happen automatically. Or use it to reduce latency for your users by picking a region closer to them. Region hopping, no vendor lock-in.</p>
           </div>
 
         </div>
@@ -1674,7 +1714,7 @@ const year = new Date().getFullYear();
     <script>
       /* ── Region rotation ── */
       (() => {
-        const regions = ['US East', 'US West', 'Germany', 'Finland', 'Singapore'];
+        const regions = ['US East', 'US West', 'Finland', 'Singapore', 'Germany'];
         const el = document.getElementById('region-rotate');
         if (!el) return;
         let idx = 0;
