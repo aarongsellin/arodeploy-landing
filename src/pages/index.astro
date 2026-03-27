@@ -108,6 +108,7 @@ const year = new Date().getFullYear();
       }
 
       html {
+        height: 100%;
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         background: var(--bg);
         color: var(--text);
@@ -119,7 +120,13 @@ const year = new Date().getFullYear();
       }
       html::-webkit-scrollbar { display: none; }
 
-      body { min-height: 100vh; }
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      main { flex: 1; }
       a { color: inherit; text-decoration: none; }
 
       /* ── NAV ── */
@@ -1594,14 +1601,14 @@ const year = new Date().getFullYear();
         </div>
       </section>
 
-      <section class="statement">
+      <!-- <section class="statement">
         <p class="eyebrow">Our Vision</p>
         <div class="statement-content" id="statement-content">
           We solve the issue of observability, tool complextion
         </div>
-      </section>
+      </section> -->
 
-      <section class="features">
+      <!-- <section class="features">
         <div class="section-header">
           <p class="eyebrow">Platform Features</p>
           <h2>Everything you need. Nothing you don't.</h2>
@@ -1689,10 +1696,10 @@ const year = new Date().getFullYear();
           </div>
 
         </div>
-      </section>
+      </section> -->
     </main>
 
-    <footer>
+    <footer class="footer">
       <div class="footer-left">
         <div class="footer-eu">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -1712,7 +1719,6 @@ const year = new Date().getFullYear();
     </footer>
 
     <script>
-      /* ── Region rotation ── */
       (() => {
         const regions = ['US East', 'US West', 'Finland', 'Singapore', 'Germany'];
         const el = document.getElementById('region-rotate');
@@ -1725,10 +1731,9 @@ const year = new Date().getFullYear();
             el.textContent = regions[idx];
             el.style.opacity = '1';
           }, 500);
-        }, 3000);
+        }, 2300);
       })();
 
-      /* ── Theme toggle ── */
       (() => {
         const btn = document.getElementById('theme-toggle');
         if (!btn) return;
@@ -1737,7 +1742,6 @@ const year = new Date().getFullYear();
           const current = html.getAttribute('data-theme');
           let next;
           if (!current) {
-            /* System default — toggle to the opposite */
             next = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'light' : 'dark';
           } else {
             next = current === 'dark' ? 'light' : 'dark';
