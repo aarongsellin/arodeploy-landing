@@ -76,10 +76,36 @@
         overflow-x: hidden;
       }
 
+      /* Dev Banner */
+      .dev-banner {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: var(--text);
+        color: var(--bg);
+        text-align: center;
+        padding: 0.55rem 1.5rem;
+        font-family: "Courier New", "Lucida Console", monospace;
+        font-size: 0.78rem;
+        letter-spacing: 0.04em;
+        z-index: 1001;
+        line-height: 1.5;
+      }
+
+      .dev-banner a {
+        color: var(--bg);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+      .dev-banner a:hover {
+        opacity: 0.75;
+      }
+
       /* Navigation */
       nav {
         position: fixed;
-        top: 0;
+        top: 36px;
         width: 100%;
         background-color: var(--bg);
         border-bottom: 1px solid var(--border);
@@ -407,6 +433,10 @@
     </style>
   </head>
   <body>
+    <div class="dev-banner" role="banner" aria-label="Development notice">
+      Under active development &mdash; for whitelist access or more details,
+      <a href="#contact">contact us</a>
+    </div>
     <nav>
       <div class="nav-inner">
         <a href="#" class="logo">Arodeploy</a>
