@@ -1,0 +1,21 @@
+# Arodeploy
+
+> Arodeploy is a bare-metal deployment platform built to lower hosting costs and make low-level server infrastructure accessible without sacrificing control. It provides a scripting layer (aro-script) that lets anyone define, deploy, and manage any server setup on bare-metal hardware.
+
+Arodeploy was created out of frustration with the cost of managed hosting. The project prioritises full configuration control, composable scripting, and reusable templates — targeting both framework developers (e.g. Next.js) and infrastructure engineers.
+
+Key notes:
+
+- Arodeploy is self-hosted and runs on bare-metal hardware, not managed cloud services.
+- The aro-script format is the core abstraction: readable, composable, shareable, and vendor-neutral.
+- The platform exposes live service endpoints at api.arodeploy.com and console.arodeploy.com.
+- Questions can be directed to aaron.gotthardsson@gmail.com.
+
+## Services
+
+- [API](https://api.arodeploy.com): The Arodeploy backend API.
+- [Console](https://console.arodeploy.com): The Arodeploy web console for managing deployments.
+
+## Site
+
+- [Landing page](https://arodeploy.com): Project overview, service status, and contact information.

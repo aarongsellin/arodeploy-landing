@@ -1,0 +1,529 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arodeploy</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg: #f4f2ee;
+        --bg-card: #f0f2f5;
+        --text: #0a0a0f;
+        --text-muted: #52526e;
+        --border: #dddde8;
+        --success: #16803c;
+        --error: #c0392b;
+        --warning: #b45309;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+
+      html::-webkit-scrollbar {
+        display: none;
+      }
+
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Helvetica,
+          Arial,
+          sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        line-height: 1.7;
+        overflow-x: hidden;
+      }
+
+      /* Navigation */
+      nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: var(--bg);
+        border-bottom: 1px solid var(--border);
+        z-index: 1000;
+        padding: 1.25rem 2.5rem;
+      }
+
+      nav .nav-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+      }
+
+      .logo {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+          sans-serif;
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text);
+        text-decoration: none;
+      }
+
+      nav .nav-links {
+        display: flex;
+        gap: 2.5rem;
+      }
+
+      nav .nav-links a {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+          sans-serif;
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+
+      nav .nav-links a:hover {
+        color: var(--text);
+      }
+
+      /* Main Layout */
+      main {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 2.5rem;
+      }
+
+      /* Hero */
+      .hero {
+        padding-top: 160px;
+        padding-bottom: 120px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .hero-eyebrow {
+        font-family: "Courier New", "Lucida Console", monospace;
+        font-size: 0.85rem;
+        letter-spacing: 0.05em;
+        color: var(--text-muted);
+        margin-bottom: 2rem;
+      }
+
+      .hero h1 {
+        font-size: clamp(4rem, 10vw, 9rem);
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: -0.04em;
+        max-width: 900px;
+        margin-bottom: 2.5rem;
+        color: var(--text);
+      }
+
+      .hero-description {
+        font-size: 1.5rem;
+        color: var(--text-muted);
+        max-width: 620px;
+        line-height: 1.75;
+      }
+
+      /* About Section */
+      .about-section {
+        padding: 100px 0;
+        border-bottom: 1px solid var(--border);
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 4rem;
+        align-items: start;
+      }
+
+      .section-label {
+        font-family: "Courier New", "Lucida Console", monospace;
+        font-size: 3rem;
+        /* font-weight: 400; */
+        /* letter-spacing: 0.03em; */
+        color: var(--text-muted);
+        padding-top: 0.4rem;
+      }
+
+      .about-body p {
+        font-size: 1.25rem;
+        color: var(--text-muted);
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+        font-weight: 400;
+      }
+
+      .about-body p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* Status Section */
+      .status-section {
+        padding: 100px 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .status-header {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 4rem;
+        margin-bottom: 3rem;
+      }
+
+      .status-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1px;
+        background-color: var(--border);
+        border: 1px solid var(--border);
+        margin-left: calc(33.33% + 1.33rem);
+      }
+
+      .status-card {
+        background-color: var(--bg);
+        padding: 2.5rem;
+        transition: background-color 0.2s ease;
+      }
+
+      .status-card:hover {
+        background-color: var(--bg-card);
+      }
+
+      .service-name {
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Helvetica,
+          Arial,
+          sans-serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        margin-bottom: 0.35rem;
+        color: var(--text);
+      }
+
+      .service-url {
+        font-family: "Courier New", "Lucida Console", monospace;
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .status-row {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+
+      .status-dot {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .status-dot.online {
+        background-color: var(--success);
+      }
+      .status-dot.offline {
+        background-color: var(--error);
+      }
+      .status-dot.checking {
+        background-color: var(--warning);
+        animation: blink 1.2s infinite;
+      }
+
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+
+      .status-label {
+        font-family: "Courier New", "Lucida Console", monospace;
+        font-size: 1rem;
+        font-weight: 400;
+        letter-spacing: 0.02em;
+      }
+
+      .status-label.online {
+        color: var(--success);
+      }
+      .status-label.offline {
+        color: var(--error);
+      }
+      .status-label.checking {
+        color: var(--warning);
+      }
+
+      .status-time {
+        font-family: "Courier New", "Lucida Console", monospace;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin-top: 0.6rem;
+      }
+
+      /* Contact Section */
+      .contact-section {
+        padding: 100px 0;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 4rem;
+        align-items: start;
+      }
+
+      .contact-body p {
+        font-size: 1.25rem;
+        color: var(--text-muted);
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+      }
+
+      .contact-link {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+          sans-serif;
+        font-size: 1.1rem;
+        letter-spacing: 0.05em;
+        color: var(--text);
+        text-decoration: none;
+        border-bottom: 1px solid var(--text);
+        padding-bottom: 1px;
+        transition:
+          color 0.2s ease,
+          border-color 0.2s ease;
+      }
+
+      .contact-link:hover {
+        color: var(--text-muted);
+        border-color: var(--text-muted);
+      }
+
+      /* Footer */
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 2rem 2.5rem;
+      }
+
+      footer .footer-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      footer p {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+          sans-serif;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        color: var(--text-muted);
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        nav {
+          padding: 1.25rem 1.5rem;
+        }
+        main {
+          padding: 0 1.5rem;
+        }
+
+        .hero {
+          padding-top: 120px;
+          padding-bottom: 80px;
+        }
+
+        .about-section,
+        .contact-section,
+        .status-header {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .status-grid {
+          margin-left: 0;
+        }
+
+        footer {
+          padding: 1.5rem;
+        }
+
+        footer .footer-inner {
+          flex-direction: column;
+          gap: 0.5rem;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-inner">
+        <a href="#" class="logo">Arodeploy</a>
+        <div class="nav-links">
+          <a href="#status">Status</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <p class="hero-eyebrow">// infrastructure at cost</p>
+        <h1>Deploy smarter. Scale for less.</h1>
+        <p class="hero-description">
+          A deployment platform focused on lowering hosting costs and making
+          low-level architecture accessible, without giving up control or
+          fine-tuning.
+        </p>
+      </section>
+
+      <section class="about-section" id="about">
+        <p class="section-label">About</p>
+        <div class="about-body">
+          <p>
+            AroDeploy started with a simple frustration: hosting costs. Running
+            services on bare metal was significantly cheaper, but the tooling
+            needed to do it well was largely absent for small teams and
+            individual developers.
+          </p>
+          <p>
+            The goal is simple: build a scripting layer that lets anyone define
+            the setup they want, deploy it, and retain full control over every
+            configuration detail. No managed abstraction hiding what is actually
+            happening underneath.
+          </p>
+          <p>
+            The aro-script format is designed to be readable and composable, so
+            setups can be shared, versioned, and adapted without being locked
+            into a vendor or rigid convention. That opens the door to reusable
+            templates, making AroDeploy a fit for both the average Next.js
+            developer and the more infrastructure-focused engineer.
+          </p>
+        </div>
+      </section>
+
+      <section class="status-section" id="status">
+        <div class="status-header">
+          <p class="section-label">Status</p>
+        </div>
+        <div class="status-grid">
+          <div class="status-card">
+            <div class="service-name">API</div>
+            <div class="service-url">api.arodeploy.com</div>
+            <div class="status-row">
+              <div class="status-dot checking" id="api-dot"></div>
+              <span class="status-label checking" id="api-status"
+                >Checking</span
+              >
+            </div>
+            <div class="status-time" id="api-time"></div>
+          </div>
+
+          <div class="status-card">
+            <div class="service-name">Console</div>
+            <div class="service-url">console.arodeploy.com</div>
+            <div class="status-row">
+              <div class="status-dot checking" id="console-dot"></div>
+              <span class="status-label checking" id="console-status"
+                >Checking</span
+              >
+            </div>
+            <div class="status-time" id="console-time"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact-section" id="contact">
+        <p class="section-label">Contact</p>
+        <div class="contact-body">
+          <p>
+            Questions, feedback, or just want to know more? Reach out directly.
+          </p>
+          <a href="mailto:aaron.gotthardsson@gmail.com" class="contact-link">
+            aaron.gotthardsson@gmail.com
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <p>Arodeploy</p>
+        <p>2026</p>
+      </div>
+    </footer>
+
+    <script>
+      async function checkService(host, dotId, statusId, timeId) {
+        const dot = document.getElementById(dotId);
+        const status = document.getElementById(statusId);
+        const time = document.getElementById(timeId);
+
+        const setState = (state, label, timeText) => {
+          dot.className = "status-dot " + state;
+          status.className = "status-label " + state;
+          status.textContent = label;
+          time.textContent = timeText;
+        };
+
+        try {
+          const t0 = Date.now();
+          await Promise.race([
+            fetch("https://" + host, {
+              method: "GET",
+              mode: "no-cors",
+              cache: "no-store",
+            }),
+            new Promise((_, reject) =>
+              setTimeout(() => reject(new Error("timeout")), 6000),
+            ),
+          ]);
+          const ms = Date.now() - t0;
+          setState("online", "Online", ms + "ms");
+        } catch (err) {
+          const label = err.message === "timeout" ? "Timeout" : "Offline";
+          setState(
+            "offline",
+            label,
+            "Last checked " + new Date().toLocaleTimeString(),
+          );
+        }
+      }
+
+      function runChecks() {
+        checkService("api.arodeploy.com", "api-dot", "api-status", "api-time");
+        checkService(
+          "console.arodeploy.com",
+          "console-dot",
+          "console-status",
+          "console-time",
+        );
+      }
+
+      runChecks();
+      setInterval(runChecks, 30000);
+    </script>
+  </body>
+</html>
