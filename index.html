@@ -499,6 +499,120 @@
         color: #f0d080;
       }
 
+      /* Projects Section */
+      .projects-section {
+        padding: 100px 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .projects-header {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 4rem;
+        margin-bottom: 3rem;
+      }
+
+      .projects-label {
+        position: sticky;
+        top: 110px;
+      }
+
+      .projects-header-note {
+        padding-top: 0.4rem;
+      }
+
+      .projects-header-note p {
+        font-size: 1.25rem;
+        color: var(--text-muted);
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+      }
+
+      .wip-notice {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: "Courier New", "Lucida Console", monospace;
+        font-size: 0.8rem;
+        letter-spacing: 0.05em;
+        color: var(--warning);
+      }
+
+      .wip-notice-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: var(--warning);
+        flex-shrink: 0;
+        animation: blink 1.2s infinite;
+      }
+
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1px;
+        background-color: var(--border);
+        border: 1px solid var(--border);
+        margin-left: calc(33.33% + 1.33rem);
+      }
+
+      .project-card {
+        background-color: var(--bg);
+        padding: 2.5rem;
+        transition: background-color 0.2s ease;
+      }
+
+      .project-card:hover {
+        background-color: var(--bg-card);
+      }
+
+      .project-name {
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Helvetica,
+          Arial,
+          sans-serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        margin-bottom: 0.5rem;
+        color: var(--text);
+      }
+
+      .project-desc {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        line-height: 1.65;
+        margin-bottom: 1.75rem;
+      }
+
+      .wip-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "Courier New", "Lucida Console", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        color: var(--warning);
+        padding: 0.28rem 0.6rem;
+        border: 1px solid var(--warning);
+        border-radius: 3px;
+        opacity: 0.85;
+      }
+
+      .wip-badge-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: var(--warning);
+        flex-shrink: 0;
+        animation: blink 1.2s infinite;
+      }
+
       /* Contact Section */
       .contact-section {
         padding: 100px 0;
@@ -575,7 +689,8 @@
         .about-section,
         .arco-section,
         .contact-section,
-        .status-header {
+        .status-header,
+        .projects-header {
           grid-template-columns: 1fr;
           gap: 2rem;
         }
@@ -584,8 +699,13 @@
           position: static;
         }
 
-        .status-grid {
+        .status-grid,
+        .projects-grid {
           margin-left: 0;
+        }
+
+        .projects-label {
+          position: static;
         }
 
         footer {
@@ -611,6 +731,7 @@
         <div class="nav-links">
           <a href="#why">Why</a>
           <a href="#status">Status</a>
+          <a href="#projects">Example projects</a>
           <a href="#contact">Contact</a>
           <a href="https://console.arodeploy.com" class="btn-console"
             >Console
@@ -848,6 +969,77 @@
               >
             </div>
             <div class="status-time" id="console-time"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="projects-section" id="projects">
+        <div class="projects-header">
+          <div class="projects-label">
+            <p class="section-label">Example projects</p>
+          </div>
+          <div class="projects-header-note">
+            <p>
+              Services and platforms being built on top of Arodeploy
+              infrastructure. None of these are in production yet.
+            </p>
+            <span class="wip-notice">
+              <span class="wip-notice-dot"></span>
+              work in progress &mdash; not yet in production
+            </span>
+          </div>
+        </div>
+        <div class="projects-grid">
+          <div class="project-card">
+            <div class="project-name">VPN Service</div>
+            <p class="project-desc">
+              WireGuard-based private network access hosted entirely on
+              Arodeploy infrastructure. Self-managed, zero third-party routing,
+              with direct firewall control per node.
+            </p>
+            <span class="wip-badge">
+              <span class="wip-badge-dot"></span>
+              Work in progress
+            </span>
+          </div>
+
+          <div class="project-card">
+            <div class="project-name">AI Inference Stack</div>
+            <p class="project-desc">
+              Self-hosted LLM inference via Ollama running on dedicated GPU
+              nodes. Deploy open models at hardware cost with no per-token
+              pricing. Exposed as a simple API endpoint.
+            </p>
+            <span class="wip-badge">
+              <span class="wip-badge-dot"></span>
+              Work in progress
+            </span>
+          </div>
+
+          <div class="project-card">
+            <div class="project-name">Minecraft Hosting</div>
+            <p class="project-desc">
+              Managed Minecraft server hosting with automated backups, custom
+              JVM tuning, and modpack support. Spun up as a standard container
+              with persistent volumes.
+            </p>
+            <span class="wip-badge">
+              <span class="wip-badge-dot"></span>
+              Work in progress
+            </span>
+          </div>
+
+          <div class="project-card">
+            <div class="project-name">Next.js Hosting</div>
+            <p class="project-desc">
+              Optimised Next.js deployment with CDN caching, edge function
+              support, and incremental static regeneration out of the box. Tuned
+              for cold start performance and global latency.
+            </p>
+            <span class="wip-badge">
+              <span class="wip-badge-dot"></span>
+              Work in progress
+            </span>
           </div>
         </div>
       </section>
