@@ -353,6 +353,152 @@
         margin-top: 0.6rem;
       }
 
+      /* ARCO Section */
+      .arco-section {
+        padding: 100px 0;
+        border-bottom: 1px solid var(--border);
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 4rem;
+        align-items: start;
+      }
+
+      .arco-label {
+        position: sticky;
+        top: 110px;
+      }
+
+      .arco-label p {
+        font-size: 1.1rem;
+        color: var(--text-muted);
+        line-height: 1.8;
+        margin-top: 1rem;
+      }
+
+      .arco-code-wrap {
+        background-color: var(--text);
+        border-radius: 6px;
+        overflow: hidden;
+      }
+
+      .arco-code-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.75rem 1.25rem;
+        border-bottom: 1px solid rgb(255, 255, 255);
+      }
+
+      .arco-code-filename {
+        font-family: "Courier New", "Lucida Console", monospace;
+        font-size: 0.78rem;
+        letter-spacing: 0.05em;
+        color: rgba(244, 241, 241, 0.976);
+      }
+
+      .arco-code-tag {
+        font-family: "Courier New", "Lucida Console", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.2);
+      }
+
+      .arco-code-body {
+        padding: 1.75rem 1.5rem;
+        overflow-x: auto;
+      }
+
+      .arco-code-body pre {
+        margin: 0;
+        font-family: "Courier New", "Lucida Console", monospace;
+        font-size: 0.85rem;
+        line-height: 1.55;
+        color: rgba(255, 255, 255, 0.85);
+        white-space: pre;
+      }
+
+      /* ARCO Section */
+      .arco-section {
+        padding: 100px 0;
+        border-bottom: 1px solid var(--border);
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 4rem;
+        align-items: start;
+      }
+
+      .arco-label {
+        position: sticky;
+        top: 110px;
+      }
+
+      .arco-label p {
+        font-size: 1.1rem;
+        color: var(--text-muted);
+        line-height: 1.8;
+        margin-top: 1rem;
+      }
+
+      .arco-code-wrap {
+        background-color: var(--text);
+        border-radius: 6px;
+        overflow: hidden;
+      }
+
+      .arco-code-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.75rem 1.25rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .arco-code-filename {
+        font-family: "Courier New", "Lucida Console", monospace;
+        font-size: 0.78rem;
+        letter-spacing: 0.05em;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .arco-code-tag {
+        font-family: "Courier New", "Lucida Console", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      .arco-code-body {
+        padding: 1.1rem 1.5rem;
+        overflow-x: auto;
+      }
+
+      .arco-code-body pre {
+        margin: 0;
+        font-family: "Courier New", "Lucida Console", monospace;
+        font-size: 0.85rem;
+        line-height: 1.35;
+        color: rgba(255, 255, 255, 0.85);
+        white-space: pre;
+      }
+
+      .arco-code-body .t-key {
+        color: rgba(255, 255, 255, 0.75);
+      }
+      .arco-code-body .t-str {
+        color: #c8f0c8;
+      }
+      .arco-code-body .t-punct {
+        color: rgba(255, 255, 255, 0.45);
+      }
+      .arco-code-body .t-num {
+        color: #f0d080;
+      }
+      .arco-code-body .t-bool {
+        color: #f0d080;
+      }
+
       /* Contact Section */
       .contact-section {
         padding: 100px 0;
@@ -427,10 +573,15 @@
         }
 
         .about-section,
+        .arco-section,
         .contact-section,
         .status-header {
           grid-template-columns: 1fr;
           gap: 2rem;
+        }
+
+        .arco-label {
+          position: static;
         }
 
         .status-grid {
@@ -462,8 +613,30 @@
           <a href="#status">Status</a>
           <a href="#contact">Contact</a>
           <a href="https://console.arodeploy.com" class="btn-console"
-            >Console</a
-          >
+            >Console
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="11"
+              height="11"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="
+                display: inline-block;
+                vertical-align: middle;
+                margin-left: 2px;
+                margin-bottom: 1px;
+              "
+            >
+              <path
+                d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+              />
+              <polyline points="15 3 21 3 21 9" />
+              <line x1="10" y1="14" x2="21" y2="3" /></svg
+          ></a>
         </div>
       </div>
     </nav>
@@ -516,11 +689,11 @@
           </p>
           <hr />
           <p style="margin-top: 1rem">
-            The longer-term goal is an infrastracture as code script, a
-            declarative configuration layer for defining an entire platform,
-            from infrastructure and containers to routing, load balancing, and
-            deployment behaviour. No managed abstractions hiding what is
-            actually happening underneath.
+            The goal is to create ARCO ('Arodeploy Infrastructure Resource
+            Configuration') , a declarative configuration layer for defining an
+            entire platform, from infrastructure and containers to routing, load
+            balancing, and deployment behaviour. No managed abstractions hiding
+            what is actually happening underneath.
           </p>
           <p>
             It will treat infrastructure as a living component of your
@@ -540,6 +713,111 @@
             distributed systems, making the platform flexible for a wide range
             of use cases.
           </p>
+        </div>
+      </section>
+
+      <section class="arco-section" id="arco">
+        <div class="arco-label">
+          <p class="section-label">ARCO</p>
+          <p>
+            Arodeploy Resource Configuration; a declarative config that defines
+            your entire platform in one place.
+          </p>
+          <p
+            style="
+              font-size: 0.8rem;
+              margin-top: 1.5rem;
+              opacity: 0.5;
+              font-family: &quot;Courier New&quot;, monospace;
+              line-height: 1.6;
+            "
+          >
+            // example only &mdash; does not reflect<br />// final production
+            syntax
+          </p>
+        </div>
+        <div class="arco-code-wrap">
+          <div class="arco-code-header">
+            <span class="arco-code-filename">infrastructure.arco</span>
+            <span class="arco-code-tag">ARCO</span>
+          </div>
+          <div class="arco-code-body">
+            <pre><span class="t-punct">[</span>
+  <span class="t-punct">{</span>
+    <span class="t-key">"name"</span><span class="t-punct">:</span> <span class="t-str">"server1"</span><span class="t-punct">,</span>
+    <span class="t-key">"type"</span><span class="t-punct">:</span> <span class="t-str">"server"</span><span class="t-punct">,</span>
+    <span class="t-key">"hardware"</span><span class="t-punct">:</span> <span class="t-str">"s2"</span><span class="t-punct">,</span>
+    <span class="t-key">"ip"</span><span class="t-punct">:</span> <span class="t-str">"10.0.0.3"</span><span class="t-punct">,</span>
+    <span class="t-key">"software"</span><span class="t-punct">:</span> <span class="t-str">"docker"</span><span class="t-punct">,</span>
+    <span class="t-key">"compose"</span><span class="t-punct">:</span> <span class="t-str">"./docker-compose.yml"</span>
+  <span class="t-punct">},</span>
+  <span class="t-punct">{</span>
+    <span class="t-key">"name"</span><span class="t-punct">:</span> <span class="t-str">"server2"</span><span class="t-punct">,</span>
+    <span class="t-key">"type"</span><span class="t-punct">:</span> <span class="t-str">"server"</span><span class="t-punct">,</span>
+    <span class="t-key">"cpu"</span><span class="t-punct">:</span> <span class="t-num">4</span><span class="t-punct">,</span>
+    <span class="t-key">"ram"</span><span class="t-punct">:</span> <span class="t-str">"8GB"</span><span class="t-punct">,</span>
+    <span class="t-key">"disk"</span><span class="t-punct">:</span> <span class="t-str">"80GB"</span><span class="t-punct">,</span>
+    <span class="t-key">"ip"</span><span class="t-punct">:</span> <span class="t-str">"10.0.0.4"</span><span class="t-punct">,</span>
+    <span class="t-key">"software"</span><span class="t-punct">:</span> <span class="t-str">"docker"</span><span class="t-punct">,</span>
+    <span class="t-key">"image"</span><span class="t-punct">:</span> <span class="t-str">"ghcr.io/my-org/api:latest"</span><span class="t-punct">,</span>
+    <span class="t-key">"env"</span><span class="t-punct">:</span> <span class="t-str">"./envs/production.env"</span>
+  <span class="t-punct">},</span>
+  <span class="t-punct">{</span>
+    <span class="t-key">"name"</span><span class="t-punct">:</span> <span class="t-str">"lb"</span><span class="t-punct">,</span>
+    <span class="t-key">"type"</span><span class="t-punct">:</span> <span class="t-str">"load-balancer"</span><span class="t-punct">,</span>
+    <span class="t-key">"targets"</span><span class="t-punct">:</span> <span class="t-punct">[</span><span class="t-str">"server1"</span><span class="t-punct">,</span> <span class="t-str">"server2"</span><span class="t-punct">],</span>
+    <span class="t-key">"algorithm"</span><span class="t-punct">:</span> <span class="t-str">"round-robin"</span><span class="t-punct">,</span>
+    <span class="t-key">"port"</span><span class="t-punct">:</span> <span class="t-num">443</span>
+  <span class="t-punct">},</span>
+  <span class="t-punct">{</span>
+    <span class="t-key">"name"</span><span class="t-punct">:</span> <span class="t-str">"internal-net"</span><span class="t-punct">,</span>
+    <span class="t-key">"type"</span><span class="t-punct">:</span> <span class="t-str">"network"</span><span class="t-punct">,</span>
+    <span class="t-key">"cidr"</span><span class="t-punct">:</span> <span class="t-str">"10.0.0.0/24"</span><span class="t-punct">,</span>
+    <span class="t-key">"firewall"</span><span class="t-punct">:</span> <span class="t-punct">{</span>
+      <span class="t-key">"allow-inbound"</span><span class="t-punct">:</span> <span class="t-punct">[</span><span class="t-num">22</span><span class="t-punct">,</span> <span class="t-num">443</span><span class="t-punct">],</span>
+      <span class="t-key">"allow-internal"</span><span class="t-punct">:</span> <span class="t-bool">true</span>
+    <span class="t-punct">}</span>
+  <span class="t-punct">},</span>
+  <span class="t-punct">{</span>
+    <span class="t-key">"name"</span><span class="t-punct">:</span> <span class="t-str">"db-volume"</span><span class="t-punct">,</span>
+    <span class="t-key">"type"</span><span class="t-punct">:</span> <span class="t-str">"volume"</span><span class="t-punct">,</span>
+    <span class="t-key">"size"</span><span class="t-punct">:</span> <span class="t-str">"20GB"</span><span class="t-punct">,</span>
+    <span class="t-key">"attach"</span><span class="t-punct">:</span> <span class="t-str">"server1"</span><span class="t-punct">,</span>
+    <span class="t-key">"mount"</span><span class="t-punct">:</span> <span class="t-str">"/var/lib/postgres"</span>
+  <span class="t-punct">},</span>
+  <span class="t-punct">{</span>
+    <span class="t-key">"name"</span><span class="t-punct">:</span> <span class="t-str">"gpu-worker"</span><span class="t-punct">,</span>
+    <span class="t-key">"type"</span><span class="t-punct">:</span> <span class="t-str">"server"</span><span class="t-punct">,</span>
+    <span class="t-key">"cpu"</span><span class="t-punct">:</span> <span class="t-num">8</span><span class="t-punct">,</span>
+    <span class="t-key">"ram"</span><span class="t-punct">:</span> <span class="t-str">"32GB"</span><span class="t-punct">,</span>
+    <span class="t-key">"disk"</span><span class="t-punct">:</span> <span class="t-str">"200GB"</span><span class="t-punct">,</span>
+    <span class="t-key">"gpu"</span><span class="t-punct">:</span> <span class="t-bool">true</span><span class="t-punct">,</span>
+    <span class="t-key">"ip"</span><span class="t-punct">:</span> <span class="t-str">"10.0.0.10"</span><span class="t-punct">,</span>
+    <span class="t-key">"software"</span><span class="t-punct">:</span> <span class="t-str">"docker"</span><span class="t-punct">,</span>
+    <span class="t-key">"image"</span><span class="t-punct">:</span> <span class="t-str">"ghcr.io/my-org/ml-worker:latest"</span><span class="t-punct">,</span>
+    <span class="t-key">"tags"</span><span class="t-punct">:</span> <span class="t-punct">[</span><span class="t-str">"gpu"</span><span class="t-punct">,</span> <span class="t-str">"ml"</span><span class="t-punct">]</span>
+  <span class="t-punct">},</span>
+  <span class="t-punct">{</span>
+    <span class="t-key">"name"</span><span class="t-punct">:</span> <span class="t-str">"routing"</span><span class="t-punct">,</span>
+    <span class="t-key">"type"</span><span class="t-punct">:</span> <span class="t-str">"routing"</span><span class="t-punct">,</span>
+    <span class="t-key">"rules"</span><span class="t-punct">:</span> <span class="t-punct">[</span>
+      <span class="t-punct">{</span>
+        <span class="t-key">"domain"</span><span class="t-punct">:</span> <span class="t-str">"api.my-org.com"</span><span class="t-punct">,</span>
+        <span class="t-key">"target"</span><span class="t-punct">:</span> <span class="t-str">"lb"</span><span class="t-punct">,</span>
+        <span class="t-key">"port"</span><span class="t-punct">:</span> <span class="t-num">443</span><span class="t-punct">,</span>
+        <span class="t-key">"tls"</span><span class="t-punct">:</span> <span class="t-bool">true</span>
+      <span class="t-punct">},</span>
+      <span class="t-punct">{</span>
+        <span class="t-key">"domain"</span><span class="t-punct">:</span> <span class="t-str">"internal.my-org.com"</span><span class="t-punct">,</span>
+        <span class="t-key">"target"</span><span class="t-punct">:</span> <span class="t-str">"server1"</span><span class="t-punct">,</span>
+        <span class="t-key">"port"</span><span class="t-punct">:</span> <span class="t-num">8080</span><span class="t-punct">,</span>
+        <span class="t-key">"tls"</span><span class="t-punct">:</span> <span class="t-bool">true</span><span class="t-punct">,</span>
+        <span class="t-key">"private"</span><span class="t-punct">:</span> <span class="t-bool">true</span>
+      <span class="t-punct">}</span>
+    <span class="t-punct">]</span>
+  <span class="t-punct">}</span>
+<span class="t-punct">]</span></pre>
+          </div>
         </div>
       </section>
 
