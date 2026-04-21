@@ -1,21 +1,27 @@
 # Arodeploy
 
-> Arodeploy is a bare-metal deployment platform built to lower hosting costs and make low-level server infrastructure accessible without sacrificing control. It provides a scripting layer (aro-script) that lets anyone define, deploy, and manage any server setup on bare-metal hardware.
+> Arodeploy is a deployment platform focused on lowering hosting costs and making low-level infrastructure accessible — without giving up control or fine-tuning.
 
-Arodeploy was created out of frustration with the cost of managed hosting. The project prioritises full configuration control, composable scripting, and reusable templates — targeting both framework developers (e.g. Next.js) and infrastructure engineers.
+Arodeploy was built out of a direct frustration with the cost of managed hosting. Running services on bare metal is significantly cheaper, but the tooling needed to do it well has largely been absent for small teams and individual developers. The platform is designed to expose the full stack — from networking and routing to runtime and deployment behaviour — while still supporting one-click deployments and the convenience of modern tools.
+
+Compute is billed at a flat, predictable rate. No per-seat fees, no per-organisation tiers, no surprise multipliers. Bandwidth is priced leniently. GPU workloads can be added and deployed as simply as any Docker container. Private networking is first-class, and every layer of configuration stays in the user's hands.
+
+The longer-term goal is ARCO (Arodeploy Resource Configuration): a declarative configuration format for defining an entire platform in one file — infrastructure, containers, routing, load balancing, volumes, firewall rules, and deployment behaviour. No managed abstractions hiding what is actually happening underneath. Infrastructure treated as a living component of your application, version-controlled and fully reproducible.
 
 Key notes:
 
-- Arodeploy is self-hosted and runs on bare-metal hardware, not managed cloud services.
-- The aro-script format is the core abstraction: readable, composable, shareable, and vendor-neutral.
-- The platform exposes live service endpoints at api.arodeploy.com and console.arodeploy.com.
-- Questions can be directed to aaron.gotthardsson@gmail.com.
+- Arodeploy runs on bare-metal hardware, not managed cloud services.
+- Pricing is flat and predictable — no multipliers based on seats or organisations.
+- ARCO is the declarative config layer under development. It is not yet in production.
+- The platform is under active development. Whitelist access is available on request.
+- Live endpoints: api.arodeploy.com and console.arodeploy.com.
+- Contact: aaron.gotthardsson@gmail.com.
 
 ## Services
 
 - [API](https://api.arodeploy.com): The Arodeploy backend API.
-- [Console](https://console.arodeploy.com): The Arodeploy web console for managing deployments.
+- [Console](https://console.arodeploy.com): The Arodeploy web console for managing deployments and infrastructure.
 
 ## Site
 
-- [Landing page](https://arodeploy.com): Project overview, service status, and contact information.
+- [Landing page](https://arodeploy.com): Platform overview, ARCO preview, service status, and contact information.
