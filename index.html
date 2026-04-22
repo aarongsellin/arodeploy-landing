@@ -371,7 +371,7 @@
         top: 110px;
       }
 
-      .arco-label p {
+      .arco-label p:not(.section-label) {
         font-size: 1.1rem;
         color: var(--text-muted);
         line-height: 1.8;
@@ -436,7 +436,7 @@
         top: 110px;
       }
 
-      .arco-label p {
+      .arco-label p:not(.section-label) {
         font-size: 1.1rem;
         color: var(--text-muted);
         line-height: 1.8;
@@ -616,6 +616,117 @@
         animation: blink 1.2s infinite;
       }
 
+      /* Trust / Compliance Section */
+      .trust-section {
+        padding: 100px 0;
+        border-bottom: 1px solid var(--border);
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 4rem;
+        align-items: start;
+      }
+
+      .trust-label {
+        position: sticky;
+        top: 110px;
+      }
+
+      .trust-label p:not(.section-label) {
+        font-size: 1.1rem;
+        color: var(--text-muted);
+        line-height: 1.8;
+        margin-top: 1rem;
+      }
+
+      .trust-body p {
+        font-size: 1.25rem;
+        color: var(--text-muted);
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+        font-weight: 400;
+      }
+
+      .trust-body p:last-of-type {
+        margin-bottom: 0;
+      }
+
+      .compliance-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1px;
+        background-color: var(--border);
+        border: 1px solid var(--border);
+        margin-top: 3rem;
+      }
+
+      .compliance-card {
+        background-color: var(--bg);
+        padding: 2rem 2.5rem;
+        transition: background-color 0.2s ease;
+      }
+
+      .compliance-card:hover {
+        background-color: var(--bg-card);
+      }
+
+      .compliance-name {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        margin-bottom: 0.4rem;
+        color: var(--text);
+      }
+
+      .compliance-desc {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        line-height: 1.65;
+        margin-bottom: 1rem;
+      }
+
+      .compliance-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "Courier New", "Lucida Console", monospace;
+        font-size: 0.58rem;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        padding: 0.22rem 0.5rem;
+        border-radius: 3px;
+      }
+
+      .compliance-badge.active {
+        color: var(--success);
+        border: 1px solid var(--success);
+      }
+
+      .compliance-badge.planned {
+        color: var(--warning);
+        border: 1px solid var(--warning);
+        opacity: 0.85;
+      }
+
+      .compliance-badge-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .compliance-badge.active .compliance-badge-dot {
+        background-color: var(--success);
+      }
+
+      .compliance-badge.planned .compliance-badge-dot {
+        background-color: var(--warning);
+        animation: blink 1.2s infinite;
+      }
+
       /* Contact Section */
       .contact-section {
         padding: 100px 0;
@@ -691,6 +802,7 @@
 
         .about-section,
         .arco-section,
+        .trust-section,
         .contact-section,
         .status-header,
         .projects-header {
@@ -698,7 +810,8 @@
           gap: 2rem;
         }
 
-        .arco-label {
+        .arco-label,
+        .trust-label {
           position: static;
         }
 
@@ -735,6 +848,7 @@
           <a href="#why">Why</a>
           <a href="#status">Status</a>
           <a href="#projects">Example projects</a>
+          <a href="#trust">Trust</a>
           <a href="#contact">Contact</a>
           <a href="https://console.arodeploy.com" class="btn-console"
             >Console
@@ -1043,6 +1157,94 @@
               <span class="wip-badge-dot"></span>
               Work in progress
             </span>
+          </div>
+        </div>
+      </section>
+
+      <section class="trust-section" id="trust">
+        <div class="trust-label">
+          <p class="section-label">Trust</p>
+          <p>
+            EU-first by design. Choose your region explicitly, with full
+            transparency about where your data sits.
+          </p>
+        </div>
+        <div class="trust-body">
+          <p>
+            Arodeploy is built as an EU-first alternative to hyperscalers and
+            US-headquartered PaaS providers. As a Swedish company, our legal
+            base, default infrastructure, and core compliance posture are all
+            rooted in the European Union. GDPR compliance is not a feature to be
+            added; it is the baseline.
+          </p>
+          <p>
+            That said, region choice is yours. Servers can be deployed in EU
+            (default), US East, US West, or Singapore. When you deploy outside
+            the EU, data for that workload resides in that region and falls
+            outside EU jurisdiction. This is visible, explicit, and never hidden
+            behind managed abstractions. You choose the region; we make the
+            implications clear.
+          </p>
+          <p>
+            For teams with strict data residency requirements, EU-only
+            deployments are fully supported. For teams that need global reach,
+            the same platform and tooling works across all regions without
+            changing your workflow.
+          </p>
+
+          <div class="compliance-grid">
+            <div class="compliance-card">
+              <div class="compliance-name">
+                GDPR
+                <span class="compliance-badge active"> Active </span>
+              </div>
+              <p class="compliance-desc">
+                EU deployments process and store all data within the EU by
+                default. GDPR compliance applies to all EU-region workloads.
+                Data in US East, US West, or Singapore regions is scoped to that
+                jurisdiction.
+              </p>
+            </div>
+
+            <div class="compliance-card">
+              <div class="compliance-name">
+                ISO 27001
+                <span class="compliance-badge planned">
+                  Planned at launch
+                </span>
+              </div>
+              <p class="compliance-desc">
+                Information security management system certification. Audit and
+                certification planned prior to general availability.
+              </p>
+            </div>
+
+            <div class="compliance-card">
+              <div class="compliance-name">
+                SOC 2 Type II
+                <span class="compliance-badge planned">
+                  Planned at launch
+                </span>
+              </div>
+              <p class="compliance-desc">
+                Independent audit covering security, availability, and
+                confidentiality. Targeted for completion in the first full year
+                of operation.
+              </p>
+            </div>
+
+            <div class="compliance-card">
+              <div class="compliance-name">
+                NIS2 Alignment
+                <span class="compliance-badge planned">
+                  Planned at launch
+                </span>
+              </div>
+              <p class="compliance-desc">
+                EU Network and Information Security Directive 2 alignment for
+                critical infrastructure and cloud service obligations.
+              </p>
+            </div>
           </div>
         </div>
       </section>
