@@ -797,6 +797,22 @@
         border-color: var(--text-muted);
       }
 
+      footer .footer-status {
+        border-bottom: 1px solid var(--border);
+        padding: 2rem 2.5rem;
+      }
+
+      footer .footer-status-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      footer .footer-status-dots {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+      }
+
       /* Footer */
       footer {
         border-top: 1px solid var(--border);
@@ -890,13 +906,26 @@
         }
 
         footer {
+          padding: 0;
+        }
+
+        footer .footer-status {
           padding: 1.5rem;
+          text-align: center;
+        }
+
+        footer .footer-status .footer-status-dots {
+          flex-direction: column;
+          align-items: center;
+          gap: 0.75rem;
         }
 
         footer .footer-inner {
+          padding: 1.5rem;
           flex-direction: column;
-          gap: 0.5rem;
-          align-items: flex-start;
+          gap: 0.75rem;
+          align-items: center;
+          text-align: center;
         }
       }
     </style>
@@ -920,7 +949,7 @@
         </button>
         <div class="nav-links">
           <a href="#why">Why</a>
-          <a href="#status">Status</a>
+          <a href="#arco">Arco</a>
           <a href="#projects">Example projects</a>
           <a href="#trust">Trust</a>
           <a href="#contact">Contact</a>
@@ -1051,13 +1080,14 @@
             syntax
           </p>
         </div>
-        <div class="arco-code-wrap">
-          <div class="arco-code-header">
-            <span class="arco-code-filename">infrastructure.arco</span>
-            <span class="arco-code-tag">ARCO</span>
-          </div>
-          <div class="arco-code-body">
-            <pre><span class="t-punct">[</span>
+        <div style="min-width: 0">
+          <div class="arco-code-wrap">
+            <div class="arco-code-header">
+              <span class="arco-code-filename">infrastructure.arco</span>
+              <span class="arco-code-tag">ARCO</span>
+            </div>
+            <div class="arco-code-body">
+              <pre><span class="t-punct">[</span>
   <span class="t-punct">{</span>
     <span class="t-key">"name"</span><span class="t-punct">:</span> <span class="t-str">"server1"</span><span class="t-punct">,</span>
     <span class="t-key">"type"</span><span class="t-punct">:</span> <span class="t-str">"server"</span><span class="t-punct">,</span>
@@ -1132,38 +1162,44 @@
     <span class="t-punct">]</span>
   <span class="t-punct">}</span>
 <span class="t-punct">]</span></pre>
-          </div>
-        </div>
-      </section>
-
-      <section class="status-section" id="status">
-        <div class="status-header">
-          <p class="section-label">Status</p>
-        </div>
-        <div class="status-grid">
-          <div class="status-card">
-            <div class="service-name">API</div>
-            <div class="service-url">api.arodeploy.com</div>
-            <div class="status-row">
-              <div class="status-dot checking" id="api-dot"></div>
-              <span class="status-label checking" id="api-status"
-                >Checking</span
-              >
             </div>
-            <div class="status-time" id="api-time"></div>
           </div>
 
-          <div class="status-card">
-            <div class="service-name">Console</div>
-            <div class="service-url">console.arodeploy.com</div>
-            <div class="status-row">
-              <div class="status-dot checking" id="console-dot"></div>
-              <span class="status-label checking" id="console-status"
-                >Checking</span
-              >
-            </div>
-            <div class="status-time" id="console-time"></div>
-          </div>
+          <p
+            style="
+              font-size: 1.1rem;
+              color: var(--text-muted);
+              margin-top: 2rem;
+              line-height: 1.8;
+            "
+          >
+            Arodeploy listens to your Git provider, detects
+            infrastructure-relevant changes, builds the affected images, and
+            applies only the updates your deployment needs.
+          </p>
+
+          <img
+            src="git-flow.png"
+            alt="Git flow diagram"
+            style="
+              width: 100%;
+              margin-top: 2rem;
+              border-radius: 6px;
+              display: block;
+            "
+          />
+
+          <!-- Short explanation of the git flow diagram -->
+          <p
+            style="
+              font-size: 0.9rem;
+              color: var(--text-muted);
+              margin-top: 1rem;
+              line-height: 1.7;
+            "
+          >
+            <!-- Add explanation here -->
+          </p>
         </div>
       </section>
 
@@ -1340,6 +1376,35 @@
     </main>
 
     <footer>
+      <div class="footer-status" id="status">
+        <div class="footer-status-inner">
+          <p class="section-label" style="margin-bottom: 1.25rem">Status</p>
+          <div class="footer-status-dots">
+            <div style="display: flex; align-items: center; gap: 0.5rem">
+              <div class="status-dot checking" id="api-dot"></div>
+              <span
+                style="
+                  font-family: &quot;Courier New&quot;, monospace;
+                  font-size: 0.85rem;
+                  color: var(--text-muted);
+                "
+                >api.arodeploy.com</span
+              >
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem">
+              <div class="status-dot checking" id="console-dot"></div>
+              <span
+                style="
+                  font-family: &quot;Courier New&quot;, monospace;
+                  font-size: 0.85rem;
+                  color: var(--text-muted);
+                "
+                >console.arodeploy.com</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="footer-inner">
         <p style="font-size: 1rem">Arodeploy</p>
         <div
@@ -1372,20 +1437,10 @@
     </footer>
 
     <script>
-      async function checkService(host, dotId, statusId, timeId) {
+      async function checkService(host, dotId) {
         const dot = document.getElementById(dotId);
-        const status = document.getElementById(statusId);
-        const time = document.getElementById(timeId);
-
-        const setState = (state, label, timeText) => {
-          dot.className = "status-dot " + state;
-          status.className = "status-label " + state;
-          status.textContent = label;
-          time.textContent = timeText;
-        };
 
         try {
-          const t0 = Date.now();
           await Promise.race([
             fetch("https://" + host, {
               method: "GET",
@@ -1396,26 +1451,15 @@
               setTimeout(() => reject(new Error("timeout")), 6000),
             ),
           ]);
-          const ms = Date.now() - t0;
-          setState("online", "Online", ms + "ms");
+          dot.className = "status-dot online";
         } catch (err) {
-          const label = err.message === "timeout" ? "Timeout" : "Offline";
-          setState(
-            "offline",
-            label,
-            "Last checked " + new Date().toLocaleTimeString(),
-          );
+          dot.className = "status-dot offline";
         }
       }
 
       function runChecks() {
-        checkService("api.arodeploy.com", "api-dot", "api-status", "api-time");
-        checkService(
-          "console.arodeploy.com",
-          "console-dot",
-          "console-status",
-          "console-time",
-        );
+        checkService("api.arodeploy.com", "api-dot");
+        checkService("console.arodeploy.com", "console-dot");
       }
 
       runChecks();
