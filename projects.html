@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <title>Example Projects — Arodeploy</title>
+
+    <!-- SEO -->
+    <meta
+      name="description"
+      content="Services and platforms being built on top of Arodeploy infrastructure."
+    />
+    <link rel="canonical" href="https://arodeploy.com/projects" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://arodeploy.com/projects" />
+    <meta property="og:site_name" content="Arodeploy" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Example Projects — Arodeploy" />
+    <meta
+      property="og:description"
+      content="Services and platforms being built on top of Arodeploy infrastructure."
+    />
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Example Projects — Arodeploy" />
+    <meta
+      name="twitter:description"
+      content="Services and platforms being built on top of Arodeploy infrastructure."
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800;900&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg: #07070e;
+        --bg-card: #0d0d1a;
+        --bg-elevated: #111122;
+        --text: #e8e8f4;
+        --text-muted: #7878a0;
+        --border: #1a1a30;
+        --border-bright: #2a2a48;
+        --accent: #4f7dff;
+        --accent-dim: rgba(79, 125, 255, 0.12);
+        --accent-glow: rgba(79, 125, 255, 0.28);
+        --success: #22c55e;
+        --error: #ff4560;
+        --warning: #ffb800;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        scrollbar-width: thin;
+        scrollbar-color: var(--border-bright) transparent;
+      }
+
+      html::-webkit-scrollbar {
+        width: 6px;
+      }
+      html::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      html::-webkit-scrollbar-thumb {
+        background: var(--border-bright);
+        border-radius: 3px;
+      }
+
+      body {
+        font-family:
+          "Inter",
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        line-height: 1.7;
+        overflow-x: hidden;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Grid background */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(79, 125, 255, 0.07) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(79, 125, 255, 0.07) 1px, transparent 1px);
+        background-size: 60px 60px;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      body > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Dev Banner */
+      .dev-banner {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: var(--accent);
+        color: #07070e;
+        text-align: center;
+        padding: 0.55rem 1.5rem;
+        font-family: "JetBrains Mono", "Courier New", monospace;
+        font-size: 0.78rem;
+        letter-spacing: 0.06em;
+        z-index: 1001;
+        line-height: 1.5;
+        font-weight: 600;
+      }
+
+      .dev-banner a {
+        color: #07070e;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+      .dev-banner a:hover {
+        opacity: 0.7;
+      }
+
+      /* Navigation */
+      nav {
+        position: fixed;
+        top: 36px;
+        width: 100%;
+        background-color: rgba(7, 7, 14, 0.92);
+        border-bottom: 1px solid var(--border);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        z-index: 1000;
+        padding: 1.25rem 2.5rem;
+      }
+
+      nav .nav-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      nav .nav-links {
+        display: flex;
+        gap: 2.5rem;
+        align-items: center;
+      }
+
+      nav .nav-links a {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+
+      nav .nav-links a:hover {
+        color: var(--accent);
+      }
+      nav .nav-links a.active {
+        color: var(--text);
+      }
+
+      .btn-console {
+        background-color: var(--accent) !important;
+        color: #07070e !important;
+        text-decoration: none;
+        padding: 0.5rem 1.1rem;
+        border-radius: 3px;
+        line-height: 1;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        transition:
+          box-shadow 0.2s ease,
+          opacity 0.2s ease;
+      }
+
+      .btn-console:hover {
+        box-shadow: 0 0 18px var(--accent-glow);
+        opacity: 0.9;
+        color: #07070e !important;
+      }
+
+      /* Main */
+      main {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 2.5rem;
+        flex: 1;
+        width: 100%;
+      }
+
+      /* Page header */
+      .page-header {
+        padding-top: 160px;
+        padding-bottom: 80px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .page-header-eyebrow {
+        font-family: "JetBrains Mono", "Courier New", monospace;
+        font-size: 0.85rem;
+        letter-spacing: 0.06em;
+        color: var(--accent);
+        margin-bottom: 1.5rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        opacity: 0.8;
+      }
+
+      .page-header h1 {
+        font-family: "Inter", sans-serif;
+        font-size: clamp(2.8rem, 7vw, 6rem);
+        font-weight: 900;
+        line-height: 1.05;
+        letter-spacing: -0.04em;
+        color: var(--text);
+        margin-bottom: 1.5rem;
+      }
+
+      .page-header p {
+        font-size: 1.2rem;
+        color: var(--text-muted);
+        max-width: 560px;
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+      }
+
+      .wip-notice {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: "JetBrains Mono", "Courier New", monospace;
+        font-size: 0.78rem;
+        letter-spacing: 0.06em;
+        color: var(--warning);
+      }
+
+      .wip-notice-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background-color: var(--warning);
+        flex-shrink: 0;
+        animation: blink 1.2s infinite;
+      }
+
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+
+      /* Projects grid */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1px;
+        background-color: var(--border);
+        border: 1px solid var(--border);
+        margin: 80px 0 100px;
+      }
+
+      .project-card {
+        background-color: var(--bg-card);
+        padding: 2.5rem;
+        transition:
+          background-color 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      .project-card:hover {
+        background-color: var(--bg-elevated);
+      }
+
+      .project-name {
+        font-family: "Inter", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        margin-bottom: 0.5rem;
+        color: var(--text);
+      }
+
+      .project-desc {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        line-height: 1.7;
+        margin-bottom: 1.75rem;
+      }
+
+      .wip-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "JetBrains Mono", "Courier New", monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--warning);
+        padding: 0.28rem 0.6rem;
+        border: 1px solid rgba(255, 184, 0, 0.3);
+        border-radius: 2px;
+      }
+
+      .wip-badge-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: var(--warning);
+        flex-shrink: 0;
+        animation: blink 1.2s infinite;
+      }
+
+      /* Footer */
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 2rem 2.5rem;
+        background-color: var(--bg-card);
+      }
+
+      footer .footer-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      footer p {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.75rem;
+        letter-spacing: 0.06em;
+        color: var(--text-muted);
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        nav {
+          padding: 1.25rem 1.5rem;
+        }
+        main {
+          padding: 0 1.5rem;
+        }
+
+        .page-header {
+          padding-top: 120px;
+          padding-bottom: 60px;
+        }
+
+        .projects-grid {
+          margin: 60px 0 80px;
+        }
+
+        footer {
+          padding: 1.5rem;
+        }
+
+        footer .footer-inner {
+          flex-direction: column;
+          gap: 0.5rem;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dev-banner" role="banner" aria-label="Development notice">
+      Under active development &mdash; for whitelist access or more details,
+      <a href="index.html#contact">contact us</a>
+    </div>
+    <nav>
+      <div class="nav-inner">
+        <a href="index.html" class="logo">Arodeploy</a>
+        <div class="nav-links">
+          <a href="index.html#why">Why</a>
+          <a href="about.html">About</a>
+          <a href="projects.html" class="active">Example projects</a>
+          <a href="index.html#contact">Contact</a>
+          <a href="https://console.arodeploy.com" class="btn-console"
+            >Console
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="11"
+              height="11"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="
+                display: inline-block;
+                vertical-align: middle;
+                margin-left: 2px;
+                margin-bottom: 1px;
+              "
+            >
+              <path
+                d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+              />
+              <polyline points="15 3 21 3 21 9" />
+              <line x1="10" y1="14" x2="21" y2="3" /></svg
+          ></a>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <div class="page-header">
+        <h1>Example Projects</h1>
+        <p>
+          Services and platforms being built on top of Arodeploy infrastructure.
+          None of these are in production yet.
+        </p>
+      </div>
+
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-name">VPN Service</div>
+          <p class="project-desc">
+            WireGuard-based private network access hosted entirely on Arodeploy
+            infrastructure. Self-managed, zero third-party routing, with direct
+            firewall control per node.
+          </p>
+          <span class="wip-badge">
+            <span class="wip-badge-dot"></span>
+            Work in progress
+          </span>
+        </div>
+
+        <div class="project-card">
+          <div class="project-name">AI Inference Stack</div>
+          <p class="project-desc">
+            Self-hosted LLM inference via Ollama running on dedicated GPU nodes.
+            Deploy open models at hardware cost with no per-token pricing.
+            Exposed as a simple API endpoint.
+          </p>
+          <span class="wip-badge">
+            <span class="wip-badge-dot"></span>
+            Work in progress
+          </span>
+        </div>
+
+        <div class="project-card">
+          <div class="project-name">Minecraft Hosting</div>
+          <p class="project-desc">
+            Managed Minecraft server hosting with automated backups, custom JVM
+            tuning, and modpack support. Spun up as a standard container with
+            persistent volumes.
+          </p>
+          <span class="wip-badge">
+            <span class="wip-badge-dot"></span>
+            Work in progress
+          </span>
+        </div>
+
+        <div class="project-card">
+          <div class="project-name">Next.js Hosting</div>
+          <p class="project-desc">
+            Optimised Next.js deployment with CDN caching, edge function
+            support, and incremental static regeneration out of the box. Tuned
+            for cold start performance and global latency.
+          </p>
+          <span class="wip-badge">
+            <span class="wip-badge-dot"></span>
+            Work in progress
+          </span>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <p style="font-size: 1rem">Arodeploy</p>
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            text-align: center;
+          "
+        >
+          <p>Made in Sweden</p>
+          <p>
+            By
+            <a
+              href="https://aarongsellin.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="
+                color: var(--accent);
+                text-decoration: underline;
+                text-underline-offset: 3px;
+                opacity: 0.8;
+              "
+              >aarongsellin.dev</a
+            >
+          </p>
+        </div>
+        <p>2026</p>
+      </div>
+      <div
+        style="
+          border-top: 1px solid var(--border);
+          margin-top: 1.25rem;
+          padding-top: 1.25rem;
+          max-width: 1100px;
+          margin-left: auto;
+          margin-right: auto;
+        "
+      >
+        <a
+          href="status.html"
+          style="
+            font-family: &quot;JetBrains Mono&quot;, monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            text-decoration: none;
+            text-transform: uppercase;
+          "
+          onmouseover="this.style.color = 'var(--accent)'"
+          onmouseout="this.style.color = 'var(--text-muted)'"
+          >System Status &rarr;</a
+        >
+      </div>
+    </footer>
+  </body>
+</html>

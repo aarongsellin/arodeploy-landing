@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <title>Status — Arodeploy</title>
+
+    <!-- SEO -->
+    <meta
+      name="description"
+      content="Live service status for Arodeploy infrastructure."
+    />
+    <link rel="canonical" href="https://arodeploy.com/status" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800;900&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg: #ffffff;
+        --bg-card: #f8f9fb;
+        --bg-hover: #f0f2f5;
+        --text: #0a0a14;
+        --text-muted: #6b7280;
+        --border: #e5e7eb;
+        --accent: #4f7dff;
+        --success: #16a34a;
+        --success-bg: #f0fdf4;
+        --success-border: #bbf7d0;
+        --error: #dc2626;
+        --error-bg: #fff1f2;
+        --error-border: #fecaca;
+        --warning: #d97706;
+        --warning-bg: #fffbeb;
+        --warning-border: #fde68a;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family:
+          "Inter",
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Navigation */
+      nav {
+        width: 100%;
+        background-color: var(--bg);
+        border-bottom: 1px solid var(--border);
+        padding: 1.1rem 2.5rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      nav .nav-inner {
+        max-width: 860px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      nav .nav-links {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+      }
+
+      nav .nav-links a {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: color 0.15s ease;
+      }
+
+      nav .nav-links a:hover {
+        color: var(--text);
+      }
+
+      nav .nav-links a.active {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* Main */
+      main {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 3rem 2.5rem 5rem;
+        flex: 1;
+        width: 100%;
+      }
+
+      /* Page header */
+      .page-header {
+        margin-bottom: 3rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .page-header-eyebrow {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 0.75rem;
+      }
+
+      .page-header-top {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .page-header h1 {
+        font-family: "Inter", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: var(--text);
+      }
+
+      .overall-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        padding: 0.4rem 0.85rem;
+        border-radius: 100px;
+        border: 1px solid;
+        white-space: nowrap;
+      }
+
+      .overall-badge.all-good {
+        color: var(--success);
+        background-color: var(--success-bg);
+        border-color: var(--success-border);
+      }
+
+      .overall-badge.degraded {
+        color: var(--warning);
+        background-color: var(--warning-bg);
+        border-color: var(--warning-border);
+      }
+
+      .overall-badge.outage {
+        color: var(--error);
+        background-color: var(--error-bg);
+        border-color: var(--error-border);
+      }
+
+      .overall-badge-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background-color: currentColor;
+        flex-shrink: 0;
+      }
+
+      .overall-badge.all-good .overall-badge-dot {
+        animation: pulse-dot 2.5s infinite;
+      }
+
+      @keyframes pulse-dot {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+
+      .last-updated {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        margin-top: 0.75rem;
+      }
+
+      /* Services */
+      .services-group {
+        margin-bottom: 2.5rem;
+      }
+
+      .services-group-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 0.75rem;
+        padding-left: 0.1rem;
+      }
+
+      .services-list {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .service-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.1rem 1.5rem;
+        background-color: var(--bg);
+        border-bottom: 1px solid var(--border);
+        gap: 1rem;
+        transition: background-color 0.15s ease;
+      }
+
+      .service-row:last-child {
+        border-bottom: none;
+      }
+
+      .service-row:hover {
+        background-color: var(--bg-card);
+      }
+
+      .service-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+        min-width: 0;
+      }
+
+      .service-name {
+        font-family: "Inter", sans-serif;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--text);
+        letter-spacing: -0.01em;
+      }
+
+      .service-url {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
+
+      .service-status {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-shrink: 0;
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        padding: 0.3rem 0.7rem;
+        border-radius: 100px;
+        border: 1px solid;
+        min-width: 92px;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+
+      .status-pill.online {
+        color: var(--success);
+        background-color: var(--success-bg);
+        border-color: var(--success-border);
+      }
+
+      .status-pill.offline {
+        color: var(--error);
+        background-color: var(--error-bg);
+        border-color: var(--error-border);
+      }
+
+      .status-pill.checking {
+        color: var(--warning);
+        background-color: var(--warning-bg);
+        border-color: var(--warning-border);
+      }
+
+      .status-pill-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: currentColor;
+        flex-shrink: 0;
+      }
+
+      .status-pill.checking .status-pill-dot {
+        animation: blink 1.2s infinite;
+      }
+
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.2;
+        }
+      }
+
+      .status-latency {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        min-width: 48px;
+        text-align: right;
+      }
+
+      /* Footer */
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 1.5rem 2.5rem;
+      }
+
+      footer .footer-inner {
+        max-width: 860px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      footer p {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.04em;
+        color: var(--text-muted);
+      }
+
+      /* Responsive */
+      @media (max-width: 640px) {
+        nav {
+          padding: 1rem 1.25rem;
+        }
+        main {
+          padding: 2rem 1.25rem 4rem;
+        }
+        footer {
+          padding: 1.25rem;
+        }
+
+        .service-row {
+          padding: 1rem 1.1rem;
+        }
+        .status-latency {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-inner">
+        <a href="index.html" class="logo">Arodeploy</a>
+        <div class="nav-links">
+          <a href="index.html#why">Why</a>
+          <a href="about.html">About</a>
+          <a href="projects.html">Example projects</a>
+          <a href="index.html#contact">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <div class="page-header">
+        <p class="page-header-eyebrow">System status</p>
+        <div class="page-header-top">
+          <h1>Service Health</h1>
+          <span class="overall-badge checking" id="overall-badge">
+            <span class="overall-badge-dot"></span>
+            <span id="overall-label">Checking</span>
+          </span>
+        </div>
+        <p class="last-updated" id="last-updated">Checking services&hellip;</p>
+      </div>
+
+      <div class="services-group">
+        <p class="services-group-label">Core services</p>
+        <div class="services-list">
+          <div class="service-row">
+            <div class="service-info">
+              <div class="service-name">API</div>
+              <div class="service-url">api.arodeploy.com</div>
+            </div>
+            <div class="service-status">
+              <span class="status-latency" id="api-latency"></span>
+              <span class="status-pill checking" id="api-pill">
+                <span class="status-pill-dot"></span>
+                <span id="api-label">Checking</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="service-row">
+            <div class="service-info">
+              <div class="service-name">Console</div>
+              <div class="service-url">console.arodeploy.com</div>
+            </div>
+            <div class="service-status">
+              <span class="status-latency" id="console-latency"></span>
+              <span class="status-pill checking" id="console-pill">
+                <span class="status-pill-dot"></span>
+                <span id="console-label">Checking</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <p>Arodeploy &mdash; Made in Sweden</p>
+        <p>Auto-refreshes every 30s</p>
+        <p>2026</p>
+      </div>
+    </footer>
+
+    <script>
+      const services = [
+        {
+          host: "api.arodeploy.com",
+          pillId: "api-pill",
+          labelId: "api-label",
+          latencyId: "api-latency",
+        },
+        {
+          host: "console.arodeploy.com",
+          pillId: "console-pill",
+          labelId: "console-label",
+          latencyId: "console-latency",
+        },
+      ];
+
+      async function checkService({ host, pillId, labelId, latencyId }) {
+        const pill = document.getElementById(pillId);
+        const label = document.getElementById(labelId);
+        const latency = document.getElementById(latencyId);
+
+        try {
+          const t0 = Date.now();
+          await Promise.race([
+            fetch("https://" + host, {
+              method: "GET",
+              mode: "no-cors",
+              cache: "no-store",
+            }),
+            new Promise((_, reject) =>
+              setTimeout(() => reject(new Error("timeout")), 6000),
+            ),
+          ]);
+          const ms = Date.now() - t0;
+          pill.className = "status-pill online";
+          label.textContent = "Operational";
+          latency.textContent = ms + "ms";
+        } catch (err) {
+          const isTimeout = err.message === "timeout";
+          pill.className = "status-pill offline";
+          label.textContent = isTimeout ? "Timeout" : "Offline";
+          latency.textContent = "";
+        }
+      }
+
+      function updateOverall() {
+        const pills = services.map((s) => document.getElementById(s.pillId));
+        const states = pills.map((p) => {
+          if (p.classList.contains("online")) return "online";
+          if (p.classList.contains("offline")) return "offline";
+          return "checking";
+        });
+
+        const badge = document.getElementById("overall-badge");
+        const label = document.getElementById("overall-label");
+
+        if (states.every((s) => s === "online")) {
+          badge.className = "overall-badge all-good";
+          label.textContent = "All systems operational";
+        } else if (states.some((s) => s === "offline")) {
+          badge.className = "overall-badge outage";
+          label.textContent = "Service disruption";
+        } else {
+          badge.className = "overall-badge degraded";
+          label.textContent = "Checking…";
+        }
+      }
+
+      async function runChecks() {
+        document.getElementById("last-updated").textContent =
+          "Checking services…";
+        await Promise.all(services.map(checkService));
+        updateOverall();
+        const now = new Date();
+        document.getElementById("last-updated").textContent =
+          "Last checked at " +
+          now.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          });
+      }
+
+      runChecks();
+      setInterval(runChecks, 30000);
+    </script>
+  </body>
+</html>

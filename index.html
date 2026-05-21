@@ -38,6 +38,8 @@
       content="A deployment platform focused on lowering hosting costs and making low-level architecture accessible, without giving up control or fine-tuning."
     />
     <style>
+      @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800;900&display=swap");
+
       * {
         margin: 0;
         padding: 0;
@@ -45,34 +47,45 @@
       }
 
       :root {
-        --bg: #f4f2ee;
-        --bg-card: #f0f2f5;
-        --text: #0a0a0f;
-        --text-muted: #52526e;
-        --border: #dddde8;
-        --success: #16803c;
-        --error: #c0392b;
-        --warning: #b45309;
+        --bg: #07070e;
+        --bg-card: #0d0d1a;
+        --bg-elevated: #111122;
+        --text: #e8e8f4;
+        --text-muted: #7878a0;
+        --border: #1a1a30;
+        --border-bright: #2a2a48;
+        --accent: #4f7dff;
+        --accent-dim: rgba(79, 125, 255, 0.12);
+        --accent-glow: rgba(79, 125, 255, 0.28);
+        --success: #22c55e;
+        --error: #ff4560;
+        --warning: #ffb800;
       }
 
       html {
         scroll-behavior: smooth;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
+        scrollbar-width: thin;
+        scrollbar-color: var(--border-bright) transparent;
       }
 
       html::-webkit-scrollbar {
-        display: none;
+        width: 6px;
+      }
+      html::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      html::-webkit-scrollbar-thumb {
+        background: var(--border-bright);
+        border-radius: 3px;
       }
 
       body {
         font-family:
+          "Inter",
           system-ui,
           -apple-system,
           BlinkMacSystemFont,
           "Segoe UI",
-          Helvetica,
-          Arial,
           sans-serif;
         background-color: var(--bg);
         color: var(--text);
@@ -80,30 +93,49 @@
         overflow-x: hidden;
       }
 
+      /* Grid background */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(79, 125, 255, 0.07) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(79, 125, 255, 0.07) 1px, transparent 1px);
+        background-size: 60px 60px;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      body > * {
+        position: relative;
+        z-index: 1;
+      }
+
       /* Dev Banner */
       .dev-banner {
         position: fixed;
         top: 0;
         width: 100%;
-        background-color: var(--text);
-        color: var(--bg);
+        background-color: var(--accent);
+        color: #07070e;
         text-align: center;
         padding: 0.55rem 1.5rem;
-        font-family: "Courier New", "Lucida Console", monospace;
+        font-family: "JetBrains Mono", "Courier New", monospace;
         font-size: 0.78rem;
-        letter-spacing: 0.04em;
+        letter-spacing: 0.06em;
         z-index: 1001;
         line-height: 1.5;
+        font-weight: 600;
       }
 
       .dev-banner a {
-        color: var(--bg);
+        color: #07070e;
         text-decoration: underline;
         text-underline-offset: 3px;
       }
 
       .dev-banner a:hover {
-        opacity: 0.75;
+        opacity: 0.7;
       }
 
       /* Navigation */
@@ -111,8 +143,10 @@
         position: fixed;
         top: var(--banner-h, 36px);
         width: 100%;
-        background-color: var(--bg);
+        background-color: rgba(7, 7, 14, 0.92);
         border-bottom: 1px solid var(--border);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
         z-index: 1000;
         padding: 1.25rem 2.5rem;
       }
@@ -126,14 +160,12 @@
       }
 
       .logo {
-        font-family:
-          -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
-          sans-serif;
-        font-size: 1rem;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.95rem;
         font-weight: 600;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.12em;
         text-transform: uppercase;
-        color: var(--text);
+        color: var(--accent);
         text-decoration: none;
       }
 
@@ -144,10 +176,8 @@
       }
 
       nav .nav-links a {
-        font-family:
-          -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
-          sans-serif;
-        font-size: 0.8rem;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.75rem;
         letter-spacing: 0.1em;
         text-transform: uppercase;
         color: var(--text-muted);
@@ -156,22 +186,27 @@
       }
 
       nav .nav-links a:hover {
-        color: var(--text);
+        color: var(--accent);
       }
 
       .btn-console {
-        background-color: var(--text);
-        color: var(--bg) !important;
+        background-color: var(--accent) !important;
+        color: #07070e !important;
         text-decoration: none;
-        padding: 0.5rem 1rem;
-        border-radius: 4px;
+        padding: 0.5rem 1.1rem;
+        border-radius: 3px;
         line-height: 1;
-        transition: opacity 0.2s ease;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        transition:
+          box-shadow 0.2s ease,
+          opacity 0.2s ease;
       }
 
       .btn-console:hover {
-        opacity: 0.75;
-        color: var(--bg) !important;
+        box-shadow: 0 0 18px var(--accent-glow);
+        opacity: 0.9;
+        color: #07070e !important;
       }
 
       /* Hamburger */
@@ -224,27 +259,58 @@
       }
 
       .hero-eyebrow {
-        font-family: "Courier New", "Lucida Console", monospace;
+        font-family: "JetBrains Mono", "Courier New", monospace;
         font-size: 0.85rem;
-        letter-spacing: 0.05em;
-        color: var(--text-muted);
+        letter-spacing: 0.06em;
+        color: var(--accent);
         margin-bottom: 2rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .hero-eyebrow::before {
+        content: "";
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: var(--accent);
+        box-shadow: 0 0 8px var(--accent);
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+          box-shadow: 0 0 8px var(--accent);
+        }
+        50% {
+          opacity: 0.6;
+          box-shadow: 0 0 3px var(--accent);
+        }
       }
 
       .hero h1 {
-        font-size: clamp(2.75rem, 8vw, 9rem);
-        font-weight: 800;
+        font-family: "Inter", sans-serif;
+        font-size: clamp(3.5rem, 9vw, 8rem);
+        font-weight: 900;
         line-height: 1;
         letter-spacing: -0.04em;
         white-space: nowrap;
         color: var(--text);
       }
 
+      .hero h1 .accent-word {
+        color: var(--accent);
+      }
+
       .hero-description {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         color: var(--text-muted);
-        max-width: 620px;
-        line-height: 1.75;
+        max-width: 580px;
+        line-height: 1.8;
       }
 
       /* About Section */
@@ -258,24 +324,30 @@
       }
 
       .section-label {
-        font-family: "Courier New", "Lucida Console", monospace;
-        font-size: 3rem;
-        /* font-weight: 400; */
-        /* letter-spacing: 0.03em; */
-        color: var(--text-muted);
+        font-family: "JetBrains Mono", "Courier New", monospace;
+        font-size: 2.5rem;
+        color: var(--text);
         padding-top: 0.4rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
       }
 
       .about-body p {
-        font-size: 1.25rem;
+        font-size: 1.15rem;
         color: var(--text-muted);
-        line-height: 1.8;
+        line-height: 1.85;
         margin-bottom: 1.5rem;
         font-weight: 400;
       }
 
       .about-body p:last-child {
         margin-bottom: 0;
+      }
+
+      .about-body hr {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin-bottom: 1.5rem;
       }
 
       /* Status Section */
@@ -301,34 +373,28 @@
       }
 
       .status-card {
-        background-color: var(--bg);
+        background-color: var(--bg-card);
         padding: 2.5rem;
         transition: background-color 0.2s ease;
       }
 
       .status-card:hover {
-        background-color: var(--bg-card);
+        background-color: var(--bg-elevated);
       }
 
       .service-name {
-        font-family:
-          system-ui,
-          -apple-system,
-          BlinkMacSystemFont,
-          "Segoe UI",
-          Helvetica,
-          Arial,
-          sans-serif;
+        font-family: "Inter", sans-serif;
         font-size: 1.1rem;
-        font-weight: 600;
+        font-weight: 700;
         letter-spacing: -0.01em;
         margin-bottom: 0.35rem;
         color: var(--text);
       }
 
       .service-url {
-        font-family: "Courier New", "Lucida Console", monospace;
-        font-size: 1rem;
+        font-family: "JetBrains Mono", "Courier New", monospace;
+        font-size: 0.88rem;
+        color: var(--text-muted);
         margin-bottom: 1.5rem;
       }
 
@@ -339,17 +405,19 @@
       }
 
       .status-dot {
-        width: 11px;
-        height: 11px;
+        width: 9px;
+        height: 9px;
         border-radius: 50%;
         flex-shrink: 0;
       }
 
       .status-dot.online {
         background-color: var(--success);
+        box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
       }
       .status-dot.offline {
         background-color: var(--error);
+        box-shadow: 0 0 8px var(--error);
       }
       .status-dot.checking {
         background-color: var(--warning);
@@ -367,10 +435,10 @@
       }
 
       .status-label {
-        font-family: "Courier New", "Lucida Console", monospace;
-        font-size: 1rem;
-        font-weight: 400;
-        letter-spacing: 0.02em;
+        font-family: "JetBrains Mono", "Courier New", monospace;
+        font-size: 0.88rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
       }
 
       .status-label.online {
@@ -384,10 +452,11 @@
       }
 
       .status-time {
-        font-family: "Courier New", "Lucida Console", monospace;
-        font-size: 0.78rem;
+        font-family: "JetBrains Mono", "Courier New", monospace;
+        font-size: 0.72rem;
         color: var(--text-muted);
         margin-top: 0.6rem;
+        opacity: 0.7;
       }
 
       /* ARCO Section */
@@ -405,17 +474,19 @@
         top: 110px;
       }
 
-      .arco-label p:not(.section-label) {
-        font-size: 1.1rem;
+      .arco-label p {
+        font-size: 1.05rem;
         color: var(--text-muted);
         line-height: 1.8;
         margin-top: 1rem;
       }
 
       .arco-code-wrap {
-        background-color: var(--text);
+        background-color: #0d0d1a;
         border-radius: 6px;
         overflow: hidden;
+        border: 1px solid var(--border-bright);
+        box-shadow: 0 0 40px rgba(0, 229, 160, 0.05);
       }
 
       .arco-code-header {
@@ -423,87 +494,24 @@
         align-items: center;
         justify-content: space-between;
         padding: 0.75rem 1.25rem;
-        border-bottom: 1px solid rgb(255, 255, 255);
-      }
-
-      .arco-code-filename {
-        font-family: "Courier New", "Lucida Console", monospace;
-        font-size: 0.78rem;
-        letter-spacing: 0.05em;
-        color: rgba(244, 241, 241, 0.976);
-      }
-
-      .arco-code-tag {
-        font-family: "Courier New", "Lucida Console", monospace;
-        font-size: 0.72rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.2);
-      }
-
-      .arco-code-body {
-        padding: 1.75rem 1.5rem;
-        overflow-x: auto;
-      }
-
-      .arco-code-body pre {
-        margin: 0;
-        font-family: "Courier New", "Lucida Console", monospace;
-        font-size: 0.85rem;
-        line-height: 1.55;
-        color: rgba(255, 255, 255, 0.85);
-        white-space: pre;
-      }
-
-      /* ARCO Section */
-      .arco-section {
-        padding: 100px 0;
         border-bottom: 1px solid var(--border);
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        gap: 4rem;
-        align-items: start;
-      }
-
-      .arco-label {
-        position: sticky;
-        top: 110px;
-      }
-
-      .arco-label p:not(.section-label) {
-        font-size: 1.1rem;
-        color: var(--text-muted);
-        line-height: 1.8;
-        margin-top: 1rem;
-      }
-
-      .arco-code-wrap {
-        background-color: var(--text);
-        border-radius: 6px;
-        overflow: hidden;
-      }
-
-      .arco-code-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0.75rem 1.25rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        background-color: #0a0a18;
       }
 
       .arco-code-filename {
-        font-family: "Courier New", "Lucida Console", monospace;
+        font-family: "JetBrains Mono", "Courier New", monospace;
         font-size: 0.78rem;
         letter-spacing: 0.05em;
-        color: rgba(255, 255, 255, 0.8);
+        color: var(--accent);
       }
 
       .arco-code-tag {
-        font-family: "Courier New", "Lucida Console", monospace;
-        font-size: 0.72rem;
-        letter-spacing: 0.08em;
+        font-family: "JetBrains Mono", "Courier New", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
         text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.5);
+        color: var(--text-muted);
+        opacity: 0.6;
       }
 
       .arco-code-body {
@@ -513,27 +521,28 @@
 
       .arco-code-body pre {
         margin: 0;
-        font-family: "Courier New", "Lucida Console", monospace;
+        font-family: "JetBrains Mono", "Courier New", monospace;
         font-size: 0.85rem;
-        line-height: 1.35;
-        color: rgba(255, 255, 255, 0.85);
+        line-height: 1.6;
+        color: rgba(232, 232, 244, 0.7);
         white-space: pre;
       }
 
       .arco-code-body .t-key {
-        color: rgba(255, 255, 255, 0.75);
+        color: rgba(232, 232, 244, 0.85);
       }
       .arco-code-body .t-str {
-        color: #c8f0c8;
+        color: #7dd3a8;
+        opacity: 0.9;
       }
       .arco-code-body .t-punct {
-        color: rgba(255, 255, 255, 0.45);
+        color: rgba(232, 232, 244, 0.3);
       }
       .arco-code-body .t-num {
-        color: #f0d080;
+        color: #ffb800;
       }
       .arco-code-body .t-bool {
-        color: #f0d080;
+        color: #ffb800;
       }
 
       /* Projects Section */
@@ -559,7 +568,7 @@
       }
 
       .projects-header-note p {
-        font-size: 1.25rem;
+        font-size: 1.15rem;
         color: var(--text-muted);
         line-height: 1.8;
         margin-bottom: 1.5rem;
@@ -569,15 +578,15 @@
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
-        font-family: "Courier New", "Lucida Console", monospace;
-        font-size: 0.8rem;
-        letter-spacing: 0.05em;
+        font-family: "JetBrains Mono", "Courier New", monospace;
+        font-size: 0.78rem;
+        letter-spacing: 0.06em;
         color: var(--warning);
       }
 
       .wip-notice-dot {
-        width: 8px;
-        height: 8px;
+        width: 7px;
+        height: 7px;
         border-radius: 50%;
         background-color: var(--warning);
         flex-shrink: 0;
@@ -594,26 +603,21 @@
       }
 
       .project-card {
-        background-color: var(--bg);
+        background-color: var(--bg-card);
         padding: 2.5rem;
-        transition: background-color 0.2s ease;
+        transition:
+          background-color 0.2s ease,
+          box-shadow 0.2s ease;
       }
 
       .project-card:hover {
-        background-color: var(--bg-card);
+        background-color: var(--bg-elevated);
       }
 
       .project-name {
-        font-family:
-          system-ui,
-          -apple-system,
-          BlinkMacSystemFont,
-          "Segoe UI",
-          Helvetica,
-          Arial,
-          sans-serif;
-        font-size: 1.1rem;
-        font-weight: 600;
+        font-family: "Inter", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
         letter-spacing: -0.01em;
         margin-bottom: 0.5rem;
         color: var(--text);
@@ -622,7 +626,7 @@
       .project-desc {
         font-size: 0.9rem;
         color: var(--text-muted);
-        line-height: 1.65;
+        line-height: 1.7;
         margin-bottom: 1.75rem;
       }
 
@@ -630,20 +634,19 @@
         display: inline-flex;
         align-items: center;
         gap: 0.4rem;
-        font-family: "Courier New", "Lucida Console", monospace;
-        font-size: 0.7rem;
-        letter-spacing: 0.07em;
+        font-family: "JetBrains Mono", "Courier New", monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.08em;
         text-transform: uppercase;
         color: var(--warning);
         padding: 0.28rem 0.6rem;
-        border: 1px solid var(--warning);
-        border-radius: 3px;
-        opacity: 0.85;
+        border: 1px solid rgba(255, 184, 0, 0.3);
+        border-radius: 2px;
       }
 
       .wip-badge-dot {
-        width: 6px;
-        height: 6px;
+        width: 5px;
+        height: 5px;
         border-radius: 50%;
         background-color: var(--warning);
         flex-shrink: 0;
@@ -771,30 +774,30 @@
       }
 
       .contact-body p {
-        font-size: 1.25rem;
+        font-size: 1.15rem;
         color: var(--text-muted);
         line-height: 1.8;
         margin-bottom: 1.5rem;
       }
 
       .contact-link {
-        font-family:
-          -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
-          sans-serif;
-        font-size: 1.1rem;
-        letter-spacing: 0.05em;
-        color: var(--text);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 1rem;
+        letter-spacing: 0.04em;
+        color: var(--accent);
         text-decoration: none;
-        border-bottom: 1px solid var(--text);
-        padding-bottom: 1px;
+        border-bottom: 1px solid rgba(0, 229, 160, 0.3);
+        padding-bottom: 2px;
         transition:
           color 0.2s ease,
-          border-color 0.2s ease;
+          border-color 0.2s ease,
+          text-shadow 0.2s ease;
       }
 
       .contact-link:hover {
-        color: var(--text-muted);
-        border-color: var(--text-muted);
+        color: var(--text);
+        border-color: var(--text);
+        text-shadow: 0 0 12px var(--accent-glow);
       }
 
       footer .footer-status {
@@ -817,6 +820,7 @@
       footer {
         border-top: 1px solid var(--border);
         padding: 2rem 2.5rem;
+        background-color: var(--bg-card);
       }
 
       footer .footer-inner {
@@ -828,11 +832,9 @@
       }
 
       footer p {
-        font-family:
-          -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
-          sans-serif;
+        font-family: "JetBrains Mono", monospace;
         font-size: 0.75rem;
-        letter-spacing: 0.05em;
+        letter-spacing: 0.06em;
         color: var(--text-muted);
       }
 
@@ -949,9 +951,8 @@
         </button>
         <div class="nav-links">
           <a href="#why">Why</a>
-          <a href="#arco">Arco</a>
-          <a href="#projects">Example projects</a>
-          <a href="#trust">Trust</a>
+          <a href="about.html">About</a>
+          <a href="projects.html">Example projects</a>
           <a href="#contact">Contact</a>
           <a
             href="https://console.arodeploy.com"
@@ -978,19 +979,20 @@
                 d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
               />
               <polyline points="15 3 21 3 21 9" />
-              <line x1="10" y1="14" x2="21" y2="3" /></svg
-          ></a>
+              <line x1="10" y1="14" x2="21" y2="3" /></svg>
+          </a>
         </div>
       </div>
     </nav>
 
     <main>
       <section class="hero">
-        <p class="hero-eyebrow">// infrastructure at cost</p>
-        <h1>Deploy smarter.</h1>
-        <h1>Scale for less.</h1>
+        <h1>
+          Deploy <span class="accent-word">smarter.</span><br />Scale for
+          <span class="accent-word">less.</span>
+        </h1>
         <p class="hero-description">
-          Cut your hosting overhead while exposing the full stack. From
+          Cut your hosting overhead while unlocking the full stack. From
           networking to runtime, without sacrificing usability.
         </p>
       </section>
@@ -1014,52 +1016,6 @@
         </div>
       </section>
 
-      <section class="about-section" id="about">
-        <p class="section-label">About</p>
-        <div class="about-body">
-          <p>
-            Arodeploy started with a simple frustration: hosting costs. Running
-            services on bare metal was significantly cheaper, but the tooling
-            needed to do it well was largely absent for small teams and
-            individual developers. The platform is built to give full control
-            over infrastructure at a fraction of typical PaaS cost, and is
-            designed to grow well beyond simple app deployment.
-          </p>
-
-          <p>
-            As the platform matures, the aim is to make it source-available,
-            keeping development transparent and giving the community a clear
-            view of how it works.
-          </p>
-          <hr />
-          <p style="margin-top: 1rem">
-            The goal is to create ARCO ('Arodeploy Infrastructure Resource
-            Configuration') , a declarative configuration layer for defining an
-            entire platform, from infrastructure and containers to routing, load
-            balancing, and deployment behaviour. No managed abstractions hiding
-            what is actually happening underneath.
-          </p>
-          <p>
-            It will treat infrastructure as a living component of your
-            application, rather than a static backdrop. By implementing
-            GitOps-driven, declarative workflows, we can establish a repository
-            as a single source of truth for an entire environment.
-          </p>
-          <p>
-            The result of this is a platform that is entirely reproducible and
-            auditable. Removing the need for opaque, managed abstractions while
-            providing the granular control needed to scale complex systems with
-            absolute certainty.
-          </p>
-          <p>
-            Through reusable templates and custom definitions, it can support
-            everything from a simple WordPress site to more intricate
-            distributed systems, making the platform flexible for a wide range
-            of use cases.
-          </p>
-        </div>
-      </section>
-
       <section class="arco-section" id="arco">
         <div class="arco-label">
           <p class="section-label">ARCO</p>
@@ -1069,11 +1025,13 @@
           </p>
           <p
             style="
-              font-size: 0.8rem;
+              font-size: 0.78rem;
               margin-top: 1.5rem;
-              opacity: 0.5;
-              font-family: &quot;Courier New&quot;, monospace;
+              opacity: 0.45;
+              font-family:
+                &quot;JetBrains Mono&quot;, &quot;Courier New&quot;, monospace;
               line-height: 1.6;
+              color: var(--accent);
             "
           >
             // example only &mdash; does not reflect<br />// final production
@@ -1162,202 +1120,6 @@
     <span class="t-punct">]</span>
   <span class="t-punct">}</span>
 <span class="t-punct">]</span></pre>
-            </div>
-          </div>
-
-          <p
-            style="
-              font-size: 1.1rem;
-              color: var(--text-muted);
-              margin-top: 2rem;
-              line-height: 1.8;
-            "
-          >
-            Arodeploy listens to your Git provider, detects
-            infrastructure-relevant changes, builds the affected images, and
-            applies only the updates your deployment needs.
-          </p>
-
-          <img
-            src="git-flow.png"
-            alt="Git flow diagram"
-            style="
-              width: 100%;
-              margin-top: 2rem;
-              border-radius: 6px;
-              display: block;
-            "
-          />
-
-          <!-- Short explanation of the git flow diagram -->
-          <p
-            style="
-              font-size: 0.9rem;
-              color: var(--text-muted);
-              margin-top: 1rem;
-              line-height: 1.7;
-            "
-          >
-            <!-- Add explanation here -->
-          </p>
-        </div>
-      </section>
-
-      <section class="projects-section" id="projects">
-        <div class="projects-header">
-          <div class="projects-label">
-            <p class="section-label">Example projects</p>
-          </div>
-          <div class="projects-header-note">
-            <p>
-              Services and platforms being built on top of Arodeploy
-              infrastructure. None of these are in production yet.
-            </p>
-            <span class="wip-notice">
-              <span class="wip-notice-dot"></span>
-              work in progress &mdash; not yet in production
-            </span>
-          </div>
-        </div>
-        <div class="projects-grid">
-          <div class="project-card">
-            <div class="project-name">VPN Service</div>
-            <p class="project-desc">
-              WireGuard-based private network access hosted entirely on
-              Arodeploy infrastructure. Self-managed, zero third-party routing,
-              with direct firewall control per node.
-            </p>
-            <span class="wip-badge">
-              <span class="wip-badge-dot"></span>
-              Work in progress
-            </span>
-          </div>
-
-          <div class="project-card">
-            <div class="project-name">AI Inference Stack</div>
-            <p class="project-desc">
-              Self-hosted LLM inference via Ollama running on dedicated GPU
-              nodes. Deploy open models at hardware cost with no per-token
-              pricing. Exposed as a simple API endpoint.
-            </p>
-            <span class="wip-badge">
-              <span class="wip-badge-dot"></span>
-              Work in progress
-            </span>
-          </div>
-
-          <div class="project-card">
-            <div class="project-name">Minecraft Hosting</div>
-            <p class="project-desc">
-              Managed Minecraft server hosting with automated backups, custom
-              JVM tuning, and modpack support. Spun up as a standard container
-              with persistent volumes.
-            </p>
-            <span class="wip-badge">
-              <span class="wip-badge-dot"></span>
-              Work in progress
-            </span>
-          </div>
-
-          <div class="project-card">
-            <div class="project-name">Next.js Hosting</div>
-            <p class="project-desc">
-              Optimised Next.js deployment with CDN caching, edge function
-              support, and incremental static regeneration out of the box. Tuned
-              for cold start performance and global latency.
-            </p>
-            <span class="wip-badge">
-              <span class="wip-badge-dot"></span>
-              Work in progress
-            </span>
-          </div>
-        </div>
-      </section>
-
-      <section class="trust-section" id="trust">
-        <div class="trust-label">
-          <p class="section-label">Trust</p>
-          <p>
-            EU-first by design. Choose your region explicitly, with full
-            transparency about where your data sits.
-          </p>
-        </div>
-        <div class="trust-body">
-          <p>
-            Arodeploy is built as an EU-first alternative to hyperscalers and
-            US-headquartered PaaS providers. As a Swedish company, our legal
-            base, default infrastructure, and core compliance posture are all
-            rooted in the European Union. GDPR compliance is not a feature to be
-            added; it is the baseline.
-          </p>
-          <p>
-            That said, region choice is yours. Servers can be deployed in EU
-            (default), US East, US West, or Singapore. When you deploy outside
-            the EU, data for that workload resides in that region and falls
-            outside EU jurisdiction. This is visible, explicit, and never hidden
-            behind managed abstractions. You choose the region; we make the
-            implications clear.
-          </p>
-          <p>
-            For teams with strict data residency requirements, EU-only
-            deployments are fully supported. For teams that need global reach,
-            the same platform and tooling works across all regions without
-            changing your workflow.
-          </p>
-
-          <div class="compliance-grid">
-            <div class="compliance-card">
-              <div class="compliance-name">
-                GDPR
-                <span class="compliance-badge active"> Active </span>
-              </div>
-              <p class="compliance-desc">
-                EU deployments process and store all data within the EU by
-                default. GDPR compliance applies to all EU-region workloads.
-                Data in US East, US West, or Singapore regions is scoped to that
-                jurisdiction.
-              </p>
-            </div>
-
-            <div class="compliance-card">
-              <div class="compliance-name">
-                ISO 27001
-                <span class="compliance-badge planned">
-                  Planned at launch
-                </span>
-              </div>
-              <p class="compliance-desc">
-                Information security management system certification. Audit and
-                certification planned prior to general availability.
-              </p>
-            </div>
-
-            <div class="compliance-card">
-              <div class="compliance-name">
-                SOC 2 Type II
-                <span class="compliance-badge planned">
-                  Planned at launch
-                </span>
-              </div>
-              <p class="compliance-desc">
-                Independent audit covering security, availability, and
-                confidentiality. Targeted for completion in the first full year
-                of operation.
-              </p>
-            </div>
-
-            <div class="compliance-card">
-              <div class="compliance-name">
-                NIS2 Alignment
-                <span class="compliance-badge planned">
-                  Planned at launch
-                </span>
-              </div>
-              <p class="compliance-desc">
-                EU Network and Information Security Directive 2 alignment for
-                critical infrastructure and cloud service obligations.
-              </p>
-            </div>
           </div>
         </div>
       </section>
@@ -1376,35 +1138,6 @@
     </main>
 
     <footer>
-      <div class="footer-status" id="status">
-        <div class="footer-status-inner">
-          <p class="section-label" style="margin-bottom: 1.25rem">Status</p>
-          <div class="footer-status-dots">
-            <div style="display: flex; align-items: center; gap: 0.5rem">
-              <div class="status-dot checking" id="api-dot"></div>
-              <span
-                style="
-                  font-family: &quot;Courier New&quot;, monospace;
-                  font-size: 0.85rem;
-                  color: var(--text-muted);
-                "
-                >api.arodeploy.com</span
-              >
-            </div>
-            <div style="display: flex; align-items: center; gap: 0.5rem">
-              <div class="status-dot checking" id="console-dot"></div>
-              <span
-                style="
-                  font-family: &quot;Courier New&quot;, monospace;
-                  font-size: 0.85rem;
-                  color: var(--text-muted);
-                "
-                >console.arodeploy.com</span
-              >
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="footer-inner">
         <p style="font-size: 1rem">Arodeploy</p>
         <div
@@ -1423,9 +1156,10 @@
               target="_blank"
               rel="noopener noreferrer"
               style="
-                color: var(--text-muted);
+                color: var(--accent);
                 text-decoration: underline;
                 text-underline-offset: 3px;
+                opacity: 0.8;
               "
               >aarongsellin.dev</a
             >
@@ -1434,65 +1168,31 @@
 
         <p>2026</p>
       </div>
+      <div
+        style="
+          border-top: 1px solid var(--border);
+          margin-top: 1.25rem;
+          padding-top: 1.25rem;
+          max-width: 1100px;
+          margin-left: auto;
+          margin-right: auto;
+        "
+      >
+        <a
+          href="status.html"
+          style="
+            font-family: &quot;JetBrains Mono&quot;, monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            text-decoration: none;
+            text-transform: uppercase;
+          "
+          onmouseover="this.style.color = 'var(--accent)'"
+          onmouseout="this.style.color = 'var(--text-muted)'"
+          >System Status &rarr;</a
+        >
+      </div>
     </footer>
-
-    <script>
-      async function checkService(host, dotId) {
-        const dot = document.getElementById(dotId);
-
-        try {
-          await Promise.race([
-            fetch("https://" + host, {
-              method: "GET",
-              mode: "no-cors",
-              cache: "no-store",
-            }),
-            new Promise((_, reject) =>
-              setTimeout(() => reject(new Error("timeout")), 6000),
-            ),
-          ]);
-          dot.className = "status-dot online";
-        } catch (err) {
-          dot.className = "status-dot offline";
-        }
-      }
-
-      function runChecks() {
-        checkService("api.arodeploy.com", "api-dot");
-        checkService("console.arodeploy.com", "console-dot");
-      }
-
-      runChecks();
-      setInterval(runChecks, 30000);
-
-      // Hamburger menu
-      const navToggle = document.querySelector(".nav-toggle");
-      const navLinks = document.querySelector(".nav-links");
-
-      navToggle.addEventListener("click", () => {
-        const open = navLinks.classList.toggle("open");
-        navToggle.classList.toggle("open", open);
-        navToggle.setAttribute("aria-expanded", open);
-      });
-
-      navLinks.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => {
-          navLinks.classList.remove("open");
-          navToggle.classList.remove("open");
-          navToggle.setAttribute("aria-expanded", "false");
-        });
-      });
-
-      // Dynamic banner height
-      const banner = document.querySelector(".dev-banner");
-      function updateBannerHeight() {
-        document.documentElement.style.setProperty(
-          "--banner-h",
-          banner.offsetHeight + "px",
-        );
-      }
-      updateBannerHeight();
-      new ResizeObserver(updateBannerHeight).observe(banner);
-    </script>
   </body>
 </html>
