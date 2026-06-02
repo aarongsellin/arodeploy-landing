@@ -950,10 +950,6 @@
           <span></span>
         </button>
         <div class="nav-links">
-          <a href="#why">Why</a>
-          <a href="about.html">About</a>
-          <a href="projects.html">Example projects</a>
-          <a href="#contact">Contact</a>
           <a
             href="https://console.arodeploy.com"
             class="btn-console btn-console-in-menu"
@@ -979,7 +975,8 @@
                 d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
               />
               <polyline points="15 3 21 3 21 9" />
-              <line x1="10" y1="14" x2="21" y2="3" /></svg>
+              <line x1="10" y1="14" x2="21" y2="3" />
+            </svg>
           </a>
         </div>
       </div>
@@ -992,8 +989,8 @@
           <span class="accent-word">less.</span>
         </h1>
         <p class="hero-description">
-          Cut your hosting overhead while unlocking the full stack. From
-          networking to runtime, without sacrificing usability.
+          Cut hosting overhead while unlocking the full stack. From networking
+          to runtime, without sacrificing usability.
         </p>
       </section>
 
@@ -1001,138 +998,61 @@
         <p class="section-label">Why</p>
         <div class="about-body">
           <p>
-            Arodeploy is built around a pricing model that doesn't punish
-            growth. Compute is billed at a flat, predictable rate. No per-seat
-            fees, no per-organisation tiers, no surprise multipliers. Bandwidth
-            is priced leniently, so a traffic spike doesn't become a billing
-            spike. GPU workloads can be added and deployed as simply as any
-            Docker container. Private networking is first-class, every setup
-            ships with direct firewall access, and every layer of configuration
-            stays in your hands. From routing and load balancing down to
-            fine-tuning the environment for your exact workload, without
-            sacrificing one click deployments or the convenience that make
-            modern tools easy.
+            Most platforms abstract away the hardware. You pick a size tier and
+            accept whatever machine ends up running your code. We want to flip
+            that, putting full infrastructure control directly into your
+            existing workflow's with tools you already know and love.
           </p>
-        </div>
-      </section>
-
-      <section class="arco-section" id="arco">
-        <div class="arco-label">
-          <p class="section-label">ARCO</p>
           <p>
-            Arodeploy Resource Configuration; a declarative config that defines
-            your entire platform in one place.
+            That means CPU architecture, memory, storage, and private
+            networking, all able to be declared per service in a
+            <code
+              style="
+                font-family: &quot;JetBrains Mono&quot;, monospace;
+                font-size: 0.88em;
+                color: var(--accent);
+                background: var(--accent-dim);
+                padding: 0.1em 0.4em;
+                border-radius: 3px;
+              "
+              >compose.yaml</code
+            >.
           </p>
-          <p
-            style="
-              font-size: 0.78rem;
-              margin-top: 1.5rem;
-              opacity: 0.45;
-              font-family:
-                &quot;JetBrains Mono&quot;, &quot;Courier New&quot;, monospace;
-              line-height: 1.6;
-              color: var(--accent);
-            "
-          >
-            // example only &mdash; does not reflect<br />// final production
-            syntax
-          </p>
-        </div>
-        <div style="min-width: 0">
+          <hr />
           <div class="arco-code-wrap">
             <div class="arco-code-header">
-              <span class="arco-code-filename">infrastructure.arco</span>
-              <span class="arco-code-tag">ARCO</span>
+              <span class="arco-code-filename">compose.yaml</span>
+              <span class="arco-code-tag">goal</span>
             </div>
             <div class="arco-code-body">
-              <pre><span class="t-punct">[</span>
-  <span class="t-punct">{</span>
-    <span class="t-key">"name"</span><span class="t-punct">:</span> <span class="t-str">"server1"</span><span class="t-punct">,</span>
-    <span class="t-key">"type"</span><span class="t-punct">:</span> <span class="t-str">"server"</span><span class="t-punct">,</span>
-    <span class="t-key">"hardware"</span><span class="t-punct">:</span> <span class="t-str">"s2"</span><span class="t-punct">,</span>
-    <span class="t-key">"ip"</span><span class="t-punct">:</span> <span class="t-str">"10.0.0.3"</span><span class="t-punct">,</span>
-    <span class="t-key">"software"</span><span class="t-punct">:</span> <span class="t-str">"docker"</span><span class="t-punct">,</span>
-    <span class="t-key">"compose"</span><span class="t-punct">:</span> <span class="t-str">"./docker-compose.yml"</span>
-  <span class="t-punct">},</span>
-  <span class="t-punct">{</span>
-    <span class="t-key">"name"</span><span class="t-punct">:</span> <span class="t-str">"server2"</span><span class="t-punct">,</span>
-    <span class="t-key">"type"</span><span class="t-punct">:</span> <span class="t-str">"server"</span><span class="t-punct">,</span>
-    <span class="t-key">"cpu"</span><span class="t-punct">:</span> <span class="t-num">4</span><span class="t-punct">,</span>
-    <span class="t-key">"ram"</span><span class="t-punct">:</span> <span class="t-str">"8GB"</span><span class="t-punct">,</span>
-    <span class="t-key">"disk"</span><span class="t-punct">:</span> <span class="t-str">"80GB"</span><span class="t-punct">,</span>
-    <span class="t-key">"ip"</span><span class="t-punct">:</span> <span class="t-str">"10.0.0.4"</span><span class="t-punct">,</span>
-    <span class="t-key">"software"</span><span class="t-punct">:</span> <span class="t-str">"docker"</span><span class="t-punct">,</span>
-    <span class="t-key">"image"</span><span class="t-punct">:</span> <span class="t-str">"ghcr.io/my-org/api:latest"</span><span class="t-punct">,</span>
-    <span class="t-key">"env"</span><span class="t-punct">:</span> <span class="t-str">"./envs/production.env"</span>
-  <span class="t-punct">},</span>
-  <span class="t-punct">{</span>
-    <span class="t-key">"name"</span><span class="t-punct">:</span> <span class="t-str">"lb"</span><span class="t-punct">,</span>
-    <span class="t-key">"type"</span><span class="t-punct">:</span> <span class="t-str">"load-balancer"</span><span class="t-punct">,</span>
-    <span class="t-key">"targets"</span><span class="t-punct">:</span> <span class="t-punct">[</span><span class="t-str">"server1"</span><span class="t-punct">,</span> <span class="t-str">"server2"</span><span class="t-punct">],</span>
-    <span class="t-key">"algorithm"</span><span class="t-punct">:</span> <span class="t-str">"round-robin"</span><span class="t-punct">,</span>
-    <span class="t-key">"port"</span><span class="t-punct">:</span> <span class="t-num">443</span>
-  <span class="t-punct">},</span>
-  <span class="t-punct">{</span>
-    <span class="t-key">"name"</span><span class="t-punct">:</span> <span class="t-str">"internal-net"</span><span class="t-punct">,</span>
-    <span class="t-key">"type"</span><span class="t-punct">:</span> <span class="t-str">"network"</span><span class="t-punct">,</span>
-    <span class="t-key">"cidr"</span><span class="t-punct">:</span> <span class="t-str">"10.0.0.0/24"</span><span class="t-punct">,</span>
-    <span class="t-key">"firewall"</span><span class="t-punct">:</span> <span class="t-punct">{</span>
-      <span class="t-key">"allow-inbound"</span><span class="t-punct">:</span> <span class="t-punct">[</span><span class="t-num">22</span><span class="t-punct">,</span> <span class="t-num">443</span><span class="t-punct">],</span>
-      <span class="t-key">"allow-internal"</span><span class="t-punct">:</span> <span class="t-bool">true</span>
-    <span class="t-punct">}</span>
-  <span class="t-punct">},</span>
-  <span class="t-punct">{</span>
-    <span class="t-key">"name"</span><span class="t-punct">:</span> <span class="t-str">"db-volume"</span><span class="t-punct">,</span>
-    <span class="t-key">"type"</span><span class="t-punct">:</span> <span class="t-str">"volume"</span><span class="t-punct">,</span>
-    <span class="t-key">"size"</span><span class="t-punct">:</span> <span class="t-str">"20GB"</span><span class="t-punct">,</span>
-    <span class="t-key">"attach"</span><span class="t-punct">:</span> <span class="t-str">"server1"</span><span class="t-punct">,</span>
-    <span class="t-key">"mount"</span><span class="t-punct">:</span> <span class="t-str">"/var/lib/postgres"</span>
-  <span class="t-punct">},</span>
-  <span class="t-punct">{</span>
-    <span class="t-key">"name"</span><span class="t-punct">:</span> <span class="t-str">"gpu-worker"</span><span class="t-punct">,</span>
-    <span class="t-key">"type"</span><span class="t-punct">:</span> <span class="t-str">"server"</span><span class="t-punct">,</span>
-    <span class="t-key">"cpu"</span><span class="t-punct">:</span> <span class="t-num">8</span><span class="t-punct">,</span>
-    <span class="t-key">"ram"</span><span class="t-punct">:</span> <span class="t-str">"32GB"</span><span class="t-punct">,</span>
-    <span class="t-key">"disk"</span><span class="t-punct">:</span> <span class="t-str">"200GB"</span><span class="t-punct">,</span>
-    <span class="t-key">"gpu"</span><span class="t-punct">:</span> <span class="t-bool">true</span><span class="t-punct">,</span>
-    <span class="t-key">"ip"</span><span class="t-punct">:</span> <span class="t-str">"10.0.0.10"</span><span class="t-punct">,</span>
-    <span class="t-key">"software"</span><span class="t-punct">:</span> <span class="t-str">"docker"</span><span class="t-punct">,</span>
-    <span class="t-key">"image"</span><span class="t-punct">:</span> <span class="t-str">"ghcr.io/my-org/ml-worker:latest"</span><span class="t-punct">,</span>
-    <span class="t-key">"tags"</span><span class="t-punct">:</span> <span class="t-punct">[</span><span class="t-str">"gpu"</span><span class="t-punct">,</span> <span class="t-str">"ml"</span><span class="t-punct">]</span>
-  <span class="t-punct">},</span>
-  <span class="t-punct">{</span>
-    <span class="t-key">"name"</span><span class="t-punct">:</span> <span class="t-str">"routing"</span><span class="t-punct">,</span>
-    <span class="t-key">"type"</span><span class="t-punct">:</span> <span class="t-str">"routing"</span><span class="t-punct">,</span>
-    <span class="t-key">"rules"</span><span class="t-punct">:</span> <span class="t-punct">[</span>
-      <span class="t-punct">{</span>
-        <span class="t-key">"domain"</span><span class="t-punct">:</span> <span class="t-str">"api.my-org.com"</span><span class="t-punct">,</span>
-        <span class="t-key">"target"</span><span class="t-punct">:</span> <span class="t-str">"lb"</span><span class="t-punct">,</span>
-        <span class="t-key">"port"</span><span class="t-punct">:</span> <span class="t-num">443</span><span class="t-punct">,</span>
-        <span class="t-key">"tls"</span><span class="t-punct">:</span> <span class="t-bool">true</span>
-      <span class="t-punct">},</span>
-      <span class="t-punct">{</span>
-        <span class="t-key">"domain"</span><span class="t-punct">:</span> <span class="t-str">"internal.my-org.com"</span><span class="t-punct">,</span>
-        <span class="t-key">"target"</span><span class="t-punct">:</span> <span class="t-str">"server1"</span><span class="t-punct">,</span>
-        <span class="t-key">"port"</span><span class="t-punct">:</span> <span class="t-num">8080</span><span class="t-punct">,</span>
-        <span class="t-key">"tls"</span><span class="t-punct">:</span> <span class="t-bool">true</span><span class="t-punct">,</span>
-        <span class="t-key">"private"</span><span class="t-punct">:</span> <span class="t-bool">true</span>
-      <span class="t-punct">}</span>
-    <span class="t-punct">]</span>
-  <span class="t-punct">}</span>
-<span class="t-punct">]</span></pre>
-          </div>
-        </div>
-      </section>
+              <pre><span class="t-key">services</span><span class="t-punct">:</span>
+  <span class="t-key">api</span><span class="t-punct">:</span>
+    <span class="t-key">image</span><span class="t-punct">:</span> <span class="t-str">my-app:latest</span>
+    <span class="t-key">ports</span><span class="t-punct">:</span>
+      <span class="t-punct">-</span> <span class="t-str">"8080:8080"</span>
+    <span class="t-key">networks</span><span class="t-punct">:</span>
+      <span class="t-punct">-</span> <span class="t-str">internal</span>
+    <span class="t-key">x-arodeploy</span><span class="t-punct">:</span>
+      <span class="t-key">arch</span><span class="t-punct">:</span>     <span class="t-str">arm64</span>
+      <span class="t-key">instance</span><span class="t-punct">:</span> <span class="t-str">c2.medium</span>
+      <span class="t-key">memory</span><span class="t-punct">:</span>   <span class="t-str">2gb</span>
+      <span class="t-key">storage</span><span class="t-punct">:</span>  <span class="t-str">20gb</span>
 
-      <section class="contact-section" id="contact">
-        <p class="section-label">Contact</p>
-        <div class="contact-body">
-          <p>
-            Questions, feedback, or just want to know more? Reach out directly.
-          </p>
-          <a href="mailto:aaron.gotthardsson@gmail.com" class="contact-link">
-            aaron.gotthardsson@gmail.com
-          </a>
+  <span class="t-key">worker</span><span class="t-punct">:</span>
+    <span class="t-key">image</span><span class="t-punct">:</span> <span class="t-str">my-worker:latest</span>
+    <span class="t-key">networks</span><span class="t-punct">:</span>
+      <span class="t-punct">-</span> <span class="t-str">internal</span>
+    <span class="t-key">x-arodeploy</span><span class="t-punct">:</span>
+      <span class="t-key">arch</span><span class="t-punct">:</span>     <span class="t-str">amd64</span>
+      <span class="t-key">instance</span><span class="t-punct">:</span> <span class="t-str">c2.large</span>
+      <span class="t-key">memory</span><span class="t-punct">:</span>   <span class="t-str">8gb</span>
+      <span class="t-key">storage</span><span class="t-punct">:</span>  <span class="t-str">50gb</span>
+
+<span class="t-key">networks</span><span class="t-punct">:</span>
+  <span class="t-key">internal</span><span class="t-punct">:</span>
+    <span class="t-key">driver</span><span class="t-punct">:</span> <span class="t-str">private</span></pre>
+            </div>
+          </div>
         </div>
       </section>
     </main>
